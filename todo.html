@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumino — To Do</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1828;
+    --surface2: #221f35;
+    --border: rgba(255,255,255,0.07);
+    --text: #fffffe;
+    --muted: #6e6a8a;
+
+    --low:    #4ecdc4;
+    --medium: #ffd166;
+    --high:   #ef476f;
+    --done:   #6e6a8a;
+
+    --glow-low:    0 0 18px rgba(78,205,196,0.3);
+    --glow-medium: 0 0 18px rgba(255,209,102,0.3);
+    --glow-high:   0 0 18px rgba(239,71,111,0.3);
+
+    --font-size: 15px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: var(--font-size);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 16px 80px;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 20% 10%, rgba(78,205,196,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 90%, rgba(239,71,111,0.07) 0%, transparent 55%);
+  }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  header .eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fffffe 30%, #a9a4c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  header .sub {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  /* ── Controls bar ── */
+  .controls {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .controls label {
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .font-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--surface2);
+    outline: none;
+    width: 110px;
+    cursor: pointer;
+  }
+  .font-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--low);
+    box-shadow: 0 0 8px rgba(78,205,196,0.5);
+    cursor: pointer;
+    transition: transform .15s;
+  }
+  .font-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
+
+  .filter-btns {
+    display: flex;
+    gap: 6px;
+    margin-left: auto;
+    flex-wrap: wrap;
+  }
+  .filter-btn {
+    padding: 5px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    color: var(--text);
+    border-color: rgba(255,255,255,0.3);
+    background: var(--surface2);
+  }
+
+  /* ── Add form ── */
+  .add-form {
+    width: 100%;
+    max-width: 680px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 20px 22px;
+    margin-bottom: 24px;
+    display: grid;
+    gap: 12px;
+    animation: fadeUp .4s ease;
+  }
+  .add-form .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .add-form input[type="text"] {
+    flex: 1;
+    min-width: 180px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: inherit;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .add-form input[type="text"]:focus {
+    border-color: var(--low);
+    box-shadow: 0 0 0 3px rgba(78,205,196,0.12);
+  }
+  .add-form input::placeholder { color: var(--muted); }
+
+  .priority-select {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: inherit;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .priority-select:focus { border-color: var(--low); }
+  .priority-select option { background: #1a1828; }
+
+  .btn-add {
+    padding: 12px 26px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #4ecdc4, #2eafaa);
+    color: #0f0e17;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: inherit;
+    cursor: pointer;
+    transition: opacity .2s, transform .15s;
+    white-space: nowrap;
+  }
+  .btn-add:hover { opacity: .85; transform: translateY(-1px); }
+  .btn-add:active { transform: translateY(0); }
+
+  /* ── Stats ── */
+  .stats {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .stat-pill {
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid transparent;
+  }
+  .stat-pill.total  { border-color: rgba(255,255,255,0.12); color: var(--muted); }
+  .stat-pill.s-low  { border-color: rgba(78,205,196,0.4);  color: var(--low); }
+  .stat-pill.s-med  { border-color: rgba(255,209,102,0.4); color: var(--medium); }
+  .stat-pill.s-high { border-color: rgba(239,71,111,0.4);  color: var(--high); }
+  .stat-pill.s-done { border-color: rgba(110,106,138,0.4); color: var(--done); }
+
+  /* ── Task list ── */
+  .task-list {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .task-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    transition: transform .2s, box-shadow .2s, opacity .3s;
+    animation: fadeUp .35s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .task-item::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
+  }
+  .task-item.priority-low::before    { background: var(--low); }
+  .task-item.priority-medium::before { background: var(--medium); }
+  .task-item.priority-high::before   { background: var(--high); }
+  .task-item.done::before            { background: var(--done); }
+
+  .task-item:hover {
+    transform: translateY(-2px);
+  }
+  .task-item.priority-low:hover    { box-shadow: var(--glow-low); }
+  .task-item.priority-medium:hover { box-shadow: var(--glow-medium); }
+  .task-item.priority-high:hover   { box-shadow: var(--glow-high); }
+
+  /* Checkbox */
+  .task-check {
+    width: 22px; height: 22px;
+    border-radius: 8px;
+    border: 2px solid var(--muted);
+    flex-shrink: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, border-color .2s;
+    margin-top: 1px;
+  }
+  .task-item.priority-low    .task-check { border-color: var(--low); }
+  .task-item.priority-medium .task-check { border-color: var(--medium); }
+  .task-item.priority-high   .task-check { border-color: var(--high); }
+  .task-item.done .task-check {
+    background: var(--done);
+    border-color: var(--done);
+  }
+  .task-check svg { display: none; }
+  .task-item.done .task-check svg { display: block; }
+
+  /* Content */
+  .task-content { flex: 1; min-width: 0; }
+
+  .task-text {
+    font-size: inherit;
+    line-height: 1.45;
+    word-break: break-word;
+    transition: color .2s;
+  }
+  .task-item.priority-low    .task-text { color: var(--low); }
+  .task-item.priority-medium .task-text { color: var(--medium); }
+  .task-item.priority-high   .task-text { color: var(--high); }
+  .task-item.done .task-text {
+    color: var(--done);
+    text-decoration: line-through;
+  }
+
+  .task-edit-input {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: inherit;
+    outline: none;
+  }
+
+  .task-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .priority-badge {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .task-item.priority-low    .priority-badge { background: rgba(78,205,196,0.12);  color: var(--low); }
+  .task-item.priority-medium .priority-badge { background: rgba(255,209,102,0.12); color: var(--medium); }
+  .task-item.priority-high   .priority-badge { background: rgba(239,71,111,0.12);  color: var(--high); }
+  .task-item.done .priority-badge            { background: rgba(110,106,138,0.12); color: var(--done); }
+
+  .task-time {
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* Actions */
+  .task-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .action-btn {
+    width: 32px; height: 32px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--muted);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    font-size: 14px;
+  }
+  .action-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.25); }
+  .action-btn.del:hover { color: var(--high); border-color: var(--high); }
+  .action-btn.save:hover { color: var(--low); border-color: var(--low); }
+
+  /* Empty */
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    animation: fadeUp .4s ease;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .task-item.removing {
+    opacity: 0;
+    transform: translateX(30px) scale(.97);
+    transition: all .3s ease;
+    pointer-events: none;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Your space to think</p>
+  <h1>Lumino Tasks</h1>
+  <p class="sub">Beautiful clarity, one task at a time.</p>
+</header>
+
+<!-- Controls -->
+<div class="controls">
+  <label>Aa</label>
+  <input class="font-slider" type="range" id="fontSlider" min="12" max="22" value="15" title="Font size">
+  <label id="fontLabel" style="min-width:32px">15px</label>
+
+  <div class="filter-btns">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="low">Low</button>
+    <button class="filter-btn" data-filter="medium">Medium</button>
+    <button class="filter-btn" data-filter="high">High</button>
+    <button class="filter-btn" data-filter="done">Done</button>
+  </div>
+</div>
+
+<!-- Add form -->
+<div class="add-form">
+  <div class="row">
+    <input type="text" id="taskInput" placeholder="What needs to be done…" autocomplete="off">
+    <select class="priority-select" id="prioritySelect">
+      <option value="low">🟢 Low</option>
+      <option value="medium" selected>🟡 Medium</option>
+      <option value="high">🔴 High</option>
+    </select>
+    <button class="btn-add" id="addBtn">+ Add</button>
+  </div>
+</div>
+
+<!-- Stats -->
+<div class="stats" id="stats"></div>
+
+<!-- Task list -->
+<div class="task-list" id="taskList"></div>
+
+<script>
+  let tasks = JSON.parse(localStorage.getItem('lumino_tasks') || '[]');
+  let filter = 'all';
+  let editingId = null;
+
+  const taskList  = document.getElementById('taskList');
+  const taskInput = document.getElementById('taskInput');
+  const prioritySelect = document.getElementById('prioritySelect');
+  const fontSlider = document.getElementById('fontSlider');
+  const fontLabel  = document.getElementById('fontLabel');
+  const statsEl   = document.getElementById('stats');
+
+  /* ── Font size ── */
+  fontSlider.addEventListener('input', () => {
+    const v = fontSlider.value;
+    document.documentElement.style.setProperty('--font-size', v + 'px');
+    fontLabel.textContent = v + 'px';
+  });
+
+  /* ── Filters ── */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      filter = btn.dataset.filter;
+      render();
+    });
+  });
+
+  /* ── Add ── */
+  document.getElementById('addBtn').addEventListener('click', addTask);
+  taskInput.addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+
+  function addTask() {
+    const text = taskInput.value.trim();
+    if (!text) { taskInput.focus(); return; }
+    tasks.unshift({
+      id: Date.now(),
+      text,
+      priority: prioritySelect.value,
+      done: false,
+      created: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
+    });
+    taskInput.value = '';
+    taskInput.focus();
+    save(); render();
+  }
+
+  /* ── Save ── */
+  function save() { localStorage.setItem('lumino_tasks', JSON.stringify(tasks)); }
+
+  /* ── Render ── */
+  function render() {
+    /* stats */
+    const counts = { low:0, medium:0, high:0, done:0 };
+    tasks.forEach(t => {
+      if (t.done) counts.done++;
+      else counts[t.priority]++;
+    });
+    statsEl.innerHTML = `
+      <span class="stat-pill total">Total ${tasks.length}</span>
+      <span class="stat-pill s-low">Low ${counts.low}</span>
+      <span class="stat-pill s-med">Medium ${counts.medium}</span>
+      <span class="stat-pill s-high">High ${counts.high}</span>
+      <span class="stat-pill s-done">Done ${counts.done}</span>
+    `;
+
+    /* filter */
+    let visible = tasks;
+    if (filter === 'done') visible = tasks.filter(t => t.done);
+    else if (filter !== 'all') visible = tasks.filter(t => !t.done && t.priority === filter);
+
+    if (!visible.length) {
+      taskList.innerHTML = `<div class="empty-state">Nothing here yet — add something lovely.</div>`;
+      return;
+    }
+
+    taskList.innerHTML = '';
+    visible.forEach(task => {
+      const el = document.createElement('div');
+      el.className = `task-item priority-${task.priority}${task.done ? ' done' : ''}`;
+      el.dataset.id = task.id;
+
+      const isEditing = editingId === task.id;
+
+      el.innerHTML = `
+        <div class="task-check" title="${task.done ? 'Mark undone' : 'Mark done'}">
+          <svg width="12" height="10" viewBox="0 0 12 10" fill="none">
+            <path d="M1 5L4.5 8.5L11 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="task-content">
+          ${isEditing
+            ? `<input class="task-edit-input" type="text" value="${escHtml(task.text)}" id="edit_${task.id}">`
+            : `<div class="task-text">${escHtml(task.text)}</div>`
+          }
+          <div class="task-meta">
+            <span class="priority-badge">${task.priority}</span>
+            <span class="task-time">${task.created}</span>
+          </div>
+        </div>
+        <div class="task-actions">
+          ${isEditing
+            ? `<button class="action-btn save" title="Save" data-action="save" data-id="${task.id}">✓</button>`
+            : `<button class="action-btn" title="Edit" data-action="edit" data-id="${task.id}">✎</button>`
+          }
+          <button class="action-btn del" title="Delete" data-action="delete" data-id="${task.id}">✕</button>
+        </div>
+      `;
+
+      taskList.appendChild(el);
+
+      /* check toggle */
+      el.querySelector('.task-check').addEventListener('click', () => toggleDone(task.id));
+
+      /* action buttons */
+      el.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const action = btn.dataset.action;
+          const id = +btn.dataset.id;
+          if (action === 'delete') deleteTask(id, el);
+          else if (action === 'edit')  startEdit(id);
+          else if (action === 'save')  saveEdit(id);
+        });
+      });
+
+      /* save on Enter in edit input */
+      if (isEditing) {
+        const inp = el.querySelector(`#edit_${task.id}`);
+        inp.focus();
+        inp.addEventListener('keydown', e => {
+          if (e.key === 'Enter') saveEdit(task.id);
+          if (e.key === 'Escape') { editingId = null; render(); }
+        });
+      }
+    });
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function toggleDone(id) {
+    const t = tasks.find(t => t.id === id);
+    if (t) { t.done = !t.done; save(); render(); }
+  }
+
+  function deleteTask(id, el) {
+    el.classList.add('removing');
+    setTimeout(() => {
+      tasks = tasks.filter(t => t.id !== id);
+      save(); render();
+    }, 300);
+  }
+
+  function startEdit(id) { editingId = id; render(); }
+
+  function saveEdit(id) {
+    const inp = document.getElementById(`edit_${id}`);
+    if (!inp) return;
+    const val = inp.value.trim();
+    if (!val) return;
+    const t = tasks.find(t => t.id === id);
+    if (t) { t.text = val; }
+    editingId = null;
+    save(); render();
+  }
+
+  /* seed data if empty */
+  if (!tasks.length) {
+    tasks = [
+      { id: 1, text: 'Review project proposal and leave feedback', priority: 'high', done: false, created: 'Just now' },
+      { id: 2, text: 'Pick up groceries on the way home', priority: 'medium', done: false, created: 'Just now' },
+      { id: 3, text: 'Read 20 pages of that novel', priority: 'low', done: false, created: 'Just now' },
+      { id: 4, text: 'Send the weekly report to the team', priority: 'high', done: true, created: 'Just now' },
+    ];
+    save();
+  }
+
+  render();
+</script>
+</body>
+</html>
