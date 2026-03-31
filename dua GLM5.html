@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="bn" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>দোয়া সংগ্রহ — প্রতিদিনের আমল</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            arabic: ['Amiri', 'serif'],
+          },
+          colors: {
+            accent: '#ff005e',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .dark body, html.dark body {
+      background-color: #0a0a0a;
+      color: #fafafa;
+    }
+
+    html:not(.dark) body {
+      background-color: #ffffff;
+      color: #0a0a0a;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .dark ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    html:not(.dark) ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+
+    /* Arabic text styling */
+    .arabic-text {
+      font-family: 'Amiri', serif;
+      direction: rtl;
+      line-height: 2.2;
+      letter-spacing: 0.02em;
+    }
+
+    /* Card hover */
+    .dua-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .dua-card:hover {
+      transform: translateY(-4px);
+    }
+    .dark .dua-card:hover {
+      box-shadow: 0 25px 50px -12px rgba(255,0,94,0.1);
+      border-color: rgba(255,0,94,0.3);
+    }
+    html:not(.dark) .dua-card:hover {
+      box-shadow: 0 25px 50px -12px rgba(255,0,94,0.15);
+      border-color: rgba(255,0,94,0.4);
+    }
+
+    /* Benefit tag */
+    .benefit-tag {
+      position: relative;
+      overflow: hidden;
+    }
+    .benefit-tag::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,0,94,0.08), transparent);
+      pointer-events: none;
+    }
+
+    /* Filter button */
+    .filter-btn {
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active {
+      background-color: #ff005e !important;
+      color: white !important;
+      border-color: #ff005e !important;
+    }
+
+    /* Fade in animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in-up {
+      animation: fadeInUp 0.5s ease forwards;
+    }
+
+    /* Star pattern */
+    .star-pattern {
+      background-image: radial-gradient(1px 1px at 20px 30px, rgba(255,255,255,0.15), transparent),
+                        radial-gradient(1px 1px at 40px 70px, rgba(255,255,255,0.1), transparent),
+                        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.12), transparent),
+                        radial-gradient(1px 1px at 130px 80px, rgba(255,255,255,0.08), transparent),
+                        radial-gradient(1px 1px at 160px 30px, rgba(255,255,255,0.1), transparent);
+      background-size: 200px 200px;
+    }
+
+    /* Grid pattern for light */
+    .grid-pattern {
+      background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+                        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    /* Copy toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+      z-index: 9999;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Expand transition */
+    .benefit-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+    .benefit-content.expanded {
+      max-height: 500px;
+    }
+
+    /* Search highlight */
+    mark {
+      background-color: rgba(255,0,94,0.25);
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 2px;
+    }
+
+    /* Ornamental divider */
+    .ornament {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .ornament::before, .ornament::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+    }
+    .dark .ornament::before, .dark .ornament::after {
+      background: linear-gradient(to right, transparent, rgba(255,0,94,0.4), transparent);
+    }
+    html:not(.dark) .ornament::before, html:not(.dark) .ornament::after {
+      background: linear-gradient(to right, transparent, rgba(255,0,94,0.3), transparent);
+    }
+
+    /* Glow effect on arabic section */
+    .dark .arabic-glow {
+      background: radial-gradient(ellipse at center, rgba(255,0,94,0.03) 0%, transparent 70%);
+    }
+
+    /* Category badge colors */
+    .cat-morning { --cat-color: #f59e0b; }
+    .cat-evening { --cat-color: #8b5cf6; }
+    .cat-eating { --cat-color: #10b981; }
+    .cat-sleep { --cat-color: #6366f1; }
+    .cat-travel { --cat-color: #ec4899; }
+    .cat-prayer { --cat-color: #14b8a6; }
+    .cat-distress { --cat-color: #ef4444; }
+    .cat-general { --cat-color: #3b82f6; }
+
+    .category-badge {
+      background-color: color-mix(in srgb, var(--cat-color) 15%, transparent);
+      color: var(--cat-color);
+      border: 1px solid color-mix(in srgb, var(--cat-color) 25%, transparent);
+    }
+
+    /* Reading progress */
+    #reading-progress {
+      position: fixed;
+      top: 64px;
+      left: 0;
+      height: 2px;
+      background: linear-gradient(to right, #ff005e, #7c3aed);
+      z-index: 40;
+      transition: width 0.1s linear;
+    }
+
+    /* Floating bismillah */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    .float-anim {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* No result state */
+    .no-result {
+      display: none;
+    }
+    .no-result.visible {
+      display: flex;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress" style="width: 0%"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <div class="flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium shadow-2xl bg-neutral-900 text-white border border-white/10">
+      <span class="iconify text-green-400" data-icon="lucide:check-circle" data-width="16"></span>
+      <span id="toast-text">কপি করা হয়েছে!</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 h-16 z-50 flex items-center justify-between px-6 backdrop-blur-xl border-b" 
+       style="background-color: color-mix(in srgb, var(--nav-bg, #0a0a0a) 80%, transparent); border-color: var(--border-color, rgba(255,255,255,0.1));">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg flex items-center justify-center bg-accent/10 border border-accent/20">
+        <span class="iconify text-accent" data-icon="lucide:book-open" data-width="18"></span>
+      </div>
+      <span class="font-semibold text-lg tracking-tight">দোয়া সংগ্রহ</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <!-- Search toggle (mobile) -->
+      <button id="mobile-search-btn" class="md:hidden w-9 h-9 rounded-full flex items-center justify-center border hover:bg-white/5 transition-colors" style="border-color: var(--border-color, rgba(255,255,255,0.1));">
+        <span class="iconify" data-icon="lucide:search" data-width="16"></span>
+      </button>
+      <!-- Dua count -->
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium border" style="border-color: var(--border-color, rgba(255,255,255,0.1)); color: var(--muted-color, #a3a3a3);">
+        <span class="iconify text-accent" data-icon="lucide:heart" data-width="12"></span>
+        <span id="dua-count">১২টি দোয়া</span>
+      </div>
+      <!-- Theme toggle -->
+      <button id="theme-toggle" class="w-9 h-9 rounded-full flex items-center justify-center border hover:bg-white/5 transition-colors" style="border-color: var(--border-color, rgba(255,255,255,0.1));">
+        <span class="iconify dark-icon" data-icon="lucide:moon" data-width="16"></span>
+        <span class="iconify light-icon hidden" data-icon="lucide:sun" data-width="16"></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CSS Variables for theme -->
+  <style>
+    .dark { --nav-bg: #0a0a0a; --border-color: rgba(255,255,255,0.1); --muted-color: #a3a3a3; --card-bg: rgba(255,255,255,0.03); --card-border: rgba(255,255,255,0.08); --input-bg: rgba(255,255,255,0.05); }
+    html:not(.dark) { --nav-bg: #ffffff; --border-color: rgba(0,0,0,0.1); --muted-color: #737373; --card-bg: rgba(0,0,0,0.02); --card-border: rgba(0,0,0,0.08); --input-bg: rgba(0,0,0,0.04); }
+  </style>
+
+  <!-- Hero Section -->
+  <header class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+    <!-- Background effects -->
+    <div class="absolute inset-0 star-pattern dark:block hidden"></div>
+    <div class="absolute inset-0 grid-pattern dark:hidden block"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20 blur-[120px] bg-accent"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center">
+      <!-- Bismillah -->
+      <div class="float-anim mb-8">
+        <span class="arabic-text text-3xl md:text-4xl font-bold" style="color: var(--muted-color, #a3a3a3);">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</span>
+      </div>
+      
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-medium tracking-tighter leading-[1.1] mb-6">
+        প্রতিদিনের<br>
+        <span class="bg-clip-text text-transparent" style="background-image: linear-gradient(to bottom right, #ff005e, #7c3aed);">দোয়া সংগ্রহ</span>
+      </h1>
+      
+      <p class="text-base md:text-lg font-light leading-relaxed max-w-2xl mx-auto mb-10" style="color: var(--muted-color, #a3a3a3);">
+        পবিত্র কুরআন ও সহীহ হাদীস থেকে সংকলিত গুরুত্বপূর্ণ দোয়াসমূহ — আরবি, বাংলা অর্থ, উচ্চারণ ও ফজিলতসহ
+      </p>
+
+      <!-- Search Bar -->
+      <div id="search-container" class="max-w-xl mx-auto">
+        <div class="relative">
+          <span class="iconify absolute left-4 top-1/2 -translate-y-1/2" data-icon="lucide:search" data-width="18" style="color: var(--muted-color, #a3a3a3);"></span>
+          <input id="search-input" type="text" placeholder="দোয়া খুঁজুন..." 
+                 class="w-full pl-12 pr-4 py-4 rounded-2xl text-sm font-medium outline-none border transition-all focus:border-accent/50 focus:ring-2 focus:ring-accent/10"
+                 style="background-color: var(--input-bg, rgba(255,255,255,0.05)); border-color: var(--border-color, rgba(255,255,255,0.1));">
+          <button id="clear-search" class="absolute right-4 top-1/2 -translate-y-1/2 hidden hover:scale-110 transition-transform" style="color: var(--muted-color, #a3a3a3);">
+            <span class="iconify" data-icon="lucide:x" data-width="16"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Filter Section -->
+  <section class="sticky top-16 z-30 py-4 backdrop-blur-xl border-b" style="background-color: color-mix(in srgb, var(--nav-bg, #0a0a0a) 85%, transparent); border-color: var(--border-color, rgba(255,255,255,0.1));">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar" style="-ms-overflow-style: none; scrollbar-width: none;">
+        <button class="filter-btn active flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="all">
+          সব দোয়া
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="morning">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:sunrise" data-width="12"></span>সকাল
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="evening">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:sunset" data-width="12"></span>সন্ধ্যা
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="eating">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:utensils" data-width="12"></span>খাদ্য
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="sleep">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:moon-star" data-width="12"></span>ঘুম
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="travel">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:car" data-width="12"></span>ভ্রমণ
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="prayer">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:hand" data-width="12"></span>নামাজ
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="distress">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:cloud-rain" data-width="12"></span>কষ্ট
+        </button>
+        <button class="filter-btn flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium border transition-all" style="border-color: var(--border-color, rgba(255,255,255,0.1));" data-filter="general">
+          <span class="iconify inline-block mr-1 -mt-0.5" data-icon="lucide:sparkles" data-width="12"></span>সাধারণ
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dua Cards Section -->
+  <main class="max-w-6xl mx-auto px-6 py-12 md:py-16">
+    
+    <!-- No results -->
+    <div id="no-result" class="no-result flex-col items-center justify-center py-20 text-center">
+      <div class="w-20 h-20 rounded-full flex items-center justify-center mb-6" style="background-color: var(--input-bg, rgba(255,255,255,0.05));">
+        <span class="iconify" data-icon="lucide:search-x" data-width="32" style="color: var(--muted-color, #a3a3a3);"></span>
+      </div>
+      <h3 class="text-xl font-semibold mb-2">কোনো দোয়া পাওয়া যায়নি</h3>
+      <p class="text-sm" style="color: var(--muted-color, #a3a3a3);">অন্য কিছু দিয়ে খুঁজে দেখুন</p>
+    </div>
+
+    <!-- Dua Grid -->
+    <div id="dua-grid" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Cards will be injected by JS -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t py-12 px-6" style="border-color: var(--border-color, rgba(255,255,255,0.1));">
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="ornament mb-6">
+        <span class="arabic-text text-lg" style="color: var(--muted-color, #a3a3a3);">﷽</span>
+      </div>
+      <p class="text-sm font-light" style="color: var(--muted-color, #a3a3a3);">
+        পবিত্র কুরআন ও সহীহ হাদীস অনুযায়ী সংকলিত। কোনো ভুল হলে ক্ষমা সাপেক্ষে সংশোধন করুন।
+      </p>
+      <p class="text-xs mt-3" style="color: var(--muted-color, #a3a3a3); opacity: 0.6;">
+        © ২০২৫ দোয়া সংগ্রহ — সকলের জন্য উন্মুক্ত
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== DUA DATA =====
+    const duas = [
+      {
+        id: 1,
+        title: "সকালের দোয়া",
+        category: "morning",
+        categoryLabel: "সকাল",
+        arabic: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+        pronunciation: "আসবাহনা ওয়া আসবাহাল মুলকু লিল্লাহ, ওয়াল হামদু লিল্লাহ, লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারিকালাহ, লাহুল মুলকু ওয়া লাহুল হামদু ওয়া হুওয়া আলা কুল্লি শাইইন কাদীর।",
+        bangla: "আমরা সকালে পৌঁছেছি এবং সকালে সমস্ত রাজত্ব আল্লাহর। সকল প্রশংসা আল্লাহর। আল্লাহ ছাড়া কোনো ইলাহ নেই, তিনি একক, তাঁর কোনো শরীক নেই। রাজত্ব তাঁর, প্রশংসা তাঁর এবং তিনি সবকিছুর উপর ক্ষমতাবান।",
+        reference: "সহীহ বুখারী ৩১৯৫, সহীহ মুসলিম ২৭৩৮",
+        benefits: [
+          "প্রতিদিন সকালে পড়লে আল্লাহর সন্তুষ্টি লাভ",
+          "জাহান্নাম থেকে মুক্তি পাওয়ার মাধ্যম",
+          "সারাদিন আল্লাহর হেফাজতে থাকা",
+          "সকল প্রকার ক্ষতি থেকে রক্ষা"
+        ]
+      },
+      {
+        id: 2,
+        title: "সন্ধ্যার দোয়া",
+        category: "evening",
+        categoryLabel: "সন্ধ্যা",
+        arabic: "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+        pronunciation: "আমসাইনা ওয়া আমসাল মুলকু লিল্লাহ, ওয়াল হামদু লিল্লাহ, লা ইলাহা ইল্লাল্লাহু ওয়াহদাহু লা শারিকালাহ, লাহুল মুলকু ওয়া লাহুল হামদু ওয়া হুওয়া আলা কুল্লি শাইইন কাদীর।",
+        bangla: "আমরা সন্ধ্যায় পৌঁছেছি এবং সন্ধ্যায় সমস্ত রাজত্ব আল্লাহর। সকল প্রশংসা আল্লাহর। আল্লাহ ছাড়া কোনো ইলাহ নেই, তিনি একক, তাঁর কোনো শরীক নেই। রাজত্ব তাঁর, প্রশংসা তাঁর এবং তিনি সবকিছুর উপর ক্ষমতাবান।",
+        reference: "সহীহ বুখারী ৩১৯৫, সহীহ মুসলিম ২৭৩৮",
+        benefits: [
+          "সারারাত আল্লাহর পাহারায় থাকা",
+          "শয়তানের ক্ষতি থেকে রক্ষা",
+          "আগামী সকাল পর্যন্ত নিরাপত্তা",
+          "মৃত্যুর সময় শাহাদাত কালিমা পড়ার তাওফিক"
+        ]
+      },
+      {
+        id: 3,
+        title: "খাবার শুরুর দোয়া",
+        category: "eating",
+        categoryLabel: "খাদ্য",
+        arabic: "بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ",
+        pronunciation: "বিসমিল্লাহি ওয়া আলা বারাকাতিল্লাহ।",
+        bangla: "আল্লাহর নামে এবং আল্লাহর বরকতে।",
+        reference: "সুনানে আবু দাউদ ৩৭৭০",
+        benefits: [
+          "খাবারে বরকত লাভ",
+          "শয়তান খাবারে শরীক হতে পারে না",
+          "পেটের পীড়া থেকে মুক্তি",
+          "খাদ্যের শরীরে সঠিকভাবে কাজ করা"
+        ]
+      },
+      {
+        id: 4,
+        title: "খাবার শেষের দোয়া",
+        category: "eating",
+        categoryLabel: "খাদ্য",
+        arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+        pronunciation: "আল হামদু লিল্লাহিল্লাযী আত'আমানা ওয়া সাকানা ওয়া জা'আলানা মুসলিমীন।",
+        bangla: "সকল প্রশংসা আল্লাহর, যিনি আমাদের খাওয়ালেন, পান করালেন এবং আমাদের মুসলিম বানালেন।",
+        reference: "সুনানে আবু দাউদ ৩৮৫১, তিরমিযী ৩৪৫৮",
+        benefits: [
+          "আল্লাহর নেয়ামতের শুকরিয়া আদায়",
+          "আল্লাহ আরো বেশি নেয়ামত দান করেন",
+          "ইসলামের উপর মৃত্যুর তাওফিক",
+          "পেটভরে খেলেও গুনাহ হবে না"
+        ]
+      },
+      {
+        id: 5,
+        title: "ঘুমানোর পূর্বের দোয়া",
+        category: "sleep",
+        categoryLabel: "ঘুম",
+        arabic: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+        pronunciation: "বিসমিকা আল্লাহুম্মা আমুতু ওয়া আহইয়া।",
+        bangla: "হে আল্লাহ, তোমার নামে আমি মরি এবং তোমার নামেই জীবিত হই।",
+        reference: "সহীহ বুখারী ৬৩১২, সহীহ মুসলিম ২৭১১",
+        benefits: [
+          "ঘুমের মধ্যে আল্লাহর হেফাজত",
+          "জেগে ওঠার পর সুস্থতা",
+          "মৃত্যু এলে শাহাদাত কালিমার সাথে ইন্তেকাল",
+          "খারাপ স্বপ্ন থেকে রক্ষা"
+        ]
+      },
+      {
+        id: 6,
+        title: "ঘুম থেকে জাগার দোয়া",
+        category: "sleep",
+        categoryLabel: "ঘুম",
+        arabic: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+        pronunciation: "আল হামদু লিল্লাহিল্লাযী আহইয়ানা বা'দা মা আমাতানা ওয়া ইলাইহিন নুশূর।",
+        bangla: "সকল প্রশংসা আল্লাহর, যিনি আমাদের মারার পর জীবিত করলেন এবং তাঁরই দিকে উত্থান।",
+        reference: "সহীহ বুখারী ৬৩১২, সহীহ মুসলিম ২৭১১",
+        benefits: [
+          "নতুন জীবনের শুরুতে শুকরিয়া আদায়",
+          "সারাদিন আনন্দ ও শান্তি লাভ",
+          "কিয়ামতের পুনরুত্থানের স্মরণ",
+          "হাদীস অনুযায়ী এটি পড়া সুন্নত"
+        ]
+      },
+      {
+        id: 7,
+        title: "বাড়ি থেকে বের হওয়ার দোয়া",
+        category: "travel",
+        categoryLabel: "ভ্রমণ",
+        arabic: "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+        pronunciation: "বিসমিল্লাহি তাওয়াক্কালতু আলাল্লাহ, লা হাওলা ওয়া লা কুওয়াতা ইল্লা বিল্লাহ।",
+        bangla: "আল্লাহর নামে শুরু করি, আমি আল্লাহর উপর ভরসা করি। আল্লাহর সাহায্য ছাড়া কোনো ক্ষমতা ও শক্তি নেই।",
+        reference: "সুনানে আবু দাউদ ৫০৯৫, তিরমিযী ৩৪২৬",
+        benefits: [
+          "পথে আল্লাহর হেফাজত লাভ",
+          "সকল বিপদ থেকে রক্ষা",
+          "ফেরেশতারা সাথে সাথে থাকেন",
+          "উদ্দেশ্য পূর্ণ হওয়ার সহজতা"
+        ]
+      },
+      {
+        id: 8,
+        title: "মসজিদে প্রবেশের দোয়া",
+        category: "prayer",
+        categoryLabel: "নামাজ",
+        arabic: "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+        pronunciation: "আল্লাহুম্মাফতাহ লী আবওয়াবা রাহমাতিকা।",
+        bangla: "হে আল্লাহ, আমার জন্য তোমার রহমতের দরজাসমূহ খুলে দাও।",
+        reference: "সহীহ মুসলিম ৭১৩",
+        benefits: [
+          "মসজিদে প্রবেশের পুরো সওয়াব লাভ",
+          "আল্লাহর রহমতের দরজা উন্মুক্ত হয়",
+          "নামাজে হুজুরি ও খুশু লাভ",
+          "মসজিদের পবিত্রতা অর্জন"
+        ]
+      },
+      {
+        id: 9,
+        title: "মসজিদ থেকে বের হওয়ার দোয়া",
+        category: "prayer",
+        categoryLabel: "নামাজ",
+        arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+        pronunciation: "আল্লাহুম্মা ইন্নী আসআলুকা মিন ফাদলিকা।",
+        bangla: "হে আল্লাহ, আমি তোমার অনুগ্রহ চাই।",
+        reference: "সহীহ মুসলিম ৭১৩",
+        benefits: [
+          "আল্লাহর অসীম ফজল লাভের মাধ্যম",
+          "মসজিদ থেকে বের হওয়ার সুন্নত পালন",
+          "পরবর্তী সময়ে বরকত",
+          "আল্লাহর সন্তুষ্টি অর্জন"
+        ]
+      },
+      {
+        id: 10,
+        title: "কষ্টের সময়ের দোয়া",
+        category: "distress",
+        categoryLabel: "কষ্ট",
+        arabic: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ",
+        pronunciation: "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নী কুনতু মিনায য্বালিমীন।",
+        bangla: "তুমি ছাড়া কোনো ইলাহ নেই, তুমি পবিত্র, নিশ্চয়ই আমি জালেমদের অন্তর্ভুক্ত।",
+        reference: "সুনানে তিরমিযী ৩৫০৫, আহমাদ ১৭০৬১",
+        benefits: [
+          "হযরত ইউনুস (আ)-এর এই দোয়া কোনো কষ্টেই ব্যর্থ হয় না",
+          "প্রতিটি কষ্ট থেকে মুক্তির মাধ্যম",
+          "আল্লাহর কাছে তাওব্বাহর মাধ্যম হিসেবে কাজ করে",
+          "ঈমান বৃদ্ধি ও আত্মসচেতনতা"
+        ]
+      },
+      {
+        id: 11,
+        title: "উয়ায়ে কারীম (কুরআনের দোয়া)",
+        category: "distress",
+        categoryLabel: "কষ্ট",
+        arabic: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً ۚ إِنَّكَ أَنْتَ الْوَهَّابُ",
+        pronunciation: "রাব্বানা লা তুযিগ কুলূবানা বা'দা ইয হাদাইতানা ওয়াহাব লানা মিন লাদুনকা রাহমাতান, ইন্নাকা আনতাল ওয়াহ্হাব।",
+        bangla: "হে আমাদের রব! তুমি আমাদের হেদায়েত দানের পর আমাদের অন্তর বিকৃত করো না এবং তুমি আমাদের তোমার কাছ থেকে রহমত দান করো। নিশ্চয়ই তুমিই সর্বদাতা।",
+        reference: "সূরা আলে ইমরান: ৮",
+        benefits: [
+          "হেদায়েতের উপর স্থিরতা লাভ",
+          "অন্তরের বিকৃতি থেকে রক্ষা",
+          "আল্লাহর বিশেষ রহমত লাভ",
+          "ঈমানের মজবুতি অর্জন"
+        ]
+      },
+      {
+        id: 12,
+        title: "রাব্বানা আতিনা ফিদ্দুনিয়া হাসানাহ",
+        category: "general",
+        categoryLabel: "সাধারণ",
+        arabic: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+        pronunciation: "রাব্বানা আতিনা ফিদ্দুনিয়া হাসানাতাও ওয়া ফিল আখিরাতি হাসানাতাও ওয়া কিনা আযাবান নার।",
+        bangla: "হে আমাদের রব! আমাদের দুনিয়ায় কল্যাণ দাও এবং আখিরাতেও কল্যাণ দাও এবং আগুনের শাস্তি থেকে আমাদের রক্ষা করো।",
+        reference: "সহীহ বুখারী ৬৩৮৯, সূরা বাকারাহ: ২০১",
+        benefits: [
+          "দুনিয়া ও আখিরাত উভয়ে কল্যাণ লাভ",
+          "জাহান্নামের আযাব থেকে মুক্তি",
+          "সর্বাঙ্গীণ সাফল্যের মাধ্যম",
+          "প্রতিটি নামাজে ক্বুনূতে পড়ার সুন্নত"
+        ]
+      }
+    ];
+
+    // ===== RENDER DUAS =====
+    const duaGrid = document.getElementById('dua-grid');
+    const noResult = document.getElementById('no-result');
+    const searchInput = document.getElementById('search-input');
+    const clearSearch = document.getElementById('clear-search');
+    const duaCountEl = document.getElementById('dua-count');
+
+    function getCategoryClass(cat) {
+      const map = {
+        morning: 'cat-morning',
+        evening: 'cat-evening',
+        eating: 'cat-eating',
+        sleep: 'cat-sleep',
+        travel: 'cat-travel',
+        prayer: 'cat-prayer',
+        distress: 'cat-distress',
+        general: 'cat-general'
+      };
+      return map[cat] || 'cat-general';
+    }
+
+    function renderDuas(filteredDuas) {
+      duaGrid.innerHTML = '';
+      
+      if (filteredDuas.length === 0) {
+        noResult.classList.add('visible');
+        duaCountEl.textContent = '০টি দোয়া';
+        return;
+      }
+      
+      noResult.classList.remove('visible');
+      duaCountEl.textContent = `${toBanglaNumber(filteredDuas.length)}টি দোয়া`;
+
+      filteredDuas.forEach((dua, index) => {
+        const card = document.createElement('div');
+        card.className = `dua-card rounded-2xl border overflow-hidden fade-in-up ${getCategoryClass(dua.category)}`;
+        card.style.cssText = `background-color: var(--card-bg, rgba(255,255,255,0.03)); border-color: var(--card-border, rgba(255,255,255,0.08)); animation-delay: ${index * 0.05}s; opacity: 0;`;
+        card.dataset.category = dua.category;
+
+        card.innerHTML = `
+          <!-- Header -->
+          <div class="flex items-center justify-between px-6 pt-5 pb-3">
+            <div class="flex items-center gap-3">
+              <span class="flex items-center justify-center w-8 h-8 rounded-full text-xs font-bold" style="background-color: color-mix(in srgb, var(--cat-color) 15%, transparent); color: var(--cat-color);">
+                ${toBanglaNumber(dua.id)}
+              </span>
+              <h3 class="font-semibold text-sm tracking-tight">${dua.title}</h3>
+            </div>
+            <span class="category-badge px-2.5 py-1 rounded-full text-[10px] font-medium uppercase tracking-widest">${dua.categoryLabel}</span>
+          </div>
+
+          <!-- Arabic Section -->
+          <div class="arabic-glow px-6 py-6 mx-4 rounded-xl mb-2" style="background-color: var(--input-bg, rgba(255,255,255,0.03));">
+            <p class="arabic-text text-2xl md:text-3xl text-center font-bold leading-loose">${dua.arabic}</p>
+          </div>
+
+          <!-- Pronunciation -->
+          <div class="px-6 py-3">
+            <div class="flex items-start gap-2">
+              <span class="iconify flex-shrink-0 mt-0.5" data-icon="lucide:volume-2" data-width="14" style="color: var(--muted-color, #a3a3a3);"></span>
+              <p class="text-xs leading-relaxed" style="color: var(--muted-color, #a3a3a3);">${dua.pronunciation}</p>
+            </div>
+          </div>
+
+          <!-- Divider -->
+          <div class="mx-6 border-t" style="border-color: var(--border-color, rgba(255,255,255,0.06));"></div>
+
+          <!-- Bangla Meaning -->
+          <div class="px-6 py-4">
+            <div class="flex items-start gap-2">
+              <span class="iconify flex-shrink-0 mt-0.5 text-accent" data-icon="lucide:languages" data-width="14"></span>
+              <p class="text-sm leading-relaxed font-light">${dua.bangla}</p>
+            </div>
+          </div>
+
+          <!-- Reference -->
+          <div class="px-6 pb-3">
+            <div class="flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-medium" style="color: var(--muted-color, #a3a3a3); opacity: 0.7;">
+              <span class="iconify" data-icon="lucide:book-marked" data-width="11"></span>
+              ${dua.reference}
+            </div>
+          </div>
+
+          <!-- Benefits Toggle -->
+          <div class="border-t px-6" style="border-color: var(--border-color, rgba(255,255,255,0.06));">
+            <button class="benefit-toggle w-full flex items-center justify-between py-4 group" data-dua-id="${dua.id}">
+              <div class="flex items-center gap-2">
+                <span class="iconify text-accent" data-icon="lucide:star" data-width="14"></span>
+                <span class="text-xs font-medium">ফজিলত ও উপকারিতা</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-medium px-2 py-0.5 rounded-full" style="background-color: color-mix(in srgb, var(--cat-color) 12%, transparent); color: var(--cat-color);">${toBanglaNumber(dua.benefits.length)}</span>
+                <span class="iconify transition-transform duration-300 benefit-arrow" data-icon="lucide:chevron-down" data-width="14" style="color: var(--muted-color, #a3a3a3);"></span>
+              </div>
+            </button>
+            <div class="benefit-content" id="benefits-${dua.id}">
+              <div class="pb-5 space-y-2">
+                ${dua.benefits.map(b => `
+                  <div class="benefit-tag flex items-start gap-2.5 px-3 py-2.5 rounded-xl border" style="border-color: var(--border-color, rgba(255,255,255,0.06)); background-color: var(--input-bg, rgba(255,255,255,0.02));">
+                    <span class="iconify flex-shrink-0 mt-0.5 text-green-500" data-icon="lucide:check-circle-2" data-width="13"></span>
+                    <span class="text-xs leading-relaxed font-light">${b}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="border-t px-6 py-3 flex items-center justify-between" style="border-color: var(--border-color, rgba(255,255,255,0.06));">
+            <button class="copy-btn flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest hover:text-accent transition-colors" style="color: var(--muted-color, #a3a3a3);" data-arabic="${encodeURIComponent(dua.arabic)}" data-title="${dua.title}">
+              <span class="iconify" data-icon="lucide:copy" data-width="12"></span>
+              কপি আরবি
+            </button>
+            <button class="copy-btn flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-widest hover:text-accent transition-colors" style="color: var(--muted-color, #a3a3a3);" data-arabic="${encodeURIComponent(dua.arabic + '\n\n' + dua.pronunciation + '\n\n' + dua.bangla + '\n\n' + dua.reference)}" data-title="${dua.title}">
+              <span class="iconify" data-icon="lucide:clipboard-list" data-width="12"></span>
+              কপি সব
+            </button>
+          </div>
+        `;
+
+        duaGrid.appendChild(card);
+      });
+
+      // Attach event listeners
+      attachCardListeners();
+    }
+
+    function attachCardListeners() {
+      // Benefit toggles
+      document.querySelectorAll('.benefit-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.dataset.duaId;
+          const content = document.getElementById(`benefits-${id}`);
+          const arrow = btn.querySelector('.benefit-arrow');
+          content.classList.toggle('expanded');
+          arrow.style.transform = content.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+      });
+
+      // Copy buttons
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const text = decodeURIComponent(btn.dataset.arabic);
+          navigator.clipboard.writeText(text).then(() => {
+            showToast('কপি করা হয়েছে!');
+          }).catch(() => {
+            // Fallback
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            showToast('কপি করা হয়েছে!');
+          });
+        });
+      });
+    }
+
+    // ===== TOAST =====
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    // ===== SEARCH =====
+    let searchTimeout;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimeout);
+      const query = searchInput.value.trim().toLowerCase();
+      clearSearch.classList.toggle('hidden', !query);
+
+      searchTimeout = setTimeout(() => {
+        if (!query) {
+          renderDuas(getFilteredDuas('all'));
+          return;
+        }
+        const filtered = duas.filter(d => 
+          d.title.toLowerCase().includes(query) ||
+          d.arabic.includes(query) ||
+          d.pronunciation.toLowerCase().includes(query) ||
+          d.bangla.toLowerCase().includes(query) ||
+          d.categoryLabel.includes(query)
+        );
+        renderDuas(filtered);
+      }, 200);
+    });
+
+    clearSearch.addEventListener('click', () => {
+      searchInput.value = '';
+      clearSearch.classList.add('hidden');
+      const activeFilter = document.querySelector('.filter-btn.active');
+      renderDuas(getFilteredDuas(activeFilter?.dataset.filter || 'all'));
+    });
+
+    // ===== FILTERS =====
+    function getFilteredDuas(category) {
+      if (category === 'all') return duas;
+      return duas.filter(d => d.category === category);
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        searchInput.value = '';
+        clearSearch.classList.add('hidden');
+        renderDuas(getFilteredDuas(filter));
+      });
+    });
+
+    // ===== THEME TOGGLE =====
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      const isDark = document.documentElement.classList.contains('dark');
+      themeToggle.querySelector('.dark-icon').classList.toggle('hidden', !isDark);
+      themeToggle.querySelector('.light-icon').classList.toggle('hidden', isDark);
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+
+    // Load saved theme
+    if (localStorage.getItem('theme') === 'light') {
+      document.documentElement.classList.remove('dark');
+      themeToggle.querySelector('.dark-icon').classList.add('hidden');
+      themeToggle.querySelector('.light-icon').classList.remove('hidden');
+    }
+
+    // ===== READING PROGRESS =====
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('reading-progress').style.width = progress + '%';
+    });
+
+    // ===== MOBILE SEARCH =====
+    document.getElementById('mobile-search-btn').addEventListener('click', () => {
+      searchInput.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== HELPER: Bangla Numbers =====
+    function toBanglaNumber(num) {
+      const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+      return String(num).replace(/[0-9]/g, d => banglaDigits[d]);
+    }
+
+    // ===== INIT =====
+    renderDuas(duas);
+  </script>
+</body>
+</html>
+

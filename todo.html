@@ -75,6 +75,7 @@
     color: var(--accent);
     border-bottom: 1px solid var(--border);
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 8px;
   }
@@ -570,6 +571,53 @@
     font-family: 'Space Mono', monospace;
     text-align: center;
   }
+  .logo {
+    display: flex;
+    gap: 10px;
+}
+
+/* shared style */
+.pdf-icon {
+    padding: 6px 14px;
+    font-size: 14px;
+    color: #fff;
+    background: rgba(255,255,255,0.05);       /* soft glass */
+    border: 1px solid rgba(255,255,255,0.1);  /* subtle border */
+    border-radius: 8px;                       /* soft round */
+    backdrop-filter: blur(6px);               /* glass effect */
+    cursor: pointer;
+    transition: 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.5px;
+}
+
+/* hover glow */
+.pdf-icon:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px);
+}
+
+/* active/pressed */
+.pdf-icon:active {
+    transform: scale(0.96);
+    opacity: 0.85;
+}.pdf-icon.low {
+    box-shadow: 0 0 8px #22c55e55;
+    border-color: #22c55e55;
+}
+
+.pdf-icon.med {
+    box-shadow: 0 0 8px #eab30855;
+    border-color: #eab30855;
+}
+
+.pdf-icon.rose {
+    box-shadow: 0 0 8px #f43f5e55;
+    border-color: #f43f5e55;
+}
 </style>
 </head>
 <body>
@@ -577,9 +625,39 @@
 <!-- ─── SIDEBAR ─────────────────────── -->
 <aside id="sidebar">
   <div class="logo">
-    <div class="logo-dot"></div>
-    TASKFLOW
-  </div>
+    <a href="../Learn-Arabic-words/quran-words.html" target="_blank">
+        <span class="pdf-icon low">125</span>
+    </a>
+
+    <a href="../Learn-Arabic-words/arabic vocabulary.html" target="_blank">
+        <span class="pdf-icon rose">vocabulary</span>
+    </a>
+    <a href="../Daily-Dhikr-main/broken-heart-duas.html" target="_blank">
+        <span class="pdf-icon low">Broken Heart</span>
+    </a>
+    <a href="../Daily-Dhikr-main/dua forgivness.pdf" target="_blank">
+        <span class="pdf-icon med">Forgivness</span>
+    </a>
+    <a href="../Others/Dua/Daily duas.html" target="_blank">
+        <span class="pdf-icon med">Daily</span>
+    </a>
+    <a href="../Daily-Dhikr-main/The Divine Call.html" target="_blank">
+        <span class="pdf-icon low">Divine Call</span>
+    </a>
+    <a href="../Others/নবীদের দু'আ থেকে শিক্ষা.html" target="_blank">
+        <span class="pdf-icon low">দু'আ থেকে শিক্ষা</span>
+    </a>
+    <a href="../Others/কুরআনিক দু'আ.html" target="_blank">
+        <span class="pdf-icon low">কুরআনিক দু'আ</span>
+    </a>
+    <a href="../Others/Dua/Dua from Hearts.html" target="_blank">
+        <span class="pdf-icon rose">
+          From Heart
+        </span>
+    </a>
+
+    
+</div>
 
   <!-- ADD TASK -->
   <div class="section-label">➕ New Task</div>
