@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دعاء الانكسار — Du'a of the Broken Heart</title>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #ffffff;
+  --bg-soft: #faf8f5;
+  --bg-warm: #f5f0e8;
+  --ink: #1c1612;
+  --ink-mid: #4a3f30;
+  --ink-soft: #8a7a65;
+  --ink-faint: #c4b89e;
+  --gold: #c9973d;
+  --gold-deep: #a07828;
+  --gold-pale: #f0e6cc;
+  --gold-line: #e8d9b8;
+  --rust: #8b4513;
+  --teal: #2d6b6b;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── PAGE FADE IN ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 1; }
+}
+@keyframes drawLine {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  position: relative;
+  background: var(--bg);
+  border-bottom: 1px solid var(--gold-line);
+}
+
+.hero-ornament {
+  font-family: 'Scheherazade New', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  letter-spacing: 0.5em;
+  margin-bottom: 2.5rem;
+  animation: shimmer 3s ease-in-out infinite;
+  opacity: 0;
+  animation: fadeIn 1s ease 0.2s forwards, shimmer 4s ease-in-out 1.2s infinite;
+}
+
+.hero-arabic {
+  font-family: 'Scheherazade New', serif;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.8;
+  direction: rtl;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.4s forwards;
+  letter-spacing: 0.04em;
+}
+
+.hero-arabic .highlight {
+  color: var(--gold-deep);
+}
+
+.hero-line {
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 1.8rem auto;
+  animation: drawLine 1.2s ease 1s forwards;
+  transform-origin: center;
+  max-width: 280px;
+  width: 280px;
+}
+
+.hero-trans {
+  font-style: italic;
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--ink-soft);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.6rem;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.8s forwards;
+}
+
+.hero-meaning {
+  font-size: clamp(1rem, 2.2vw, 1.3rem);
+  font-weight: 600;
+  color: var(--ink-mid);
+  opacity: 0;
+  animation: fadeUp 1s ease 1s forwards;
+  margin-bottom: 2rem;
+}
+
+.hero-desc {
+  max-width: 500px;
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  opacity: 0;
+  animation: fadeUp 1s ease 1.2s forwards;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  opacity: 0;
+  animation: fadeIn 1s ease 2s forwards;
+}
+.scroll-hint::after {
+  content: '';
+  display: block;
+  width: 1px;
+  height: 32px;
+  background: var(--gold-line);
+  margin: 0.6rem auto 0;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* ── SECTION LABEL ── */
+.section-label {
+  text-align: center;
+  padding: 4rem 2rem 2rem;
+}
+.section-label .number {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.4rem;
+}
+.section-label .title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+}
+
+/* ── DUA CARDS ── */
+.duas-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 6rem;
+}
+
+.dua-card {
+  margin-bottom: 3.5rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid var(--gold-line);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.dua-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.dua-card:last-child {
+  border-bottom: none;
+}
+
+/* Number badge */
+.dua-number {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-bottom: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.dua-number::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--gold-line);
+}
+
+/* Arabic */
+.dua-arabic {
+  font-family: 'Scheherazade New', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  line-height: 2.1;
+  direction: rtl;
+  text-align: right;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+  padding: 1.4rem 1.8rem;
+  background: var(--bg-soft);
+  border-right: 3px solid var(--gold);
+  border-radius: 0 2px 2px 0;
+}
+
+/* Transliteration */
+.dua-trans {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.03em;
+  padding-left: 0.2rem;
+}
+
+/* Translation */
+.dua-meaning {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink-mid);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  padding-left: 0.2rem;
+}
+
+/* Source */
+.dua-source {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--gold-deep);
+  border: 1px solid var(--gold-line);
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1rem;
+  border-radius: 1px;
+}
+
+/* Insight */
+.dua-insight {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.85;
+  padding: 1rem 1.3rem;
+  border-left: 2px solid var(--gold-pale);
+  background: var(--bg-warm);
+  border-radius: 0 2px 2px 0;
+  position: relative;
+}
+.dua-insight::before {
+  content: '❝';
+  font-family: Georgia, serif;
+  font-size: 2rem;
+  color: var(--gold-line);
+  position: absolute;
+  top: -0.3rem;
+  left: 0.8rem;
+  line-height: 1;
+}
+
+/* ── HEART TABLE ── */
+.heart-table-section {
+  background: var(--bg-soft);
+  border-top: 1px solid var(--gold-line);
+  border-bottom: 1px solid var(--gold-line);
+  padding: 4rem 1.5rem;
+  margin: 2rem 0 4rem;
+}
+
+.heart-table-section h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.heart-table {
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.heart-table th {
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.4rem;
+  background: var(--ink);
+  color: var(--bg);
+  text-align: left;
+}
+.heart-table th:last-child { text-align: right; direction: rtl; }
+
+.heart-table td {
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--gold-line);
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+.heart-table tr:last-child td { border-bottom: none; }
+.heart-table tr:hover td { background: var(--gold-pale); transition: background 0.2s; }
+
+.feel { color: var(--ink-mid); font-style: italic; }
+
+.arabic-short {
+  font-family: 'Scheherazade New', serif;
+  font-size: 1.2rem;
+  direction: rtl;
+  text-align: right;
+  color: var(--gold-deep);
+  line-height: 1.8;
+}
+
+/* ── CLOSING ── */
+.closing {
+  text-align: center;
+  padding: 5rem 2rem 6rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.closing-arabic {
+  font-family: 'Scheherazade New', serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  direction: rtl;
+  line-height: 2;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+}
+
+.closing-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 1.5rem auto;
+}
+
+.closing-wisdom {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  line-height: 2;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--gold-line);
+  padding: 2rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  font-style: italic;
+}
+footer span { color: var(--gold); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .dua-arabic { padding: 1rem 1.2rem; font-size: 1.5rem; }
+  .dua-card { margin-bottom: 2.5rem; padding-bottom: 2.5rem; }
+  .heart-table td, .heart-table th { padding: 0.7rem 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-ornament">✦ ✦ ✦</div>
+  <div class="hero-arabic">
+    لَا مَلْجَأَ وَلَا مَنْجَا <span class="highlight">مِنْكَ إِلَّا إِلَيْكَ</span>
+  </div>
+  <div class="hero-line"></div>
+  <div class="hero-trans">La malja'a wa la manja minka illa ilayk</div>
+  <div class="hero-meaning">"There is no refuge and no escape from You — except to You"</div>
+  <p class="hero-desc">
+    These are the du'as of the broken heart — <em>دعاء الانكسار</em> —
+    the most beloved supplications to Allah, spoken by those who have nowhere left to go
+  </p>
+  <div class="scroll-hint">read</div>
+</section>
+
+<!-- ══ DU'AS ══ -->
+<div class="duas-container">
+
+  <!-- 1 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A ONE — THE BEGINNING</div>
+    <div class="dua-arabic">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</div>
+    <div class="dua-trans">La hawla wa la quwwata illa billah</div>
+    <div class="dua-meaning">"There is no power and no strength — except through Allah"</div>
+    <div class="dua-source">Bukhari & Muslim</div>
+    <div class="dua-insight">I cannot move. I cannot breathe. I cannot exist — without Him. Every muscle, every heartbeat is His gift. The Prophet ﷺ called this a treasure from the treasures of Paradise.</div>
+  </div>
+
+  <!-- 2 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A TWO — FROM THE DARKEST PLACE</div>
+    <div class="dua-arabic">لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</div>
+    <div class="dua-trans">La ilaha illa anta subhanaka inni kuntu minaz-zalimin</div>
+    <div class="dua-meaning">"There is no god but You — Glory be to You — Indeed I have wronged myself"</div>
+    <div class="dua-source">Quran 21:87 — Du'a of Prophet Yunus</div>
+    <div class="dua-insight">Said from inside the whale — in complete darkness — with no escape. Three layers: Tawheed, glorification, admission of guilt. Allah answered immediately. The most powerful du'a of total admission ever recorded.</div>
+  </div>
+
+  <!-- 3 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A THREE — THE CRY OF NEED</div>
+    <div class="dua-arabic">رَبِّ إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ</div>
+    <div class="dua-trans">Rabbi inni lima anzalta ilayya min khayrin faqir</div>
+    <div class="dua-meaning">"My Lord — I am in absolute need of whatever good You send down to me"</div>
+    <div class="dua-source">Quran 28:24 — Du'a of Prophet Musa</div>
+    <div class="dua-insight">Prophet Musa said this alone, hungry, exhausted, with nothing. He did not specify what he wanted. He simply said — I need You. Just three words of need — and Allah changed his entire life that same day.</div>
+  </div>
+
+  <!-- 4 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A FOUR — THE WHISPER OF PAIN</div>
+    <div class="dua-arabic">رَبِّ إِنِّي مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ</div>
+    <div class="dua-trans">Rabbi inni massaniyad-durru wa anta arhamur-rahimin</div>
+    <div class="dua-meaning">"My Lord — suffering has touched me — and You are the Most Merciful of all"</div>
+    <div class="dua-source">Quran 21:83 — Du'a of Prophet Ayyub</div>
+    <div class="dua-insight">After years of illness and total loss. He did not demand. He did not complain. He simply said — I am hurting — and You are Merciful. No demands. No conditions. Just truth placed before Allah. That was enough.</div>
+  </div>
+
+  <!-- 5 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A FIVE — THE MOST ASTONISHING</div>
+    <div class="dua-arabic">أَعُوذُ بِرِضَاكَ مِنْ سَخَطِكَ، وَبِمُعَافَاتِكَ مِنْ عُقُوبَتِكَ، وَأَعُوذُ بِكَ مِنْكَ</div>
+    <div class="dua-trans">A'udhu biridaka min sakhatik, wa bimu'afatika min 'uqubatik, wa a'udhu bika mink</div>
+    <div class="dua-meaning">"I seek refuge in Your pleasure from Your anger — in Your pardon from Your punishment — and I seek refuge in You — from You"</div>
+    <div class="dua-source">Muslim — Du'a of Prophet ﷺ in Sujood</div>
+    <div class="dua-insight">The most astonishing sentence in Arabic literature — أَعُوذُ بِكَ مِنْكَ — seeking refuge in Allah's mercy from Allah's justice. Only Allah can be both the thing you fear — and the only shelter from that fear.</div>
+  </div>
+
+  <!-- 6 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A SIX — WHEN EVERYTHING IS GONE</div>
+    <div class="dua-arabic">حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ</div>
+    <div class="dua-trans">Hasbiyallahu la ilaha illa huwa 'alayhi tawakkaltu wa huwa rabbul 'arshil 'azim</div>
+    <div class="dua-meaning">"Allah is enough for me — there is no god but Him — upon Him I rely — He is the Lord of the Mighty Throne"</div>
+    <div class="dua-source">Quran 9:129</div>
+    <div class="dua-insight">When everything is gone — wealth, health, people, hope — say this. It means: I have lost everything — but I still have Allah — and Allah is everything. The Prophet ﷺ said whoever says this seven times morning and evening, Allah will take care of all his concerns.</div>
+  </div>
+
+  <!-- 7 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A SEVEN — THE SOUL RETURNING HOME</div>
+    <div class="dua-arabic">إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ</div>
+    <div class="dua-trans">Inna lillahi wa inna ilayhi raji'un</div>
+    <div class="dua-meaning">"Indeed we belong to Allah — and indeed to Him we shall return"</div>
+    <div class="dua-source">Quran 2:156</div>
+    <div class="dua-insight">Not just for death. For every loss. Every door that closes. Every heartbreak. It means — I came from Him. Everything I love came from Him. It all returns to Him. I am at peace. This is surrender in its most beautiful form.</div>
+  </div>
+
+  <!-- 8 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A EIGHT — THE MASTER OF FORGIVENESS</div>
+    <div class="dua-arabic">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ بِذَنْبِي فَاغْفِرْ لِي</div>
+    <div class="dua-trans">Allahumma anta rabbi la ilaha illa anta, khalaqtani wa ana 'abduk, abu'u laka bini'matika 'alayya wa abu'u bidhanbī faghfir li</div>
+    <div class="dua-meaning">"O Allah You are my Lord — no god but You — You created me and I am Your slave — I acknowledge Your blessings upon me — and I acknowledge my sin — so forgive me"</div>
+    <div class="dua-source">Bukhari — Sayyidul Istighfar</div>
+    <div class="dua-insight">The complete confession. No hiding. No excuses. Just — here I am. All of me. Sinful and Yours. The Prophet ﷺ said whoever says this with conviction in the morning and dies that day enters Paradise.</div>
+  </div>
+
+  <!-- 9 -->
+  <div class="dua-card">
+    <div class="dua-number">DU'A NINE — THE FINAL SURRENDER</div>
+    <div class="dua-arabic">أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَأَلْجَأْتُ ظَهْرِي إِلَيْكَ، رَغْبَةً وَرَهْبَةً إِلَيْكَ، لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ</div>
+    <div class="dua-trans">Aslamtu nafsi ilayk, wa fawwadtu amri ilayk, wa alja'tu zahri ilayk, raghbatan wa rahbatan ilayk, la malja'a wa la manja minka illa ilayk</div>
+    <div class="dua-meaning">"I have submitted my soul to You — I have entrusted my affairs to You — I have leaned my back against You — in hope and in fear — there is no refuge and no escape from You — except to You"</div>
+    <div class="dua-source">Bukhari — Du'a before sleep, Prophet ﷺ</div>
+    <div class="dua-insight">Every word is a layer of surrender. My soul — submitted. My affairs — entrusted. My back — leaning on You. My hope — in You. My fear — of You. And then it ends where it always ends — nowhere to go. Except You.</div>
+  </div>
+
+</div>
+
+<!-- ══ HEART TABLE ══ -->
+<div class="heart-table-section">
+  <h2>What the Heart Feels — What the Du'a Says</h2>
+  <table class="heart-table">
+    <thead>
+      <tr>
+        <th>When the heart feels...</th>
+        <th style="text-align:right; direction:rtl;">The du'a says...</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="feel">I have nowhere to go</td>
+        <td class="arabic-short">لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ</td>
+      </tr>
+      <tr>
+        <td class="feel">I have no strength left</td>
+        <td class="arabic-short">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ</td>
+      </tr>
+      <tr>
+        <td class="feel">I have wronged myself</td>
+        <td class="arabic-short">إِنِّي كُنْتُ مِنَ الظَّالِمِينَ</td>
+      </tr>
+      <tr>
+        <td class="feel">I need everything from You</td>
+        <td class="arabic-short">إِنِّي لِمَا أَنْزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ</td>
+      </tr>
+      <tr>
+        <td class="feel">I am in pain</td>
+        <td class="arabic-short">مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ</td>
+      </tr>
+      <tr>
+        <td class="feel">I am guilty and exposed</td>
+        <td class="arabic-short">أَبُوءُ بِذَنْبِي فَاغْفِرْ لِي</td>
+      </tr>
+      <tr>
+        <td class="feel">I have lost everything</td>
+        <td class="arabic-short">حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ</td>
+      </tr>
+      <tr>
+        <td class="feel">I am completely His</td>
+        <td class="arabic-short">أَسْلَمْتُ نَفْسِي إِلَيْكَ</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══ CLOSING ══ -->
+<div class="closing">
+  <div class="closing-arabic">لَا مَلْجَأَ وَلَا مَنْجَا مِنْكَ إِلَّا إِلَيْكَ</div>
+  <div class="closing-line"></div>
+  <p class="closing-wisdom">
+    "Allah loves the broken heart more than the perfect deed.<br>
+    Because the broken heart knows it needs Him —<br>
+    and that knowing — is the beginning of everything."
+  </p>
+  <br><br>
+  <p style="font-family:'Scheherazade New',serif; font-size:1.4rem; color:var(--gold); direction:rtl; line-height:2;">
+    آمين يا رب العالمين
+  </p>
+</div>
+
+<footer>
+  <span>دعاء الانكسار</span> — The Du'a of the Broken Heart<br><br>
+  May Allah accept every whisper of every broken heart — آمين 🤍
+</footer>
+
+<script>
+// Intersection Observer for scroll animations
+const cards = document.querySelectorAll('.dua-card');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => {
+        entry.target.classList.add('visible');
+      }, 100);
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+cards.forEach(card => observer.observe(card));
+</script>
+</body>
+</html>

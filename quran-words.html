@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>কুরআনের গুরুত্বপূর্ণ ১২৫টি শব্দ</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Bengali:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#f8f4ee',
+            parchment: '#f0e9dc',
+            gold: '#b8860b',
+            'gold-light': '#d4a843',
+            'gold-dark': '#8b6508',
+            ink: '#2c2416',
+            'ink-light': '#5a4a32',
+            'ink-muted': '#8b7355',
+            teal: '#2d6a6a',
+            'teal-light': '#e8f4f4',
+            'border-warm': '#d8c9a8',
+          },
+          fontFamily: {
+            arabic: ['Amiri', 'serif'],
+            bengali: ['Noto Serif Bengali', 'serif'],
+            display: ['Playfair Display', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #f8f4ee;
+      background-image:
+        radial-gradient(ellipse at 20% 10%, rgba(184,134,11,0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(45,106,106,0.05) 0%, transparent 50%);
+    }
+
+    .card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(44, 36, 22, 0.12);
+    }
+
+    .arabic-text {
+      font-family: 'Amiri', serif;
+      direction: rtl;
+      line-height: 1.4;
+    }
+
+    .number-badge {
+      background: linear-gradient(135deg, #b8860b, #d4a843);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-ornament {
+      background: linear-gradient(90deg, transparent, #b8860b, transparent);
+      height: 1px;
+    }
+
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(184,134,11,0.15);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .card {
+      animation: fadeIn 0.4s ease both;
+    }
+
+    .tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body class="min-h-screen font-bengali text-ink mx-16">
+
+  <!-- Header -->
+  <header class="pt-12 pb-8 px-4 text-center">
+    <div class="max-w-4xl mx-auto">
+      <p class="arabic-text text-gold text-3xl mb-3 tracking-wide">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      <div class="header-ornament my-4 max-w-xs mx-auto"></div>
+      <h1 class="font-display text-4xl md:text-5xl font-bold text-ink mb-2 leading-tight">
+        কুরআনের গুরুত্বপূর্ণ
+      </h1>
+      <h2 class="font-display text-3xl md:text-4xl text-gold font-bold mb-4">১২৫টি শব্দ</h2>
+      <p class="text-ink-muted text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+        আরবি · বাংলা · ইংরেজি — তিনটি ভাষায় কুরআনের মূল শব্দভান্ডার
+      </p>
+      <div class="header-ornament my-6 max-w-xs mx-auto"></div>
+
+      <!-- Search -->
+      <div class="relative max-w-md mx-auto mt-6">
+        <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-ink-muted w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="শব্দ খুঁজুন..."
+          class="search-input w-full pl-10 pr-4 py-3 bg-white border border-border-warm rounded-xl text-ink placeholder-ink-muted text-sm shadow-sm"
+          oninput="filterWords()"
+        />
+      </div>
+
+      <!-- Stats -->
+      <div class="flex justify-center gap-6 mt-6">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-gold font-display" id="visibleCount">১২৫</div>
+          <div class="text-xs text-ink-muted tag">মোট শব্দ</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Grid -->
+  <main class="max-w-7xl mx-auto px-4 pb-16">
+    <div id="wordGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    </div>
+    <div id="noResults" class="hidden text-center py-20 text-ink-muted">
+      <p class="text-4xl mb-3">🔍</p>
+      <p class="font-bengali">কোনো শব্দ পাওয়া যায়নি</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 border-t border-border-warm">
+    <p class="text-ink-muted text-sm font-bengali">কুরআনের শব্দ শিক্ষা · Arabic · বাংলা · English</p>
+    <p class="arabic-text text-gold text-xl mt-2">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</p>
+  </footer>
+
+  <script>
+    const words = [
+      {n:1,ar:"الله",bn:"আল্লাহ",en:"Allah"},
+      {n:2,ar:"شَيْطَان",bn:"শয়তান",en:"Satan / Devil"},
+      {n:3,ar:"هُوَ",bn:"সে (পুং)",en:"He"},
+      {n:4,ar:"هُمْ",bn:"তারা",en:"They"},
+      {n:5,ar:"أَنْتَ",bn:"তুমি (পুং)",en:"You (singular)"},
+      {n:6,ar:"أَنْتُمْ",bn:"তোমরা",en:"You all (plural)"},
+      {n:7,ar:"أَنَا",bn:"আমি",en:"I"},
+      {n:8,ar:"نَحْنُ",bn:"আমরা",en:"We"},
+      {n:9,ar:"مَنْ",bn:"কে / যে",en:"Who / The one who"},
+      {n:10,ar:"هَلْ",bn:"কি? (প্রশ্নবোধক)",en:"Is? / Are? / Do?"},
+      {n:11,ar:"خَيْر",bn:"উত্তম / ভালো",en:"Good / Better"},
+      {n:12,ar:"اِسْم",bn:"নাম",en:"Name"},
+      {n:13,ar:"رَحْمٰن",bn:"পরম করুণাময়",en:"Most Gracious"},
+      {n:14,ar:"رَحِيْم",bn:"অতি দয়ালু",en:"Especially Merciful"},
+      {n:15,ar:"كَرِيم",bn:"সম্মানিত / দয়ালু",en:"Noble / Generous"},
+      {n:16,ar:"حَمْد",bn:"প্রশংসা",en:"Praise"},
+      {n:17,ar:"لِلّٰه",bn:"আল্লাহর জন্য",en:"For Allah"},
+      {n:18,ar:"عَالَمِيْن",bn:"বিশ্বজগত",en:"Worlds / Universe"},
+      {n:19,ar:"مُسْلِم",bn:"মুসলিম / আত্মসমর্পণকারী",en:"Muslim / Submitter"},
+      {n:20,ar:"مُؤْمِن",bn:"মুমিন / বিশ্বাসী",en:"Believer"},
+      {n:21,ar:"مُشْرِك",bn:"মুশরিক / অংশীবাদী",en:"Polytheist"},
+      {n:22,ar:"كَافِر",bn:"কাফির / অবিশ্বাসী",en:"Disbeliever"},
+      {n:23,ar:"صَالِح",bn:"সৎ / নেককার",en:"Righteous / Pious"},
+      {n:24,ar:"يَوْم",bn:"দিন",en:"Day"},
+      {n:25,ar:"دِيْن",bn:"দ্বীন / বিচার / জীবনবিধান",en:"Religion / Judgment"},
+      {n:26,ar:"إِيَّاكَ",bn:"শুধুমাত্র তোমারই",en:"You alone"},
+      {n:27,ar:"رَبّ",bn:"পালনকর্তা / প্রভু",en:"Lord / Sustainer"},
+      {n:28,ar:"ما",bn:"যা / না",en:"What / That which / Not"},
+      {n:29,ar:"صِرَاط",bn:"পথ",en:"Path"},
+      {n:30,ar:"مُسْتَقِيم",bn:"সরল / সোজা",en:"Straight"},
+      {n:31,ar:"اَلَّذِيْنَ",bn:"যারা",en:"Those who"},
+      {n:32,ar:"غَيْر",bn:"ব্যতীত / ছাড়া",en:"Other than / Not"},
+      {n:33,ar:"لَا",bn:"না",en:"No / Not"},
+      {n:34,ar:"ضَالِّيْن",bn:"পথভ্রষ্টগণ",en:"Those who go astray"},
+      {n:35,ar:"هِيَ",bn:"সে (স্ত্রী)",en:"She"},
+      {n:36,ar:"كِتَاب",bn:"কিতাব / বই",en:"Book"},
+      {n:37,ar:"أَنْزَلْنَا",bn:"আমরা নাযিল করেছি",en:"We sent down"},
+      {n:38,ar:"آيَة",bn:"নিদর্শন / আয়াত",en:"Sign / Verse"},
+      {n:39,ar:"أَرْض",bn:"পৃথিবী / জমি",en:"Earth / Land"},
+      {n:40,ar:"سَمَاء",bn:"আকাশ",en:"Sky / Heaven"},
+      {n:41,ar:"أُولُو",bn:"অধিকারী / ব্যক্তিরা",en:"Owners of / People of"},
+      {n:42,ar:"لَوْ",bn:"যদি",en:"If"},
+      {n:43,ar:"لِـ",bn:"জন্য",en:"For / To"},
+      {n:44,ar:"مِنْ",bn:"থেকে",en:"From"},
+      {n:45,ar:"عَنْ",bn:"থেকে / সম্পর্কে",en:"From / About"},
+      {n:46,ar:"لَقَدْ، قَدْ",bn:"অবশ্যই",en:"Certainly / Already"},
+      {n:47,ar:"قُرْآن",bn:"কুরআন",en:"Quran / Recitation"},
+      {n:48,ar:"إِنَّ",bn:"নিশ্চয়ই",en:"Indeed / Verily"},
+      {n:49,ar:"شَاءَ",bn:"চাইলেন",en:"Willed"},
+      {n:50,ar:"إِنْ",bn:"যদি",en:"If"},
+      {n:51,ar:"إِنَّمَا",bn:"কেবল / শুধুমাত্র",en:"Only"},
+      {n:52,ar:"أَعْمَال",bn:"আমলসমূহ / কাজ",en:"Deeds / Actions"},
+      {n:53,ar:"بِـ",bn:"দ্বারা / সাথে",en:"With / In / By"},
+      {n:54,ar:"فِيْ",bn:"মধ্যে",en:"In"},
+      {n:55,ar:"سَبِيْل",bn:"পথ",en:"Way / Path"},
+      {n:56,ar:"عَلَىٰ",bn:"উপরে",en:"On / Upon"},
+      {n:57,ar:"اَلَّذِي",bn:"যে / যিনি (একবচন)",en:"The one who"},
+      {n:58,ar:"أَيُّكُمْ",bn:"তোমাদের মধ্যে কে?",en:"Which of you?"},
+      {n:59,ar:"أَحْسَن",bn:"অধিক উত্তম",en:"Better / Best"},
+      {n:60,ar:"إِلَىٰ",bn:"দিকে / পর্যন্ত",en:"To / Towards"},
+      {n:61,ar:"مَعَ",bn:"সাথে",en:"With"},
+      {n:62,ar:"عِنْدَ",bn:"কাছে / নিকট",en:"With / Near / At"},
+      {n:63,ar:"إِنْسَان",bn:"মানুষ",en:"Human / Man"},
+      {n:64,ar:"إِلَّا",bn:"ব্যতীত / ছাড়া",en:"Except"},
+      {n:65,ar:"اٰمَنُوْا",bn:"তারা ঈমান এনেছে",en:"They believed"},
+      {n:66,ar:"حَقّ",bn:"সত্য / অধিকার",en:"Truth / Right"},
+      {n:67,ar:"أَوْ",bn:"অথবা",en:"Or"},
+      {n:68,ar:"هٰذَا",bn:"এই / এটি (পুং)",en:"This"},
+      {n:69,ar:"هٰذِهِ",bn:"এই / এটি (স্ত্রী)",en:"This (fem.)"},
+      {n:70,ar:"ذٰلِكَ",bn:"ওই / সেটি",en:"That"},
+      {n:71,ar:"تِلْكَ",bn:"ওই / সেটি (স্ত্রী)",en:"That (fem.)"},
+      {n:72,ar:"هٰؤُلَاءِ",bn:"এরা",en:"These"},
+      {n:73,ar:"أُولٰئِكَ",bn:"ওরা / তারা",en:"Those"},
+      {n:74,ar:"إِذْ",bn:"যখন (অতীত)",en:"When (past)"},
+      {n:75,ar:"إِذَا",bn:"যখন (ভবিষ্যৎ)",en:"When (future)"},
+      {n:76,ar:"جَاءَ",bn:"আসলো",en:"Came"},
+      {n:77,ar:"نَاس",bn:"মানুষ / লোকসকল",en:"People / Mankind"},
+      {n:78,ar:"فَعَلَ",bn:"সে করলো",en:"He did"},
+      {n:79,ar:"جَعَلَ",bn:"সে বানালো / করলো",en:"He made / placed"},
+      {n:80,ar:"فَتَحَ",bn:"সে জয় করলো / খুললো",en:"He opened / He victory"},
+      {n:81,ar:"قُلْ",bn:"বলো",en:"Say"},
+      {n:82,ar:"أَحَد",bn:"এক / একক",en:"One / Unique"},
+      {n:83,ar:"لَمْ",bn:"না (অতীত)",en:"Did not"},
+      {n:84,ar:"لَنْ",bn:"কখনোই না",en:"Never"},
+      {n:85,ar:"نَصَرَ",bn:"সে সাহায্য করলো",en:"He helped"},
+      {n:86,ar:"خَلَقَ",bn:"সে সৃষ্টি করলো",en:"He created"},
+      {n:87,ar:"ذَكَرَ",bn:"সে স্মরণ করলো",en:"He remembered"},
+      {n:88,ar:"عَبَدَ",bn:"সে ইবাদত করলো",en:"He worshipped"},
+      {n:89,ar:"شَيْء",bn:"জিনিস / বস্তু",en:"Thing"},
+      {n:90,ar:"ضَرَبَ",bn:"সে উদাহরণ দিলো / আঘাত করলো",en:"He struck / He set forth"},
+      {n:91,ar:"سَمِعَ",bn:"সে শুনলো",en:"He heard"},
+      {n:92,ar:"عَلِمَ",bn:"সে জানলো",en:"He knew"},
+      {n:93,ar:"عَمِلَ",bn:"সে কাজ করলো",en:"He worked / acted"},
+      {n:94,ar:"حَدِيث",bn:"কথা / বাণী / হাদীস",en:"Speech / Narrative"},
+      {n:95,ar:"إِلٰه",bn:"ইলাহ / উপাস্য",en:"God / Deity"},
+      {n:96,ar:"صَدْر",bn:"বুক / হৃদয়",en:"Chest / Breast"},
+      {n:97,ar:"مَلَك",bn:"ফেরেশতা",en:"Angel"},
+      {n:98,ar:"جَنَّة",bn:"জান্নাত / বাগান",en:"Paradise / Garden"},
+      {n:99,ar:"يَا",bn:"হে (আহ্বান)",en:"O... (Vocative)"},
+      {n:100,ar:"قَوْم",bn:"কওম / জাতি",en:"People / Community"},
+      {n:101,ar:"أَيُّهَا",bn:"হে",en:"O you..."},
+      {n:102,ar:"أَنْ",bn:"যে",en:"That"},
+      {n:103,ar:"أَنَّ",bn:"যে (নিশ্চয়ই)",en:"That (indeed)"},
+      {n:104,ar:"مُحَمَّد",bn:"মুহাম্মদ (সাঃ)",en:"Muhammad"},
+      {n:105,ar:"رَسُول",bn:"রাসূল / বার্তাবাহক",en:"Messenger"},
+      {n:106,ar:"صَلَاة",bn:"সালাত / নামায",en:"Prayer"},
+      {n:107,ar:"شَرِيك",bn:"অংশীদার",en:"Partner / Associate"},
+      {n:108,ar:"مَاذَا",bn:"কি?",en:"What?"},
+      {n:109,ar:"سُبْحَانَ",bn:"পবিত্রতা",en:"Glory be to..."},
+      {n:110,ar:"عَظِيم",bn:"মহান",en:"Great / Magnificent"},
+      {n:111,ar:"طَيِّبَات",bn:"পবিত্র বস্তুসমূহ",en:"Good things"},
+      {n:112,ar:"سَلَام",bn:"শান্তি",en:"Peace"},
+      {n:113,ar:"نَبِيّ",bn:"নবী",en:"Prophet"},
+      {n:114,ar:"رَحْمَة",bn:"দয়া / করুণা",en:"Mercy"},
+      {n:115,ar:"عَبْد",bn:"বান্দা / দাস",en:"Slave / Servant"},
+      {n:116,ar:"سَوْفَ",bn:"শীঘ্রই",en:"Soon"},
+      {n:117,ar:"إِبْرَاهِيم",bn:"ইব্রাহিম (আঃ)",en:"Abraham"},
+      {n:118,ar:"نَفْس",bn:"আত্মা / জীবন / নিজে",en:"Soul / Self"},
+      {n:119,ar:"كَثِير",bn:"অনেক / প্রচুর",en:"Many / Much"},
+      {n:120,ar:"ذَنْب",bn:"গুনাহ / পাপ",en:"Sin"},
+      {n:121,ar:"غَفُور",bn:"অত্যন্ত ক্ষমাশীল",en:"All-Forgiving"},
+      {n:122,ar:"دُنْيَا",bn:"দুনিয়া / ইহকাল",en:"World / Lower life"},
+      {n:123,ar:"اٰخِرَة",bn:"আখেরাত / পরকাল",en:"Hereafter"},
+      {n:124,ar:"عَذَاب",bn:"শাস্তি",en:"Punishment"},
+      {n:125,ar:"نَار",bn:"আগুন / জাহান্নাম",en:"Fire"},
+    ];
+
+    function toBengaliNum(n) {
+      const digits = ['০','১','২','৩','৪','৫','৬','৭','৮','৯'];
+      return String(n).split('').map(d => digits[parseInt(d)] ?? d).join('');
+    }
+
+    function renderCards(data) {
+      const grid = document.getElementById('wordGrid');
+      const noResults = document.getElementById('noResults');
+      const visibleCount = document.getElementById('visibleCount');
+
+      grid.innerHTML = '';
+      if (data.length === 0) {
+        noResults.classList.remove('hidden');
+        visibleCount.textContent = '০';
+        return;
+      }
+      noResults.classList.add('hidden');
+      visibleCount.textContent = toBengaliNum(data.length);
+
+      data.forEach((w, i) => {
+        const card = document.createElement('div');
+        card.className = 'card bg-white border border-border-warm rounded-2xl overflow-hidden shadow-sm cursor-default';
+        card.style.animationDelay = `${Math.min(i * 0.03, 0.6)}s`;
+        card.innerHTML = `
+          <div class="bg-parchment px-4 pt-4 pb-3 border-b border-border-warm flex items-start justify-between gap-2">
+            <span class="number-badge font-display font-bold text-xl leading-none">${toBengaliNum(w.n)}</span>
+            <span class="arabic-text text-4xl text-ink leading-tight text-right flex-1">${w.ar}</span>
+          </div>
+          <div class="flex justify-between px-4 pt-3 pb-4 space-y-2">
+            <div class="flex items-start gap-2">
+              <span class="font-bengali text-ink  leading-snug">${w.bn}</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <span class="text-ink-light  leading-snug font-medium tracking-wide">${w.en}</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function filterWords() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      if (!query) { renderCards(words); return; }
+      const filtered = words.filter(w =>
+        w.ar.includes(query) ||
+        w.bn.toLowerCase().includes(query) ||
+        w.en.toLowerCase().includes(query)
+      );
+      renderCards(filtered);
+    }
+
+    renderCards(words);
+  </script>
+</body>
+</html>

@@ -1,0 +1,5765 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quranic Vocabulary</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+Bengali:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --surface2: #f4efe6;
+    --border: #e8dfd0;
+    --text-primary: #2c2416;
+    --text-secondary: #6b5c42;
+    --text-muted: #a0916e;
+    --accent: #7c5c2e;
+    --accent-light: #c49a5a;
+    --arabic-color: #3d2b0e;
+    --tag-bg: #efe8d8;
+    --shadow: 0 2px 16px rgba(100,70,20,0.07);
+    --shadow-hover: 0 6px 28px rgba(100,70,20,0.13);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    font-family: 'Lora', Georgia, serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  /* Subtle paper texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(196,154,90,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 90%, rgba(124,92,46,0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 760px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .header-ornament {
+    color: var(--accent-light);
+    font-family: 'Amiri', serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  header h1 {
+    font-family: 'Amiri', serif;
+    font-size: clamp(1.9rem, 4vw, 2.8rem);
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+  }
+
+  header p {
+    margin-top: 10px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-style: italic;
+    font-family: 'Lora', serif;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 20px auto 0;
+    width: fit-content;
+  }
+
+  .divider-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-light));
+  }
+
+  .divider-line.right {
+    background: linear-gradient(90deg, var(--accent-light), transparent);
+  }
+
+  .divider-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-light);
+  }
+
+  /* Groups */
+  .group {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .group:hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  .group:nth-child(2) { animation-delay: 0.1s; }
+  .group:nth-child(3) { animation-delay: 0.2s; }
+  .group:nth-child(4) { animation-delay: 0.3s; }
+  .group:nth-child(5) { animation-delay: 0.4s; }
+
+  .group-header {
+    background: linear-gradient(135deg, var(--surface2) 0%, #ece5d5 100%);
+    padding: 22px 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .group-id {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: var(--tag-bg);
+    border: 1px solid var(--border);
+    padding: 3px 9px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+
+  .group-meta {
+    flex: 1;
+  }
+
+  .group-root {
+    font-family: 'Amiri', serif;
+    font-size: 1.5rem;
+    color: var(--arabic-color);
+    font-weight: 700;
+    line-height: 1.3;
+    direction: rtl;
+    display: inline;
+  }
+
+  .group-root-romanized {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-left: 8px;
+  }
+
+  .group-meanings {
+    display: flex;
+    gap: 16px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .group-meaning {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .lang-tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
+
+  /* Words grid — 4 cards per row */
+  .words-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    padding: 0;
+  }
+
+  .word-card {
+    background: var(--surface);
+    padding: 18px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background 0.2s ease;
+    position: relative;
+  }
+
+  .word-card:hover {
+    background: var(--surface2);
+  }
+
+  .serial {
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.06em;
+  }
+
+  .word-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.65rem;
+    color: var(--arabic-color);
+    direction: rtl;
+    text-align: right;
+    line-height: 1.5;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+
+  .word-english {
+    font-size: 0.88rem;
+    color: var(--text-primary);
+    font-family: 'Lora', serif;
+    margin-top: 4px;
+  }
+
+  .word-bangla {
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+    font-family: 'Noto Serif Bengali', serif;
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 48px;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    font-style: italic;
+    animation: fadeUp 0.6s ease 0.5s both;
+  }
+
+  /* Animations */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .words-grid { grid-template-columns: repeat(2, 1fr); }
+    .group-header { padding: 18px 18px; }
+  }
+
+  @media (max-width: 400px) {
+    .words-grid { grid-template-columns: repeat(1, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <span class="header-ornament">﷽</span>
+    <h1>Quranic Vocabulary</h1>
+    <p>Word roots, meanings & Bengali translations</p>
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-dot"></div>
+      <div class="divider-dot" style="opacity:0.5; width:4px; height:4px;"></div>
+      <div class="divider-dot"></div>
+      <div class="divider-line right"></div>
+    </div>
+  </header>
+
+  <div id="groups-container"></div>
+
+  <footer>Expand in faith, one word at a time.</footer>
+
+</div>
+
+<script>
+const data = {
+  "vocabulary_groups": [
+    {
+      "group_id": 1,
+      "core_root": "سَبِيل (Sabeel)",
+      "core_meaning_en": "Path / Way",
+      "core_meaning_bn": "পথ / রাস্তা",
+      "words": [
+        {
+          "serial_no": 1,
+          "arabic": "سَبِيلُ",
+          "english": "Path",
+          "bangla": "পথ"
+        },
+        {
+          "serial_no": 2,
+          "arabic": "اَلسَّبِيلَا",
+          "english": "The path",
+          "bangla": "পথটি"
+        },
+        {
+          "serial_no": 3,
+          "arabic": "سَبِيلُهُ",
+          "english": "His path",
+          "bangla": "তার পথ"
+        },
+        {
+          "serial_no": 4,
+          "arabic": "سَبِيلُهُمْ",
+          "english": "Their path",
+          "bangla": "তাদের পথ"
+        },
+        {
+          "serial_no": 5,
+          "arabic": "سَبِيلُكَ",
+          "english": "Your path",
+          "bangla": "তোমার পথ"
+        },
+        {
+          "serial_no": 6,
+          "arabic": "سَبِيلِي",
+          "english": "My path",
+          "bangla": "আমার পথ"
+        },
+        {
+          "serial_no": 7,
+          "arabic": "سَبِيلُنَا",
+          "english": "Our path",
+          "bangla": "আমাদের পথ"
+        },
+        {
+          "serial_no": 8,
+          "arabic": "لَبِسَبِيلِ",
+          "english": "Surely by a path",
+          "bangla": "অবশ্যই একটি পথ দ্বারা"
+        },
+        {
+          "serial_no": 9,
+          "arabic": "سُبُلُ",
+          "english": "Paths (plural)",
+          "bangla": "পথসমূহ"
+        },
+        {
+          "serial_no": 10,
+          "arabic": "وَسُبُلًا",
+          "english": "And paths",
+          "bangla": "এবং পথসমূহ"
+        },
+        {
+          "serial_no": 11,
+          "arabic": "اَلسُّبُلُ",
+          "english": "The paths",
+          "bangla": "পথগুলো"
+        },
+        {
+          "serial_no": 12,
+          "arabic": "سُبُلُنَا",
+          "english": "Our paths",
+          "bangla": "আমাদের পথসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 2,
+      "core_root": "عَلَى (Ala)",
+      "core_meaning_en": "On / Upon",
+      "core_meaning_bn": "উপরে / উপর",
+      "words": [
+        {
+          "serial_no": 13,
+          "arabic": "عَلَى",
+          "english": "Upon",
+          "bangla": "উপরে"
+        },
+        {
+          "serial_no": 14,
+          "arabic": "وَعَلَى",
+          "english": "And upon",
+          "bangla": "এবং উপরে"
+        },
+        {
+          "serial_no": 15,
+          "arabic": "فَعَلَى",
+          "english": "Then upon",
+          "bangla": "অতঃপর উপরে"
+        },
+        {
+          "serial_no": 16,
+          "arabic": "لَعَلَى",
+          "english": "Surely upon",
+          "bangla": "অবশ্যই উপরে"
+        },
+        {
+          "serial_no": 17,
+          "arabic": "عَلَيْهِ",
+          "english": "Upon him",
+          "bangla": "তার উপর"
+        },
+        {
+          "serial_no": 18,
+          "arabic": "وَعَلَيْهِ",
+          "english": "And upon him",
+          "bangla": "এবং তার উপর"
+        },
+        {
+          "serial_no": 19,
+          "arabic": "فَعَلَيْهِ",
+          "english": "Then upon him",
+          "bangla": "অতঃপর তার উপর"
+        },
+        {
+          "serial_no": 20,
+          "arabic": "عَلَيْكَ",
+          "english": "Upon you",
+          "bangla": "তোমার উপর"
+        },
+        {
+          "serial_no": 21,
+          "arabic": "عَلَيَّ",
+          "english": "Upon me",
+          "bangla": "আমার উপর"
+        },
+        {
+          "serial_no": 22,
+          "arabic": "فَعَلَيَّ",
+          "english": "Then upon me",
+          "bangla": "অতঃপর আমার উপর"
+        },
+        {
+          "serial_no": 23,
+          "arabic": "عَلَيْكُمْ",
+          "english": "Upon you (all)",
+          "bangla": "তোমাদের উপর"
+        },
+        {
+          "serial_no": 24,
+          "arabic": "وَعَلَيْكُمْ",
+          "english": "And upon you (all)",
+          "bangla": "এবং তোমাদের উপর"
+        },
+        {
+          "serial_no": 25,
+          "arabic": "فَعَلَيْكُمْ",
+          "english": "Then upon you (all)",
+          "bangla": "অতঃপর তোমাদের উপর"
+        },
+        {
+          "serial_no": 26,
+          "arabic": "عَلَيْنَا",
+          "english": "Upon us",
+          "bangla": "আমাদের উপর"
+        },
+        {
+          "serial_no": 27,
+          "arabic": "وَعَلَيْنَا",
+          "english": "And upon us",
+          "bangla": "এবং আমাদের উপর"
+        },
+        {
+          "serial_no": 28,
+          "arabic": "عَلَيْهَا",
+          "english": "Upon her/it",
+          "bangla": "তার/এর উপর"
+        },
+        {
+          "serial_no": 29,
+          "arabic": "وَعَلَيْهَا",
+          "english": "And upon her/it",
+          "bangla": "এবং তার/এর উপর"
+        },
+        {
+          "serial_no": 30,
+          "arabic": "فَعَلَيْهَا",
+          "english": "Then upon her/it",
+          "bangla": "অতঃপর তার/এর উপর"
+        }
+      ]
+    },
+    {
+      "group_id": 3,
+      "core_root": "إِلَى (Ila)",
+      "core_meaning_en": "To / Towards",
+      "core_meaning_bn": "দিকে / প্রতি",
+      "words": [
+        {
+          "serial_no": 31,
+          "arabic": "وَإِلَى",
+          "english": "And to",
+          "bangla": "এবং দিকে"
+        },
+        {
+          "serial_no": 32,
+          "arabic": "لَإِلَى",
+          "english": "Surely to",
+          "bangla": "অবশ্যই দিকে"
+        },
+        {
+          "serial_no": 33,
+          "arabic": "إِلَيْهِ",
+          "english": "To him",
+          "bangla": "তার দিকে"
+        },
+        {
+          "serial_no": 34,
+          "arabic": "وَإِلَيْهِ",
+          "english": "And to him",
+          "bangla": "এবং তার দিকে"
+        },
+        {
+          "serial_no": 35,
+          "arabic": "فَإِلَيْهِ",
+          "english": "Then to him",
+          "bangla": "অতঃপর তার দিকে"
+        },
+        {
+          "serial_no": 36,
+          "arabic": "إِلَيْهِمْ",
+          "english": "To them",
+          "bangla": "তাদের দিকে"
+        },
+        {
+          "serial_no": 37,
+          "arabic": "إِلَيْكَ",
+          "english": "To you",
+          "bangla": "তোমার দিকে"
+        },
+        {
+          "serial_no": 38,
+          "arabic": "وَإِلَيْكَ",
+          "english": "And to you",
+          "bangla": "এবং তোমার দিকে"
+        },
+        {
+          "serial_no": 39,
+          "arabic": "إِلَيَّ",
+          "english": "To me",
+          "bangla": "আমার দিকে"
+        },
+        {
+          "serial_no": 40,
+          "arabic": "وَإِلَيَّ",
+          "english": "And to me",
+          "bangla": "এবং আমার দিকে"
+        },
+        {
+          "serial_no": 41,
+          "arabic": "إِلَيْكُمْ",
+          "english": "To you (all)",
+          "bangla": "তোমাদের দিকে"
+        },
+        {
+          "serial_no": 42,
+          "arabic": "إِلَيْنَا",
+          "english": "To us",
+          "bangla": "আমাদের দিকে"
+        },
+        {
+          "serial_no": 43,
+          "arabic": "وَإِلَيْنَا",
+          "english": "And to us",
+          "bangla": "এবং আমাদের দিকে"
+        },
+        {
+          "serial_no": 44,
+          "arabic": "فَإِلَيْنَا",
+          "english": "Then to us",
+          "bangla": "অতঃপর আমাদের দিকে"
+        },
+        {
+          "serial_no": 45,
+          "arabic": "إِلَيْهَا",
+          "english": "To her/it",
+          "bangla": "তার/এর দিকে"
+        }
+      ]
+    },
+    {
+      "group_id": 4,
+      "core_root": "عِنْدَ (Inda)",
+      "core_meaning_en": "At / With / Near",
+      "core_meaning_bn": "কাছে / নিকটে",
+      "words": [
+        {
+          "serial_no": 46,
+          "arabic": "وَعِنْدَ",
+          "english": "And at/with",
+          "bangla": "এবং কাছে"
+        },
+        {
+          "serial_no": 47,
+          "arabic": "فَعِنْدَ",
+          "english": "Then at/with",
+          "bangla": "অতঃপর কাছে"
+        },
+        {
+          "serial_no": 48,
+          "arabic": "عِنْدِهِ",
+          "english": "With him",
+          "bangla": "তার কাছে"
+        },
+        {
+          "serial_no": 49,
+          "arabic": "وَعِنْدَهُ",
+          "english": "And with him",
+          "bangla": "এবং তার কাছে"
+        },
+        {
+          "serial_no": 50,
+          "arabic": "أَعِنْدَهُ",
+          "english": "Is it with him?",
+          "bangla": "তার কাছে কি?"
+        },
+        {
+          "serial_no": 51,
+          "arabic": "عِنْدَهُمُ",
+          "english": "With them",
+          "bangla": "তাদের কাছে"
+        },
+        {
+          "serial_no": 52,
+          "arabic": "وَعِنْدَهُمْ",
+          "english": "And with them",
+          "bangla": "এবং তাদের কাছে"
+        },
+        {
+          "serial_no": 53,
+          "arabic": "عِنْدَكَ",
+          "english": "With you",
+          "bangla": "তোমার কাছে"
+        },
+        {
+          "serial_no": 54,
+          "arabic": "عِنْدِي",
+          "english": "With me",
+          "bangla": "আমার কাছে"
+        },
+        {
+          "serial_no": 55,
+          "arabic": "عِنْدَكُمُ",
+          "english": "With you (all)",
+          "bangla": "তোমাদের কাছে"
+        },
+        {
+          "serial_no": 56,
+          "arabic": "عِنْدَنَا",
+          "english": "With us",
+          "bangla": "আমাদের কাছে"
+        },
+        {
+          "serial_no": 57,
+          "arabic": "وَعِنْدَنَا",
+          "english": "And with us",
+          "bangla": "এবং আমাদের কাছে"
+        },
+        {
+          "serial_no": 58,
+          "arabic": "عِنْدَهَا",
+          "english": "With her/it",
+          "bangla": "তার/এর কাছে"
+        }
+      ]
+    },
+    {
+      "group_id": 5,
+      "core_root": "حَقّ (Haqq)",
+      "core_meaning_en": "Truth / Right",
+      "core_meaning_bn": "সত্য / অধিকার",
+      "words": [
+        {
+          "serial_no": 59,
+          "arabic": "حَقٌّ",
+          "english": "Truth",
+          "bangla": "সত্য"
+        },
+        {
+          "serial_no": 60,
+          "arabic": "أَحَقُّ",
+          "english": "More worthy / Truer",
+          "bangla": "অধিক সত্য / যোগ্য"
+        },
+        {
+          "serial_no": 61,
+          "arabic": "بِحَقٍّ",
+          "english": "With truth",
+          "bangla": "সত্যের সাথে"
+        },
+        {
+          "serial_no": 62,
+          "arabic": "وَالْحَقُّ",
+          "english": "And the truth",
+          "bangla": "এবং সত্য"
+        },
+        {
+          "serial_no": 63,
+          "arabic": "فَالْحَقُّ",
+          "english": "Then the truth",
+          "bangla": "অতঃপর সত্য"
+        },
+        {
+          "serial_no": 64,
+          "arabic": "بِالْحَقِّ",
+          "english": "With the truth",
+          "bangla": "সত্যের সাথে"
+        },
+        {
+          "serial_no": 65,
+          "arabic": "وَبِالْحَقِّ",
+          "english": "And with the truth",
+          "bangla": "এবং সত্যের সাথে"
+        },
+        {
+          "serial_no": 66,
+          "arabic": "لَحَقٌّ",
+          "english": "Surely truth",
+          "bangla": "অবশ্যই সত্য"
+        },
+        {
+          "serial_no": 67,
+          "arabic": "لِلْحَقِّ",
+          "english": "For the truth",
+          "bangla": "সত্যের জন্য"
+        },
+        {
+          "serial_no": 68,
+          "arabic": "حَقَّهُ",
+          "english": "His right / His truth",
+          "bangla": "তার অধিকার / তার সত্য"
+        }
+      ]
+    },
+    {
+      "group_id": 6,
+      "core_root": "ذَلِكَ (Dhalika)",
+      "core_meaning_en": "That",
+      "core_meaning_bn": "তা / ঐ",
+      "words": [
+        {
+          "serial_no": 69,
+          "arabic": "وَذَلِكَ",
+          "english": "And that",
+          "bangla": "এবং তা"
+        },
+        {
+          "serial_no": 70,
+          "arabic": "فَذَلِكَ",
+          "english": "Then that",
+          "bangla": "অতঃপর তা"
+        },
+        {
+          "serial_no": 71,
+          "arabic": "بِذَلِكَ",
+          "english": "With / By that",
+          "bangla": "তার দ্বারা / সাথে"
+        },
+        {
+          "serial_no": 72,
+          "arabic": "فَبِذَلِكَ",
+          "english": "Then with that",
+          "bangla": "অতঃপর তার দ্বারা"
+        },
+        {
+          "serial_no": 73,
+          "arabic": "وَبِذَلِكَ",
+          "english": "And with that",
+          "bangla": "এবং তার দ্বারা"
+        },
+        {
+          "serial_no": 74,
+          "arabic": "وَلِذَلِكَ",
+          "english": "And for that",
+          "bangla": "এবং তার জন্য"
+        },
+        {
+          "serial_no": 75,
+          "arabic": "فَلِذَلِكَ",
+          "english": "Then for that",
+          "bangla": "অতঃপর তার জন্য"
+        },
+        {
+          "serial_no": 76,
+          "arabic": "أَذَلِكَ",
+          "english": "Is that?",
+          "bangla": "তা কি?"
+        },
+        {
+          "serial_no": 77,
+          "arabic": "كَذَلِكَ",
+          "english": "Like that / Thus",
+          "bangla": "ঐরকম / সেইরূপ"
+        },
+        {
+          "serial_no": 78,
+          "arabic": "وَكَذَلِكَ",
+          "english": "And like that",
+          "bangla": "এবং ঐরকম"
+        },
+        {
+          "serial_no": 79,
+          "arabic": "فَكَذَلِكَ",
+          "english": "Then like that",
+          "bangla": "অতঃপর ঐরকম"
+        },
+        {
+          "serial_no": 80,
+          "arabic": "ذَلِكُمَا",
+          "english": "That (dual)",
+          "bangla": "তোমাদের দুজনের তা"
+        },
+        {
+          "serial_no": 81,
+          "arabic": "ذَلِكُمْ",
+          "english": "That (plural)",
+          "bangla": "তোমাদের সকলের তা"
+        },
+        {
+          "serial_no": 82,
+          "arabic": "وَذَلِكُمْ",
+          "english": "And that (plural)",
+          "bangla": "এবং তোমাদের তা"
+        },
+        {
+          "serial_no": 83,
+          "arabic": "فَذَلِكُمْ",
+          "english": "Then that (plural)",
+          "bangla": "অতঃপর তোমাদের তা"
+        },
+        {
+          "serial_no": 84,
+          "arabic": "كَذَلِكُمْ",
+          "english": "Like that (plural)",
+          "bangla": "তোমাদের জন্য ঐরকম"
+        }
+      ]
+    },
+    {
+      "group_id": 7,
+      "core_root": "جَاءَ (Ja'a)",
+      "core_meaning_en": "Came",
+      "core_meaning_bn": "এসেছে / আসল",
+      "words": [
+        {
+          "serial_no": 85,
+          "arabic": "وَجَاءَ",
+          "english": "And he came",
+          "bangla": "এবং সে আসল"
+        },
+        {
+          "serial_no": 86,
+          "arabic": "فَجَاءَ",
+          "english": "Then he came",
+          "bangla": "অতঃপর সে আসল"
+        },
+        {
+          "serial_no": 87,
+          "arabic": "جَاءَهُ",
+          "english": "He came to him",
+          "bangla": "সে তার কাছে আসল"
+        },
+        {
+          "serial_no": 88,
+          "arabic": "وَجَاءَهُ",
+          "english": "And he came to him",
+          "bangla": "এবং সে তার কাছে আসল"
+        },
+        {
+          "serial_no": 89,
+          "arabic": "جَاءَهُمْ",
+          "english": "He came to them",
+          "bangla": "সে তাদের কাছে আসল"
+        },
+        {
+          "serial_no": 90,
+          "arabic": "وَجَاءَهُمْ",
+          "english": "And he came to them",
+          "bangla": "এবং সে তাদের কাছে আসল"
+        },
+        {
+          "serial_no": 91,
+          "arabic": "لَجَاءَهُمْ",
+          "english": "Surely he came to them",
+          "bangla": "অবশ্যই সে তাদের কাছে আসল"
+        },
+        {
+          "serial_no": 92,
+          "arabic": "جَاءَكَ",
+          "english": "He came to you",
+          "bangla": "সে তোমার কাছে আসল"
+        },
+        {
+          "serial_no": 93,
+          "arabic": "وَجَاءَكَ",
+          "english": "And he came to you",
+          "bangla": "এবং সে তোমার কাছে আসল"
+        },
+        {
+          "serial_no": 94,
+          "arabic": "جَاءَنِي",
+          "english": "He came to me",
+          "bangla": "সে আমার কাছে আসল"
+        },
+        {
+          "serial_no": 95,
+          "arabic": "جَاءَكُمْ",
+          "english": "He came to you (all)",
+          "bangla": "সে তোমাদের কাছে আসল"
+        },
+        {
+          "serial_no": 96,
+          "arabic": "وَجَاءَكُمْ",
+          "english": "And he came to you (all)",
+          "bangla": "এবং সে তোমাদের কাছে আসল"
+        },
+        {
+          "serial_no": 97,
+          "arabic": "جَاءَنَا",
+          "english": "He came to us",
+          "bangla": "সে আমাদের কাছে আসল"
+        },
+        {
+          "serial_no": 98,
+          "arabic": "جَاءَهَا",
+          "english": "He came to her",
+          "bangla": "সে তার কাছে আসল"
+        },
+        {
+          "serial_no": 99,
+          "arabic": "فَجَاءَهَا",
+          "english": "Then he came to her",
+          "bangla": "অতঃপর সে তার কাছে আসল"
+        }
+      ]
+    },
+    {
+      "group_id": 8,
+      "core_root": "إِلَه (Ilah)",
+      "core_meaning_en": "God / Deity",
+      "core_meaning_bn": "উপাস্য / ইলাহ",
+      "words": [
+        {
+          "serial_no": 100,
+          "arabic": "إِلَهَيْنِ",
+          "english": "Two gods",
+          "bangla": "দুজন উপাস্য"
+        },
+        {
+          "serial_no": 101,
+          "arabic": "وَإِلَهٌ",
+          "english": "And a god",
+          "bangla": "এবং একজন উপাস্য"
+        },
+        {
+          "serial_no": 102,
+          "arabic": "أَإِلَهٌ",
+          "english": "Is there a god?",
+          "bangla": "কোনো উপাস্য আছে কি?"
+        },
+        {
+          "serial_no": 103,
+          "arabic": "إِلَهَكَ",
+          "english": "Your god",
+          "bangla": "তোমার উপাস্য"
+        },
+        {
+          "serial_no": 104,
+          "arabic": "إِلَهُكُمْ",
+          "english": "Your (all) god",
+          "bangla": "তোমাদের উপাস্য"
+        },
+        {
+          "serial_no": 105,
+          "arabic": "وَإِلَهُكُمْ",
+          "english": "And your (all) god",
+          "bangla": "এবং তোমাদের উপাস্য"
+        },
+        {
+          "serial_no": 106,
+          "arabic": "فَإِلَهُكُمْ",
+          "english": "Then your (all) god",
+          "bangla": "অতঃপর তোমাদের উপাস্য"
+        },
+        {
+          "serial_no": 107,
+          "arabic": "وَإِلَهُنَا",
+          "english": "And our god",
+          "bangla": "এবং আমাদের উপাস্য"
+        },
+        {
+          "serial_no": 108,
+          "arabic": "آلِهَةٌ",
+          "english": "Gods",
+          "bangla": "উপাস্যগণ"
+        },
+        {
+          "serial_no": 109,
+          "arabic": "أَآلِهَتُهُمْ",
+          "english": "Are their gods?",
+          "bangla": "তাদের উপাস্যগণ কি?"
+        },
+        {
+          "serial_no": 110,
+          "arabic": "وَآلِهَتُكَ",
+          "english": "And your gods",
+          "bangla": "এবং তোমার উপাস্যগণ"
+        },
+        {
+          "serial_no": 111,
+          "arabic": "آلِهَتِي",
+          "english": "My gods",
+          "bangla": "আমার উপাস্যগণ"
+        },
+        {
+          "serial_no": 112,
+          "arabic": "آلِهَتُكُمْ",
+          "english": "Your (all) gods",
+          "bangla": "তোমাদের উপাস্যগণ"
+        },
+        {
+          "serial_no": 113,
+          "arabic": "آلِهَتُنَا",
+          "english": "Our gods",
+          "bangla": "আমাদের উপাস্যগণ"
+        },
+        {
+          "serial_no": 114,
+          "arabic": "أَآلِهَتُنَا",
+          "english": "Are our gods?",
+          "bangla": "আমাদের উপাস্যগণ কি?"
+        },
+        {
+          "serial_no": 115,
+          "arabic": "بِآلِهَتِنَا",
+          "english": "With our gods",
+          "bangla": "আমাদের উপাস্যগণের সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 9,
+      "core_root": "مَلَك (Malak / Malik)",
+      "core_meaning_en": "Angel / King",
+      "core_meaning_bn": "ফেরেশতা / রাজা",
+      "words": [
+        {
+          "serial_no": 116,
+          "arabic": "مَلَكٌ",
+          "english": "Angel",
+          "bangla": "ফেরেশতা"
+        },
+        {
+          "serial_no": 117,
+          "arabic": "وَالْمَلَكُ",
+          "english": "And the angel",
+          "bangla": "এবং ফেরেশতা"
+        },
+        {
+          "serial_no": 118,
+          "arabic": "مَلَكَيْنِ",
+          "english": "Two angels",
+          "bangla": "দুইজন ফেরেশতা"
+        },
+        {
+          "serial_no": 119,
+          "arabic": "الْمَلَائِكَةُ",
+          "english": "The angels",
+          "bangla": "ফেরেশতাগণ"
+        },
+        {
+          "serial_no": 120,
+          "arabic": "وَالْمَلَائِكَةُ",
+          "english": "And the angels",
+          "bangla": "এবং ফেরেশতাগণ"
+        },
+        {
+          "serial_no": 121,
+          "arabic": "بِالْمَلَائِكَةِ",
+          "english": "With the angels",
+          "bangla": "ফেরেশতাগণের সাথে"
+        },
+        {
+          "serial_no": 122,
+          "arabic": "لِلْمَلَائِكَةِ",
+          "english": "To the angels",
+          "bangla": "ফেরেশতাগণের জন্য"
+        },
+        {
+          "serial_no": 123,
+          "arabic": "مَلَائِكَةٌ",
+          "english": "Angels",
+          "bangla": "ফেরেশতারা"
+        },
+        {
+          "serial_no": 124,
+          "arabic": "وَمَلَائِكَتُهُ",
+          "english": "And His angels",
+          "bangla": "এবং তাঁর ফেরেশতাগণ"
+        }
+      ]
+    },
+    {
+      "group_id": 10,
+      "core_root": "قَوْم (Qawm)",
+      "core_meaning_en": "People / Nation",
+      "core_meaning_bn": "জাতি / সম্প্রদায়",
+      "words": [
+        {
+          "serial_no": 125,
+          "arabic": "الْقَوْمُ",
+          "english": "The people",
+          "bangla": "জাতিটি"
+        },
+        {
+          "serial_no": 126,
+          "arabic": "وَقَوْمُ",
+          "english": "And people of",
+          "bangla": "এবং জাতি"
+        },
+        {
+          "serial_no": 127,
+          "arabic": "بِقَوْمٍ",
+          "english": "With a people",
+          "bangla": "কোনো জাতির সাথে"
+        },
+        {
+          "serial_no": 128,
+          "arabic": "لِقَوْمٍ",
+          "english": "For a people",
+          "bangla": "কোনো জাতির জন্য"
+        },
+        {
+          "serial_no": 129,
+          "arabic": "لِلْقَوْمِ",
+          "english": "For the people",
+          "bangla": "জাতিটির জন্য"
+        },
+        {
+          "serial_no": 130,
+          "arabic": "قَوْمُهُ",
+          "english": "His people",
+          "bangla": "তার জাতি"
+        },
+        {
+          "serial_no": 131,
+          "arabic": "وَقَوْمُهُ",
+          "english": "And his people",
+          "bangla": "এবং তার জাতি"
+        },
+        {
+          "serial_no": 132,
+          "arabic": "لِقَوْمِهِ",
+          "english": "For his people",
+          "bangla": "তার জাতির জন্য"
+        },
+        {
+          "serial_no": 133,
+          "arabic": "قَوْمُهُمْ",
+          "english": "Their people",
+          "bangla": "তাদের জাতি"
+        },
+        {
+          "serial_no": 134,
+          "arabic": "وَقَوْمُهُمْ",
+          "english": "And their people",
+          "bangla": "এবং তাদের জাতি"
+        },
+        {
+          "serial_no": 135,
+          "arabic": "لِقَوْمِهِمْ",
+          "english": "For their people",
+          "bangla": "তাদের জাতির জন্য"
+        },
+        {
+          "serial_no": 136,
+          "arabic": "قَوْمُكَ",
+          "english": "Your people",
+          "bangla": "তোমার জাতি"
+        },
+        {
+          "serial_no": 137,
+          "arabic": "وَقَوْمُكَ",
+          "english": "And your people",
+          "bangla": "এবং তোমার জাতি"
+        },
+        {
+          "serial_no": 138,
+          "arabic": "وَلِقَوْمِكَ",
+          "english": "And for your people",
+          "bangla": "এবং তোমার জাতির জন্য"
+        },
+        {
+          "serial_no": 139,
+          "arabic": "قَوْمِي",
+          "english": "My people",
+          "bangla": "আমার জাতি"
+        },
+        {
+          "serial_no": 140,
+          "arabic": "قَوْمُنَا",
+          "english": "Our people",
+          "bangla": "আমাদের জাতি"
+        },
+        {
+          "serial_no": 141,
+          "arabic": "قَوْمَهَا",
+          "english": "Her people",
+          "bangla": "তার (স্ত্রী) জাতি"
+        },
+        {
+          "serial_no": 142,
+          "arabic": "وَقَوْمَهَا",
+          "english": "And her people",
+          "bangla": "এবং তার জাতি"
+        },
+        {
+          "serial_no": 143,
+          "arabic": "وَقَوْمَهُمَا",
+          "english": "And the people of those two",
+          "bangla": "এবং তাদের দুজনের জাতি"
+        }
+      ]
+    },
+    {
+      "group_id": 11,
+      "core_root": "أَنَّ (Anna / Inna)",
+      "core_meaning_en": "That / Indeed",
+      "core_meaning_bn": "যে / নিশ্চয়ই",
+      "words": [
+        {
+          "serial_no": 144,
+          "arabic": "أَنَّ",
+          "english": "That",
+          "bangla": "যে"
+        },
+        {
+          "serial_no": 145,
+          "arabic": "فَأَنَّ",
+          "english": "Then indeed",
+          "bangla": "অতঃপর নিশ্চয়ই"
+        },
+        {
+          "serial_no": 146,
+          "arabic": "بِأَنَّ",
+          "english": "Because that",
+          "bangla": "কারণ যে"
+        },
+        {
+          "serial_no": 147,
+          "arabic": "أَنَّهُ",
+          "english": "That he",
+          "bangla": "যে সে"
+        },
+        {
+          "serial_no": 148,
+          "arabic": "وَأَنَّهُ",
+          "english": "And that he",
+          "bangla": "এবং যে সে"
+        },
+        {
+          "serial_no": 149,
+          "arabic": "فَأَنَّهُ",
+          "english": "Then indeed he",
+          "bangla": "অতঃপর নিশ্চয়ই সে"
+        },
+        {
+          "serial_no": 150,
+          "arabic": "بِأَنَّهُ",
+          "english": "Because he",
+          "bangla": "কারণ সে"
+        },
+        {
+          "serial_no": 151,
+          "arabic": "أَنَّهُمْ",
+          "english": "That they",
+          "bangla": "যে তারা"
+        },
+        {
+          "serial_no": 152,
+          "arabic": "وَأَنَّهُمْ",
+          "english": "And that they",
+          "bangla": "এবং যে তারা"
+        },
+        {
+          "serial_no": 153,
+          "arabic": "بِأَنَّهُمْ",
+          "english": "Because they",
+          "bangla": "কারণ তারা"
+        },
+        {
+          "serial_no": 154,
+          "arabic": "أَنَّكَ",
+          "english": "That you",
+          "bangla": "যে তুমি"
+        },
+        {
+          "serial_no": 155,
+          "arabic": "وَأَنَّكَ",
+          "english": "And that you",
+          "bangla": "এবং যে তুমি"
+        },
+        {
+          "serial_no": 156,
+          "arabic": "أَنِّي",
+          "english": "That I",
+          "bangla": "যে আমি"
+        },
+        {
+          "serial_no": 157,
+          "arabic": "وَأَنِّي",
+          "english": "And that I",
+          "bangla": "এবং যে আমি"
+        },
+        {
+          "serial_no": 158,
+          "arabic": "أَنَّكُمْ",
+          "english": "That you (all)",
+          "bangla": "যে তোমরা"
+        },
+        {
+          "serial_no": 159,
+          "arabic": "وَأَنَّكُمْ",
+          "english": "And that you (all)",
+          "bangla": "এবং যে তোমরা"
+        },
+        {
+          "serial_no": 160,
+          "arabic": "بِأَنَّكُمْ",
+          "english": "Because you (all)",
+          "bangla": "কারণ তোমরা"
+        },
+        {
+          "serial_no": 161,
+          "arabic": "أَنَّا",
+          "english": "That we",
+          "bangla": "যে আমরা"
+        },
+        {
+          "serial_no": 162,
+          "arabic": "وَأَنَّا",
+          "english": "And that we",
+          "bangla": "এবং যে আমরা"
+        },
+        {
+          "serial_no": 163,
+          "arabic": "بِأَنَّا",
+          "english": "Because we",
+          "bangla": "কারণ আমরা"
+        },
+        {
+          "serial_no": 164,
+          "arabic": "أَنَّنَا",
+          "english": "Indeed we",
+          "bangla": "নিশ্চয়ই আমরা"
+        },
+        {
+          "serial_no": 165,
+          "arabic": "بِأَنَّنَا",
+          "english": "Because we",
+          "bangla": "কারণ আমরা"
+        },
+        {
+          "serial_no": 166,
+          "arabic": "أَنَّمَا",
+          "english": "That only",
+          "bangla": "কেবল যে"
+        },
+        {
+          "serial_no": 167,
+          "arabic": "أَنَّهَا",
+          "english": "That she / it",
+          "bangla": "যে সে / তা"
+        },
+        {
+          "serial_no": 168,
+          "arabic": "أَنَّهُمَا",
+          "english": "That those two",
+          "bangla": "যে তারা দুজন"
+        }
+      ]
+    },
+    {
+      "group_id": 12,
+      "core_root": "رَسُول (Rasool)",
+      "core_meaning_en": "Messenger",
+      "core_meaning_bn": "রাসূল / বার্তাবাহক",
+      "words": [
+        {
+          "serial_no": 169,
+          "arabic": "وَرَسُولُهُ",
+          "english": "And His messenger",
+          "bangla": "এবং তাঁর রাসূল"
+        },
+        {
+          "serial_no": 170,
+          "arabic": "وَبِرَسُولِهِ",
+          "english": "And with His messenger",
+          "bangla": "এবং তাঁর রাসূলের সাথে"
+        },
+        {
+          "serial_no": 171,
+          "arabic": "وَلِرَسُولِهِ",
+          "english": "And for His messenger",
+          "bangla": "এবং তাঁর রাসূলের জন্য"
+        },
+        {
+          "serial_no": 172,
+          "arabic": "رَسُولُهُمْ",
+          "english": "Their messenger",
+          "bangla": "তাদের রাসূল"
+        },
+        {
+          "serial_no": 173,
+          "arabic": "بِرَسُولِهِمْ",
+          "english": "With their messenger",
+          "bangla": "তাদের রাসূলের সাথে"
+        },
+        {
+          "serial_no": 174,
+          "arabic": "وَبِرَسُولِي",
+          "english": "And with my messenger",
+          "bangla": "এবং আমার রাসূলের সাথে"
+        },
+        {
+          "serial_no": 175,
+          "arabic": "رَسُولُكُمْ",
+          "english": "Your (all) messenger",
+          "bangla": "তোমাদের রাসূল"
+        },
+        {
+          "serial_no": 176,
+          "arabic": "رَسُولُنَا",
+          "english": "Our messenger",
+          "bangla": "আমাদের রাসূল"
+        },
+        {
+          "serial_no": 177,
+          "arabic": "رَسُولُهَا",
+          "english": "Her messenger",
+          "bangla": "তার রাসূল"
+        },
+        {
+          "serial_no": 178,
+          "arabic": "لَرَسُولُهُ",
+          "english": "Surely His messenger",
+          "bangla": "অবশ্যই তাঁর রাসূল"
+        },
+        {
+          "serial_no": 179,
+          "arabic": "وَبِالرَّسُولِ",
+          "english": "And with the messenger",
+          "bangla": "এবং রাসূলের সাথে"
+        },
+        {
+          "serial_no": 180,
+          "arabic": "الرُّسُلُ",
+          "english": "The messengers",
+          "bangla": "রাসূলগণ"
+        },
+        {
+          "serial_no": 181,
+          "arabic": "بِالرُّسُلِ",
+          "english": "With the messengers",
+          "bangla": "রাসূলগণের সাথে"
+        },
+        {
+          "serial_no": 182,
+          "arabic": "رُسُلُهُمْ",
+          "english": "Their messengers",
+          "bangla": "তাদের রাসূলগণ"
+        },
+        {
+          "serial_no": 183,
+          "arabic": "رُسُلُكَ",
+          "english": "Your messengers",
+          "bangla": "তোমার রাসূলগণ"
+        },
+        {
+          "serial_no": 184,
+          "arabic": "بِرُسُلِي",
+          "english": "With my messengers",
+          "bangla": "আমার রাসূলগণের সাথে"
+        },
+        {
+          "serial_no": 185,
+          "arabic": "رُسُلُكُمْ",
+          "english": "Your (all) messengers",
+          "bangla": "তোমাদের রাসূলগণ"
+        },
+        {
+          "serial_no": 186,
+          "arabic": "رُسُلُنَا",
+          "english": "Our messengers",
+          "bangla": "আমাদের রাসূলগণ"
+        },
+        {
+          "serial_no": 187,
+          "arabic": "بِرُسُلِنَا",
+          "english": "With our messengers",
+          "bangla": "আমাদের রাসূলগণের সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 13,
+      "core_root": "صَلَاة (Salah)",
+      "core_meaning_en": "Prayer",
+      "core_meaning_bn": "নামাজ / সালাত",
+      "words": [
+        {
+          "serial_no": 188,
+          "arabic": "وَالصَّلَاةُ",
+          "english": "And the prayer",
+          "bangla": "এবং সালাত"
+        },
+        {
+          "serial_no": 189,
+          "arabic": "لِلصَّلَاةِ",
+          "english": "For the prayer",
+          "bangla": "সালাতের জন্য"
+        },
+        {
+          "serial_no": 190,
+          "arabic": "بِالصَّلَاةِ",
+          "english": "With the prayer",
+          "bangla": "সালাতের সাথে"
+        },
+        {
+          "serial_no": 191,
+          "arabic": "صَلَاتُهُ",
+          "english": "His prayer",
+          "bangla": "তার সালাত"
+        },
+        {
+          "serial_no": 192,
+          "arabic": "صَلَاتُهُمْ",
+          "english": "Their prayer",
+          "bangla": "তাদের সালাত"
+        },
+        {
+          "serial_no": 193,
+          "arabic": "صَلَاتُكَ",
+          "english": "Your prayer",
+          "bangla": "তোমার সালাত"
+        },
+        {
+          "serial_no": 194,
+          "arabic": "بِصَلَاتِكَ",
+          "english": "With your prayer",
+          "bangla": "তোমার সালাতের সাথে"
+        },
+        {
+          "serial_no": "195",
+          "arabic": "أَصَلَاتُكَ",
+          "english": "Is it your prayer?",
+          "bangla": "তোমার সালাত কি?"
+        },
+        {
+          "serial_no": 196,
+          "arabic": "صَلَاتِي",
+          "english": "My prayer",
+          "bangla": "আমার সালাত"
+        },
+        {
+          "serial_no": 197,
+          "arabic": "صَلَوَاتُ",
+          "english": "Prayers (plural)",
+          "bangla": "সালাতসমূহ"
+        },
+        {
+          "serial_no": 198,
+          "arabic": "وَصَلَوَاتُ",
+          "english": "And prayers",
+          "bangla": "এবং সালাতসমূহ"
+        },
+        {
+          "serial_no": 199,
+          "arabic": "صَلَوَاتُهُمْ",
+          "english": "Their prayers",
+          "bangla": "তাদের সালাতসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 14,
+      "core_root": "شَرِيك (Shareek)",
+      "core_meaning_en": "Partner / Associate",
+      "core_meaning_bn": "অংশীদার / শরিক",
+      "words": [
+        {
+          "serial_no": 200,
+          "arabic": "شُرَكَاءُ",
+          "english": "Partners",
+          "bangla": "অংশীদারগণ"
+        },
+        {
+          "serial_no": 201,
+          "arabic": "شُرَكَاؤُهُمْ",
+          "english": "Their partners",
+          "bangla": "তাদের অংশীদারগণ"
+        },
+        {
+          "serial_no": 202,
+          "arabic": "بِشُرَكَائِهِمْ",
+          "english": "With their partners",
+          "bangla": "তাদের অংশীদারগণের সাথে"
+        },
+        {
+          "serial_no": 203,
+          "arabic": "لِشُرَكَائِهِمْ",
+          "english": "To/For their partners",
+          "bangla": "তাদের অংশীদারগণের জন্য"
+        },
+        {
+          "serial_no": 204,
+          "arabic": "شُرَكَائِي",
+          "english": "My partners",
+          "bangla": "আমার শরিকগণ"
+        },
+        {
+          "serial_no": 205,
+          "arabic": "شُرَكَاؤُكُمْ",
+          "english": "Your partners",
+          "bangla": "তোমাদের শরিকগণ"
+        },
+        {
+          "serial_no": 206,
+          "arabic": "وَشُرَكَاؤُكُمْ",
+          "english": "And your partners",
+          "bangla": "এবং তোমাদের শরিকগণ"
+        },
+        {
+          "serial_no": 207,
+          "arabic": "شُرَكَاؤُنَا",
+          "english": "Our partners",
+          "bangla": "আমাদের শরিকগণ"
+        },
+        {
+          "serial_no": 208,
+          "arabic": "لِشُرَكَائِنَا",
+          "english": "To/For our partners",
+          "bangla": "আমাদের শরিকগণের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 15,
+      "core_root": "طَيِّب (Tayyib)",
+      "core_meaning_en": "Good / Pure / Clean",
+      "core_meaning_bn": "পবিত্র / উত্তম / ভালো",
+      "words": [
+        {
+          "serial_no": 209,
+          "arabic": "الطَّيِّبُ",
+          "english": "The good / pure",
+          "bangla": "পবিত্রটি"
+        },
+        {
+          "serial_no": 210,
+          "arabic": "وَالطَّيِّبُ",
+          "english": "And the good",
+          "bangla": "এবং পবিত্রটি"
+        },
+        {
+          "serial_no": 211,
+          "arabic": "بِالطَّيِّبِ",
+          "english": "With the good",
+          "bangla": "উত্তম জিনিসের সাথে"
+        },
+        {
+          "serial_no": 212,
+          "arabic": "طَيِّبِينَ",
+          "english": "Good ones (masc. plural)",
+          "bangla": "পবিত্রগণ"
+        },
+        {
+          "serial_no": 213,
+          "arabic": "وَالطَّيِّبُونَ",
+          "english": "And the good ones",
+          "bangla": "এবং পবিত্র ব্যক্তিবর্গ"
+        },
+        {
+          "serial_no": 214,
+          "arabic": "لِلطَّيِّبِينَ",
+          "english": "For the good ones",
+          "bangla": "পবিত্রদের জন্য"
+        },
+        {
+          "serial_no": 215,
+          "arabic": "طَيِّبَةٌ",
+          "english": "Good / Pure (fem.)",
+          "bangla": "পবিত্র (স্ত্রীবাচক)"
+        },
+        {
+          "serial_no": 216,
+          "arabic": "وَالطَّيِّبَاتُ",
+          "english": "And the good things",
+          "bangla": "এবং পবিত্র বস্তুসমূহ"
+        },
+        {
+          "serial_no": 217,
+          "arabic": "لِلطَّيِّبَاتِ",
+          "english": "For the good things",
+          "bangla": "পবিত্র বস্তুসমূহের জন্য"
+        },
+        {
+          "serial_no": 218,
+          "arabic": "طَيِّبَاتِكُمْ",
+          "english": "Your good things",
+          "bangla": "তোমাদের পবিত্র বস্তুসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 16,
+      "core_root": "نَبِيّ (Nabiyy)",
+      "core_meaning_en": "Prophet",
+      "core_meaning_bn": "নবী / বার্তাবাহক",
+      "words": [
+        {
+          "serial_no": 219,
+          "arabic": "وَالنَّبِيُّ",
+          "english": "And the prophet",
+          "bangla": "এবং নবী"
+        },
+        {
+          "serial_no": 220,
+          "arabic": "وَنَبِيًّا",
+          "english": "And a prophet",
+          "bangla": "এবং একজন নবী"
+        },
+        {
+          "serial_no": 221,
+          "arabic": "لِنَبِيٍّ",
+          "english": "To/For a prophet",
+          "bangla": "একজন নবীর জন্য"
+        },
+        {
+          "serial_no": 222,
+          "arabic": "لِلنَّبِيِّ",
+          "english": "To/For the prophet",
+          "bangla": "নবীর জন্য"
+        },
+        {
+          "serial_no": 223,
+          "arabic": "نَبِيُّهُمْ",
+          "english": "Their prophet",
+          "bangla": "তাদের নবী"
+        },
+        {
+          "serial_no": 224,
+          "arabic": "أَنْبِيَاءَ",
+          "english": "Prophets",
+          "bangla": "নবীগণ"
+        },
+        {
+          "serial_no": 225,
+          "arabic": "الْأَنْبِيَاءَ",
+          "english": "The prophets",
+          "bangla": "নবীগণকে"
+        },
+        {
+          "serial_no": 226,
+          "arabic": "النَّبِيُّونَ",
+          "english": "The prophets (subj.)",
+          "bangla": "নবীগণ"
+        },
+        {
+          "serial_no": 227,
+          "arabic": "وَالنَّبِيُّونَ",
+          "english": "And the prophets",
+          "bangla": "এবং নবীগণ"
+        },
+        {
+          "serial_no": 228,
+          "arabic": "النَّبِيِّينَ",
+          "english": "The prophets (obj./poss.)",
+          "bangla": "নবীগণকে"
+        },
+        {
+          "serial_no": 229,
+          "arabic": "وَالنَّبِيِّينَ",
+          "english": "And the prophets",
+          "bangla": "এবং নবীগণকে"
+        },
+        {
+          "serial_no": 230,
+          "arabic": "بِالنَّبِيِّينَ",
+          "english": "With the prophets",
+          "bangla": "নবীগণের সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 17,
+      "core_root": "رَحْمَة (Rahmah)",
+      "core_meaning_en": "Mercy",
+      "core_meaning_bn": "দয়া / রহমত",
+      "words": [
+        {
+          "serial_no": 231,
+          "arabic": "رَحْمَةٌ",
+          "english": "Mercy",
+          "bangla": "দয়া"
+        },
+        {
+          "serial_no": 232,
+          "arabic": "وَرَحْمَةٌ",
+          "english": "And mercy",
+          "bangla": "এবং দয়া"
+        },
+        {
+          "serial_no": 233,
+          "arabic": "بِرَحْمَةٍ",
+          "english": "With a mercy",
+          "bangla": "রহমতের সাথে"
+        },
+        {
+          "serial_no": 234,
+          "arabic": "لَرَحْمَةً",
+          "english": "Surely a mercy",
+          "bangla": "অবশ্যই রহমত"
+        },
+        {
+          "serial_no": 235,
+          "arabic": "رَحْمَتُهُ",
+          "english": "His mercy",
+          "bangla": "তার রহমত"
+        },
+        {
+          "serial_no": 236,
+          "arabic": "وَرَحْمَتُهُ",
+          "english": "And his mercy",
+          "bangla": "এবং তার রহমত"
+        },
+        {
+          "serial_no": 237,
+          "arabic": "بِرَحْمَتِهِ",
+          "english": "With his mercy",
+          "bangla": "তার রহমতের সাথে"
+        },
+        {
+          "serial_no": 238,
+          "arabic": "وَبِرَحْمَتِهِ",
+          "english": "And with his mercy",
+          "bangla": "এবং তার রহমতের সাথে"
+        },
+        {
+          "serial_no": 239,
+          "arabic": "رَحْمَتُكَ",
+          "english": "Your mercy",
+          "bangla": "তোমার রহমত"
+        },
+        {
+          "serial_no": 240,
+          "arabic": "بِرَحْمَتِكَ",
+          "english": "With your mercy",
+          "bangla": "তোমার রহমতের সাথে"
+        },
+        {
+          "serial_no": 241,
+          "arabic": "رَحْمَتِي",
+          "english": "My mercy",
+          "bangla": "আমার রহমত"
+        },
+        {
+          "serial_no": 242,
+          "arabic": "وَرَحْمَتِي",
+          "english": "And my mercy",
+          "bangla": "এবং আমার রহমত"
+        },
+        {
+          "serial_no": 243,
+          "arabic": "رَحْمَتَنَا",
+          "english": "Our mercy",
+          "bangla": "আমাদের রহমত"
+        },
+        {
+          "serial_no": 244,
+          "arabic": "بِرَحْمَتِنَا",
+          "english": "With our mercy",
+          "bangla": "আমাদের রহমতের সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 18,
+      "core_root": "عَبْد (Abd)",
+      "core_meaning_en": "Servant / Slave",
+      "core_meaning_bn": "দাস / বান্দা",
+      "words": [
+        {
+          "serial_no": 245,
+          "arabic": "عَبْدٌ",
+          "english": "A servant",
+          "bangla": "একজন বান্দা"
+        },
+        {
+          "serial_no": 246,
+          "arabic": "الْعَبْدُ",
+          "english": "The servant",
+          "bangla": "বান্দাটি"
+        },
+        {
+          "serial_no": 247,
+          "arabic": "وَالْعَبْدُ",
+          "english": "And the servant",
+          "bangla": "এবং বান্দাটি"
+        },
+        {
+          "serial_no": 248,
+          "arabic": "وَلَعَبْدٌ",
+          "english": "And surely a servant",
+          "bangla": "এবং অবশ্যই একজন বান্দা"
+        },
+        {
+          "serial_no": 249,
+          "arabic": "بِالْعَبْدِ",
+          "english": "With the servant",
+          "bangla": "বান্দার বিনিময়ে"
+        },
+        {
+          "serial_no": 250,
+          "arabic": "عَبْدُهُ",
+          "english": "His servant",
+          "bangla": "তার বান্দা"
+        },
+        {
+          "serial_no": 251,
+          "arabic": "بِعَبْدِهِ",
+          "english": "With his servant",
+          "bangla": "তার বান্দার সাথে"
+        },
+        {
+          "serial_no": 252,
+          "arabic": "عَبْدُنَا",
+          "english": "Our servant",
+          "bangla": "আমাদের বান্দা"
+        },
+        {
+          "serial_no": 253,
+          "arabic": "وَعِبَادٌ",
+          "english": "And servants",
+          "bangla": "এবং বান্দাগণ"
+        },
+        {
+          "serial_no": 254,
+          "arabic": "لِلْعِبَادِ",
+          "english": "For the servants",
+          "bangla": "বান্দাদের জন্য"
+        },
+        {
+          "serial_no": 255,
+          "arabic": "بِالْعِبَادِ",
+          "english": "With the servants",
+          "bangla": "বান্দাদের প্রতি"
+        },
+        {
+          "serial_no": 256,
+          "arabic": "عِبَادُهُ",
+          "english": "His servants",
+          "bangla": "তার বান্দাগণ"
+        },
+        {
+          "serial_no": 257,
+          "arabic": "لِعِبَادِهِ",
+          "english": "For his servants",
+          "bangla": "তার বান্দাদের জন্য"
+        },
+        {
+          "serial_no": 258,
+          "arabic": "بِعِبَادِهِ",
+          "english": "With his servants",
+          "bangla": "তার বান্দাদের সাথে"
+        },
+        {
+          "serial_no": 259,
+          "arabic": "عِبَادِي",
+          "english": "My servants",
+          "bangla": "আমার বান্দাগণ"
+        },
+        {
+          "serial_no": 260,
+          "arabic": "لِعِبَادِي",
+          "english": "For my servants",
+          "bangla": "আমার বান্দাদের জন্য"
+        },
+        {
+          "serial_no": 261,
+          "arabic": "بِعِبَادِي",
+          "english": "With my servants",
+          "bangla": "আমার বান্দাদের সাথে"
+        },
+        {
+          "serial_no": 262,
+          "arabic": "عِبَادَكُم",
+          "english": "Your servants",
+          "bangla": "তোমাদের বান্দাগণ"
+        },
+        {
+          "serial_no": 263,
+          "arabic": "عِبَادَنَا",
+          "english": "Our servants",
+          "bangla": "আমাদের বান্দাগণ"
+        },
+        {
+          "serial_no": 264,
+          "arabic": "لِعِبَادِنَا",
+          "english": "For our servants",
+          "bangla": "আমাদের বান্দাদের জন্য"
+        },
+        {
+          "serial_no": 265,
+          "arabic": "لِلْعَبِيدِ",
+          "english": "To the servants/slaves",
+          "bangla": "বান্দাদের প্রতি"
+        }
+      ]
+    },
+    {
+      "group_id": 19,
+      "core_root": "نَفْس (Nafs)",
+      "core_meaning_en": "Self / Soul",
+      "core_meaning_bn": "নিজে / প্রাণ / আত্মা",
+      "words": [
+        {
+          "serial_no": 266,
+          "arabic": "بِالنَّفْسِ",
+          "english": "With the soul",
+          "bangla": "প্রাণের বদলে"
+        },
+        {
+          "serial_no": 267,
+          "arabic": "لِنَفْسٍ",
+          "english": "For a soul",
+          "bangla": "কোনো আত্মার জন্য"
+        },
+        {
+          "serial_no": 268,
+          "arabic": "كَنَفْسٍ",
+          "english": "Like a soul",
+          "bangla": "একটি প্রাণের ন্যায়"
+        },
+        {
+          "serial_no": 269,
+          "arabic": "نَفْسَهُ",
+          "english": "Himself",
+          "bangla": "সে নিজে"
+        },
+        {
+          "serial_no": 270,
+          "arabic": "فَلِنَفْسِهِ",
+          "english": "Then for himself",
+          "bangla": "অতঃপর তার নিজের জন্য"
+        },
+        {
+          "serial_no": 271,
+          "arabic": "بِنَفْسِكَ",
+          "english": "By yourself",
+          "bangla": "তুমি নিজে"
+        },
+        {
+          "serial_no": 272,
+          "arabic": "نَفْسِي",
+          "english": "Myself",
+          "bangla": "আমি নিজে"
+        },
+        {
+          "serial_no": 273,
+          "arabic": "لِنَفْسِي",
+          "english": "For myself",
+          "bangla": "আমার নিজের জন্য"
+        },
+        {
+          "serial_no": 274,
+          "arabic": "نَفْسَهَا",
+          "english": "Herself",
+          "bangla": "সে (স্ত্রী) নিজে"
+        },
+        {
+          "serial_no": 275,
+          "arabic": "أَنْفُسَهُمْ",
+          "english": "Themselves",
+          "bangla": "তারা নিজেরা"
+        },
+        {
+          "serial_no": 276,
+          "arabic": "فَلِأَنْفُسِهِمْ",
+          "english": "Then for themselves",
+          "bangla": "অতঃপর তাদের নিজেদের জন্য"
+        },
+        {
+          "serial_no": 277,
+          "arabic": "لِأَنْفُسِهِمْ",
+          "english": "For themselves",
+          "bangla": "তাদের নিজেদের জন্য"
+        },
+        {
+          "serial_no": 278,
+          "arabic": "أَنْفُسَكُمْ",
+          "english": "Yourselves",
+          "bangla": "তোমরা নিজেরা"
+        },
+        {
+          "serial_no": 279,
+          "arabic": "لِأَنْفُسِكُمْ",
+          "english": "For yourselves",
+          "bangla": "তোমাদের নিজেদের জন্য"
+        },
+        {
+          "serial_no": 280,
+          "arabic": "فَلِأَنْفُسِكُمْ",
+          "english": "Then for yourselves",
+          "bangla": "অতঃপর তোমাদের নিজেদের জন্য"
+        },
+        {
+          "serial_no": 281,
+          "arabic": "وَأَنْفُسَنَا",
+          "english": "And ourselves",
+          "bangla": "এবং আমরা নিজেরা"
+        },
+        {
+          "serial_no": 282,
+          "arabic": "بِأَنْفُسِهِنَّ",
+          "english": "By themselves (fem.)",
+          "bangla": "তারা (স্ত্রী) নিজেরা"
+        },
+        {
+          "serial_no": 283,
+          "arabic": "أَنْفُسَهُنَّ",
+          "english": "Themselves (fem.)",
+          "bangla": "তারা (স্ত্রী) নিজেরা"
+        },
+        {
+          "serial_no": 284,
+          "arabic": "نُفُوسُكُمْ",
+          "english": "Your souls",
+          "bangla": "তোমাদের মন/প্রাণ"
+        }
+      ]
+    },
+    {
+      "group_id": 20,
+      "core_root": "ذَنْب (Dhanb)",
+      "core_meaning_en": "Sin / Fault",
+      "core_meaning_bn": "পাপ / গুনাহ",
+      "words": [
+        {
+          "serial_no": 285,
+          "arabic": "ذَنْبٍ",
+          "english": "A sin",
+          "bangla": "একটি পাপ"
+        },
+        {
+          "serial_no": 286,
+          "arabic": "ذَنْبِهِ",
+          "english": "His sin",
+          "bangla": "তার পাপ"
+        },
+        {
+          "serial_no": 287,
+          "arabic": "بِذَنْبِهِ",
+          "english": "Because of his sin",
+          "bangla": "তার পাপের কারণে"
+        },
+        {
+          "serial_no": 288,
+          "arabic": "بِذَنْبِهِمْ",
+          "english": "Because of their sin",
+          "bangla": "তাদের পাপের কারণে"
+        },
+        {
+          "serial_no": 289,
+          "arabic": "لِذَنْبِكَ",
+          "english": "For your sin",
+          "bangla": "তোমার পাপের জন্য"
+        },
+        {
+          "serial_no": 290,
+          "arabic": "بِذُنُوبٍ",
+          "english": "With sins",
+          "bangla": "পাপের কারণে"
+        },
+        {
+          "serial_no": 291,
+          "arabic": "بِذُنُوبِهِمْ",
+          "english": "Because of their sins",
+          "bangla": "তাদের পাপসমূহের কারণে"
+        },
+        {
+          "serial_no": 292,
+          "arabic": "لِذُنُوبِهِمْ",
+          "english": "For their sins",
+          "bangla": "তাদের পাপসমূহের জন্য"
+        },
+        {
+          "serial_no": 293,
+          "arabic": "ذُنُوبَكُمْ",
+          "english": "Your sins",
+          "bangla": "তোমাদের পাপসমূহ"
+        },
+        {
+          "serial_no": 294,
+          "arabic": "بِذُنُوبِكُمْ",
+          "english": "Because of your sins",
+          "bangla": "তোমাদের পাপসমূহের কারণে"
+        },
+        {
+          "serial_no": 295,
+          "arabic": "ذُنُوبَنَا",
+          "english": "Our sins",
+          "bangla": "আমাদের পাপসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 21,
+      "core_root": "مُسْلِم (Muslim)",
+      "core_meaning_en": "Muslim",
+      "core_meaning_bn": "মুসলমান / আত্মসমর্পণকারী",
+      "words": [
+        {
+          "serial_no": 296,
+          "arabic": "مُسْلِمٌ",
+          "english": "A Muslim",
+          "bangla": "একজন মুসলমান"
+        },
+        {
+          "serial_no": 297,
+          "arabic": "مُسْلِمُونَ",
+          "english": "Muslims (subj.)",
+          "bangla": "মুসলমানগণ"
+        },
+        {
+          "serial_no": 298,
+          "arabic": "مُسْلِمِينَ",
+          "english": "Muslims (obj./poss.)",
+          "bangla": "মুসলমানদেরকে"
+        },
+        {
+          "serial_no": 299,
+          "arabic": "لِلْمُسْلِمِينَ",
+          "english": "For the Muslims",
+          "bangla": "মুসলমানদের জন্য"
+        },
+        {
+          "serial_no": 300,
+          "arabic": "مُسْلِمَةٌ",
+          "english": "A Muslim (fem.)",
+          "bangla": "একজন মুসলমান (স্ত্রী)"
+        },
+        {
+          "serial_no": 301,
+          "arabic": "مُسْلِمَاتٍ",
+          "english": "Muslim women",
+          "bangla": "মুসলমান নারীগণ"
+        },
+        {
+          "serial_no": 302,
+          "arabic": "وَالْمُسْلِمَاتُ",
+          "english": "And the Muslim women",
+          "bangla": "এবং মুসলমান নারীগণ"
+        }
+      ]
+    },
+    {
+      "group_id": 22,
+      "core_root": "مُؤْمِن (Mu'min)",
+      "core_meaning_en": "Believer",
+      "core_meaning_bn": "বিশ্বাসী / মুমিন",
+      "words": [
+        {
+          "serial_no": 303,
+          "arabic": "مُؤْمِنٌ",
+          "english": "A believer",
+          "bangla": "একজন মুমিন"
+        },
+        {
+          "serial_no": 304,
+          "arabic": "لِمُؤْمِنٍ",
+          "english": "For a believer",
+          "bangla": "একজন মুমিনের জন্য"
+        },
+        {
+          "serial_no": 305,
+          "arabic": "وَالْمُؤْمِنُونَ",
+          "english": "And the believers",
+          "bangla": "এবং মুমিনগণ"
+        },
+        {
+          "serial_no": 306,
+          "arabic": "بِالْمُؤْمِنِينَ",
+          "english": "With the believers",
+          "bangla": "মুমিনদের প্রতি"
+        },
+        {
+          "serial_no": 307,
+          "arabic": "لِلْمُؤْمِنِينَ",
+          "english": "For the believers",
+          "bangla": "মুমিনদের জন্য"
+        },
+        {
+          "serial_no": 308,
+          "arabic": "وَلِلْمُؤْمِنِينَ",
+          "english": "And for the believers",
+          "bangla": "এবং মুমিনদের জন্য"
+        },
+        {
+          "serial_no": 309,
+          "arabic": "مُؤْمِنَةٌ",
+          "english": "A believer (fem.)",
+          "bangla": "একজন মুমিনা"
+        },
+        {
+          "serial_no": 310,
+          "arabic": "وَالْمُؤْمِنَاتُ",
+          "english": "And the believing women",
+          "bangla": "এবং মুমিনা নারীগণ"
+        },
+        {
+          "serial_no": 311,
+          "arabic": "لِلْمُؤْمِنَاتِ",
+          "english": "For the believing women",
+          "bangla": "মুমিনা নারীগণের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 23,
+      "core_root": "مُشْرِك (Mushrik)",
+      "core_meaning_en": "Polytheist / Idolater",
+      "core_meaning_bn": "অংশীবাদী / মুশরিক",
+      "words": [
+        {
+          "serial_no": 312,
+          "arabic": "مُشْرِكُونَ",
+          "english": "Polytheists",
+          "bangla": "মুশরিকগণ"
+        },
+        {
+          "serial_no": 313,
+          "arabic": "مُشْرِكِينَ",
+          "english": "Polytheists (obj.)",
+          "bangla": "মুশরিকদেরকে"
+        },
+        {
+          "serial_no": 314,
+          "arabic": "وَالْمُشْرِكِينَ",
+          "english": "And the polytheists",
+          "bangla": "এবং মুশরিকগণ"
+        },
+        {
+          "serial_no": 315,
+          "arabic": "لِمُشْرِكُونَ",
+          "english": "Surely polytheists",
+          "bangla": "অবশ্যই মুশরিক"
+        },
+        {
+          "serial_no": 316,
+          "arabic": "لِلْمُشْرِكِينَ",
+          "english": "For the polytheists",
+          "bangla": "মুশরিকদের জন্য"
+        },
+        {
+          "serial_no": 317,
+          "arabic": "مُشْرِكَةٌ",
+          "english": "A polytheist (fem.)",
+          "bangla": "একজন মুশরিক নারী"
+        },
+        {
+          "serial_no": 318,
+          "arabic": "الْمُشْرِكَاتِ",
+          "english": "The polytheist women",
+          "bangla": "মুশরিক নারীগণ"
+        },
+        {
+          "serial_no": 319,
+          "arabic": "وَالْمُشْرِكَاتِ",
+          "english": "And the polytheist women",
+          "bangla": "এবং মুশরিক নারীগণ"
+        }
+      ]
+    },
+    {
+      "group_id": 24,
+      "core_root": "كَافِر (Kafir)",
+      "core_meaning_en": "Disbeliever",
+      "core_meaning_bn": "অবিশ্বাসী / কাফের",
+      "words": [
+        {
+          "serial_no": 320,
+          "arabic": "الْكَافِرُونَ",
+          "english": "The disbelievers",
+          "bangla": "কাফেরগণ"
+        },
+        {
+          "serial_no": 321,
+          "arabic": "وَالْكَافِرُونَ",
+          "english": "And the disbelievers",
+          "bangla": "এবং কাফেরগণ"
+        },
+        {
+          "serial_no": 322,
+          "arabic": "لَكَافِرُونَ",
+          "english": "Surely disbelievers",
+          "bangla": "অবশ্যই কাফের"
+        },
+        {
+          "serial_no": 323,
+          "arabic": "الْكَافِرِينَ",
+          "english": "The disbelievers (obj.)",
+          "bangla": "কাফেরদেরকে"
+        },
+        {
+          "serial_no": 324,
+          "arabic": "وَالْكَافِرِينَ",
+          "english": "And the disbelievers",
+          "bangla": "এবং কাফেরদের"
+        },
+        {
+          "serial_no": 325,
+          "arabic": "بِالْكَافِرِينَ",
+          "english": "With the disbelievers",
+          "bangla": "কাফেরদের প্রতি"
+        },
+        {
+          "serial_no": 326,
+          "arabic": "لِلْكَافِرِينَ",
+          "english": "For the disbelievers",
+          "bangla": "কাফেরদের জন্য"
+        },
+        {
+          "serial_no": 327,
+          "arabic": "وَلِلْكَافِرِينَ",
+          "english": "And for the disbelievers",
+          "bangla": "এবং কাফেরদের জন্য"
+        },
+        {
+          "serial_no": 328,
+          "arabic": "كَافِرَةٌ",
+          "english": "A disbeliever (fem.)",
+          "bangla": "একজন কাফের নারী"
+        }
+      ]
+    },
+    {
+      "group_id": 25,
+      "core_root": "صَلَح (Salaha)",
+      "core_meaning_en": "Righteous / Good",
+      "core_meaning_bn": "সৎ / নেক / ভালো",
+      "words": [
+        {
+          "serial_no": 329,
+          "arabic": "صَالِحٌ",
+          "english": "Righteous",
+          "bangla": "সৎকর্মশীল"
+        },
+        {
+          "serial_no": 330,
+          "arabic": "صَالِحًا",
+          "english": "Righteous (adv.)",
+          "bangla": "সৎকাজ"
+        },
+        {
+          "serial_no": 331,
+          "arabic": "صَالِحَ",
+          "english": "Good / Righteous of",
+          "bangla": "সৎ"
+        },
+        {
+          "serial_no": 332,
+          "arabic": "الصَّالِحُونَ",
+          "english": "The righteous ones (subj.)",
+          "bangla": "সৎকর্মশীলগণ"
+        },
+        {
+          "serial_no": 333,
+          "arabic": "الصَّالِحِينَ",
+          "english": "The righteous ones (obj.)",
+          "bangla": "সৎকর্মশীলদেরকে"
+        },
+        {
+          "serial_no": 334,
+          "arabic": "وَالصَّالِحِينَ",
+          "english": "And the righteous ones",
+          "bangla": "এবং সৎকর্মশীলগণ"
+        },
+        {
+          "serial_no": 335,
+          "arabic": "بِالصَّالِحِينَ",
+          "english": "With the righteous ones",
+          "bangla": "সৎকর্মশীলদের সাথে"
+        },
+        {
+          "serial_no": 336,
+          "arabic": "الصَّالِحَاتُ",
+          "english": "Righteous deeds",
+          "bangla": "সৎকাজসমূহ"
+        },
+        {
+          "serial_no": 337,
+          "arabic": "فَالصَّالِحَاتُ",
+          "english": "So the righteous (fem. plural)",
+          "bangla": "সুতরাং সৎকর্মশীলা নারীগণ"
+        }
+      ]
+    },
+    {
+      "group_id": 26,
+      "core_root": "يَوْم (Yawm)",
+      "core_meaning_en": "Day",
+      "core_meaning_bn": "দিন / দিবস",
+      "words": [
+        {
+          "serial_no": 338,
+          "arabic": "الْيَوْمُ",
+          "english": "The day / Today",
+          "bangla": "আজ / দিনটি"
+        },
+        {
+          "serial_no": 339,
+          "arabic": "وَيَوْمَ",
+          "english": "And the day",
+          "bangla": "এবং যেদিন"
+        },
+        {
+          "serial_no": 340,
+          "arabic": "وَالْيَوْمَ",
+          "english": "And the day",
+          "bangla": "এবং দিনটি"
+        },
+        {
+          "serial_no": 341,
+          "arabic": "فَالْيَوْمَ",
+          "english": "So today",
+          "bangla": "সুতরাং আজ"
+        },
+        {
+          "serial_no": 342,
+          "arabic": "بِيَوْمِ",
+          "english": "In a day",
+          "bangla": "কোনো দিনে"
+        },
+        {
+          "serial_no": 343,
+          "arabic": "بِالْيَوْمِ",
+          "english": "With the day",
+          "bangla": "দিনের সাথে"
+        },
+        {
+          "serial_no": 344,
+          "arabic": "وَبِالْيَوْمِ",
+          "english": "And with the day",
+          "bangla": "এবং দিনটির সাথে"
+        },
+        {
+          "serial_no": 345,
+          "arabic": "لِيَوْمِ",
+          "english": "For a day",
+          "bangla": "কোনো দিনের জন্য"
+        },
+        {
+          "serial_no": 346,
+          "arabic": "يَوْمُهُمُ",
+          "english": "Their day",
+          "bangla": "তাদের দিন"
+        },
+        {
+          "serial_no": 347,
+          "arabic": "يَوْمُكُمْ",
+          "english": "Your day",
+          "bangla": "তোমাদের দিন"
+        },
+        {
+          "serial_no": 348,
+          "arabic": "يَوْمَيْنِ",
+          "english": "Two days",
+          "bangla": "দুই দিন"
+        },
+        {
+          "serial_no": 349,
+          "arabic": "يَوْمَئِذٍ",
+          "english": "That day",
+          "bangla": "সেদিন"
+        },
+        {
+          "serial_no": 350,
+          "arabic": "وَيَوْمَئِذٍ",
+          "english": "And that day",
+          "bangla": "এবং সেদিন"
+        },
+        {
+          "serial_no": 351,
+          "arabic": "فَيَوْمَئِذٍ",
+          "english": "So that day",
+          "bangla": "সুতরাং সেদিন"
+        },
+        {
+          "serial_no": 352,
+          "arabic": "الْأَيَّامِ",
+          "english": "The days",
+          "bangla": "দিনসমূহ"
+        },
+        {
+          "serial_no": 353,
+          "arabic": "بِأَيَّامِ",
+          "english": "With the days of",
+          "bangla": "দিনগুলোর দ্বারা"
+        },
+        {
+          "serial_no": 354,
+          "arabic": "وَأَيَّامًا",
+          "english": "And days",
+          "bangla": "এবং অনেক দিন"
+        }
+      ]
+    },
+    {
+      "group_id": 27,
+      "core_root": "كَتَب (Kataba)",
+      "core_meaning_en": "Book / Write",
+      "core_meaning_bn": "বই / কিতাব / লেখা",
+      "words": [
+        {
+          "serial_no": 355,
+          "arabic": "الْكِتَابُ",
+          "english": "The book",
+          "bangla": "কিতাবটি"
+        },
+        {
+          "serial_no": 356,
+          "arabic": "وَكِتَابٌ",
+          "english": "And a book",
+          "bangla": "এবং একটি কিতাব"
+        },
+        {
+          "serial_no": 357,
+          "arabic": "لِكِتَابٍ",
+          "english": "For a book",
+          "bangla": "একটি কিতাবের জন্য"
+        },
+        {
+          "serial_no": 358,
+          "arabic": "بِكِتَابٍ",
+          "english": "With a book",
+          "bangla": "একটি কিতাবসহ"
+        },
+        {
+          "serial_no": 359,
+          "arabic": "بِالْكِتَابِ",
+          "english": "With the book",
+          "bangla": "কিতাবসহ"
+        },
+        {
+          "serial_no": 360,
+          "arabic": "وَبِالْكِتَابِ",
+          "english": "And with the book",
+          "bangla": "এবং কিতাবসহ"
+        },
+        {
+          "serial_no": 361,
+          "arabic": "كِتَابُهُ",
+          "english": "His book",
+          "bangla": "তার কিতাব"
+        },
+        {
+          "serial_no": 362,
+          "arabic": "كِتَابُهُمْ",
+          "english": "Their book",
+          "bangla": "তাদের কিতাব"
+        },
+        {
+          "serial_no": 363,
+          "arabic": "كِتَابُكَ",
+          "english": "Your book",
+          "bangla": "তোমার কিতাব"
+        },
+        {
+          "serial_no": 364,
+          "arabic": "بِكِتَابِي",
+          "english": "With my book",
+          "bangla": "আমার কিতাবের সাথে"
+        },
+        {
+          "serial_no": 365,
+          "arabic": "بِكِتَابِكُمْ",
+          "english": "With your book (all)",
+          "bangla": "তোমাদের কিতাবসহ"
+        },
+        {
+          "serial_no": 366,
+          "arabic": "كِتَابُنَا",
+          "english": "Our book",
+          "bangla": "আমাদের কিতাব"
+        },
+        {
+          "serial_no": 367,
+          "arabic": "كُتُبُهَا",
+          "english": "Her books",
+          "bangla": "তার কিতাবসমূহ"
+        },
+        {
+          "serial_no": 368,
+          "arabic": "كُتُبٌ",
+          "english": "Books",
+          "bangla": "কিতাবসমূহ"
+        },
+        {
+          "serial_no": 369,
+          "arabic": "لِلْكُتُبِ",
+          "english": "For the books",
+          "bangla": "কিতাবসমূহের জন্য"
+        },
+        {
+          "serial_no": 370,
+          "arabic": "وَكُتُبِهِ",
+          "english": "And His books",
+          "bangla": "এবং তাঁর কিতাবসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 28,
+      "core_root": "آيَة (Ayah)",
+      "core_meaning_en": "Sign / Verse",
+      "core_meaning_bn": "নিদর্শন / আয়াত",
+      "words": [
+        {
+          "serial_no": 371,
+          "arabic": "آيَةٌ",
+          "english": "A sign",
+          "bangla": "একটি নিদর্শন"
+        },
+        {
+          "serial_no": 372,
+          "arabic": "وَآيَةٌ",
+          "english": "And a sign",
+          "bangla": "এবং একটি নিদর্শন"
+        },
+        {
+          "serial_no": 373,
+          "arabic": "لَآيَةً",
+          "english": "Surely a sign",
+          "bangla": "অবশ্যই একটি নিদর্শন"
+        },
+        {
+          "serial_no": 374,
+          "arabic": "بِآيَةٍ",
+          "english": "With a sign",
+          "bangla": "একটি নিদর্শনসহ"
+        },
+        {
+          "serial_no": 375,
+          "arabic": "آيَتُكَ",
+          "english": "Your sign",
+          "bangla": "তোমার নিদর্শন"
+        },
+        {
+          "serial_no": 376,
+          "arabic": "آيَتَيْنِ",
+          "english": "Two signs",
+          "bangla": "দুটি নিদর্শন"
+        },
+        {
+          "serial_no": 377,
+          "arabic": "آيَةُ",
+          "english": "Sign of",
+          "bangla": "নিদর্শন"
+        },
+        {
+          "serial_no": 378,
+          "arabic": "الْآيَاتُ",
+          "english": "The signs",
+          "bangla": "নিদর্শনসমূহ"
+        },
+        {
+          "serial_no": 379,
+          "arabic": "لِآيَاتِ",
+          "english": "For signs of",
+          "bangla": "নিদর্শনসমূহের জন্য"
+        },
+        {
+          "serial_no": 380,
+          "arabic": "بِآيَاتِ",
+          "english": "With signs of",
+          "bangla": "নিদর্শনসমূহ দ্বারা"
+        },
+        {
+          "serial_no": 381,
+          "arabic": "آيَتُهُ",
+          "english": "His sign",
+          "bangla": "তার নিদর্শন"
+        },
+        {
+          "serial_no": 382,
+          "arabic": "وَآيَتُهُ",
+          "english": "And his sign",
+          "bangla": "এবং তার নিদর্শন"
+        },
+        {
+          "serial_no": 383,
+          "arabic": "بِآيَاتِهِ",
+          "english": "With His signs",
+          "bangla": "তাঁর নিদর্শনসমূহ দ্বারা"
+        },
+        {
+          "serial_no": 384,
+          "arabic": "آيَاتِكَ",
+          "english": "Your signs",
+          "bangla": "তোমার নিদর্শনসমূহ"
+        },
+        {
+          "serial_no": 385,
+          "arabic": "آيَاتِي",
+          "english": "My signs",
+          "bangla": "আমার নিদর্শনসমূহ"
+        },
+        {
+          "serial_no": 386,
+          "arabic": "بِآيَاتِي",
+          "english": "With my signs",
+          "bangla": "আমার নিদর্শনসমূহ দ্বারা"
+        },
+        {
+          "serial_no": 387,
+          "arabic": "آيَاتُنَا",
+          "english": "Our signs",
+          "bangla": "আমাদের নিদর্শনসমূহ"
+        },
+        {
+          "serial_no": 388,
+          "arabic": "بِآيَاتِنَا",
+          "english": "With our signs",
+          "bangla": "আমাদের নিদর্শনসমূহ দ্বারা"
+        },
+        {
+          "serial_no": 389,
+          "arabic": "لِآيَاتِنَا",
+          "english": "For our signs",
+          "bangla": "আমাদের নিদর্শনসমূহের জন্য"
+        },
+        {
+          "serial_no": 390,
+          "arabic": "آيَاتِهَا",
+          "english": "Its signs",
+          "bangla": "তার নিদর্শনসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 29,
+      "core_root": "لِ (Li)",
+      "core_meaning_en": "For / To",
+      "core_meaning_bn": "জন্য / কাছে",
+      "words": [
+        {
+          "serial_no": 391,
+          "arabic": "لَهُ",
+          "english": "For him",
+          "bangla": "তার জন্য"
+        },
+        {
+          "serial_no": 392,
+          "arabic": "وَلَهُ",
+          "english": "And for him",
+          "bangla": "এবং তার জন্য"
+        },
+        {
+          "serial_no": 393,
+          "arabic": "فَلَهُ",
+          "english": "So for him",
+          "bangla": "সুতরাং তার জন্য"
+        },
+        {
+          "serial_no": 394,
+          "arabic": "لَهُمْ",
+          "english": "For them",
+          "bangla": "তাদের জন্য"
+        },
+        {
+          "serial_no": 395,
+          "arabic": "وَلَهُمْ",
+          "english": "And for them",
+          "bangla": "এবং তাদের জন্য"
+        },
+        {
+          "serial_no": 396,
+          "arabic": "فَلَهُمْ",
+          "english": "So for them",
+          "bangla": "সুতরাং তাদের জন্য"
+        },
+        {
+          "serial_no": 397,
+          "arabic": "أَلَهُمْ",
+          "english": "Is it for them?",
+          "bangla": "তাদের জন্য কি?"
+        },
+        {
+          "serial_no": 398,
+          "arabic": "لَكَ",
+          "english": "For you",
+          "bangla": "তোমার জন্য"
+        },
+        {
+          "serial_no": 399,
+          "arabic": "وَلَكَ",
+          "english": "And for you",
+          "bangla": "এবং তোমার জন্য"
+        },
+        {
+          "serial_no": 400,
+          "arabic": "لِي",
+          "english": "For me",
+          "bangla": "আমার জন্য"
+        },
+        {
+          "serial_no": 401,
+          "arabic": "لِيَ",
+          "english": "For me (alternate)",
+          "bangla": "আমার জন্য"
+        },
+        {
+          "serial_no": 402,
+          "arabic": "وَلِيَ",
+          "english": "And for me",
+          "bangla": "এবং আমার জন্য"
+        },
+        {
+          "serial_no": 403,
+          "arabic": "لَكُمْ",
+          "english": "For you (all)",
+          "bangla": "তোমাদের জন্য"
+        },
+        {
+          "serial_no": 404,
+          "arabic": "وَلَكُمْ",
+          "english": "And for you (all)",
+          "bangla": "এবং তোমাদের জন্য"
+        },
+        {
+          "serial_no": 405,
+          "arabic": "فَلَكُمْ",
+          "english": "So for you (all)",
+          "bangla": "সুতরাং তোমাদের জন্য"
+        },
+        {
+          "serial_no": 406,
+          "arabic": "أَلَكُمْ",
+          "english": "Is it for you?",
+          "bangla": "তোমাদের জন্য কি?"
+        },
+        {
+          "serial_no": 407,
+          "arabic": "لَنَا",
+          "english": "For us",
+          "bangla": "আমাদের জন্য"
+        },
+        {
+          "serial_no": 408,
+          "arabic": "وَلَنَا",
+          "english": "And for us",
+          "bangla": "এবং আমাদের জন্য"
+        },
+        {
+          "serial_no": 409,
+          "arabic": "لَمَا",
+          "english": "For what / Surely what",
+          "bangla": "যা কিছুর জন্য"
+        },
+        {
+          "serial_no": 410,
+          "arabic": "لِمَ",
+          "english": "Why?",
+          "bangla": "কেন?"
+        },
+        {
+          "serial_no": 411,
+          "arabic": "فَلِمَ",
+          "english": "So why?",
+          "bangla": "সুতরাং কেন?"
+        }
+      ]
+    },
+    {
+      "group_id": 30,
+      "core_root": "مِنْ (Min)",
+      "core_meaning_en": "From / Than",
+      "core_meaning_bn": "হতে / থেকে / চেয়ে",
+      "words": [
+        {
+          "serial_no": 412,
+          "arabic": "وَمِنْ",
+          "english": "And from",
+          "bangla": "এবং থেকে"
+        },
+        {
+          "serial_no": 413,
+          "arabic": "فَمِنْ",
+          "english": "So from",
+          "bangla": "সুতরাং থেকে"
+        },
+        {
+          "serial_no": 414,
+          "arabic": "أَفَمِنْ",
+          "english": "Is it then from?",
+          "bangla": "অতঃপর থেকে কি?"
+        },
+        {
+          "serial_no": 415,
+          "arabic": "لَمِنْ",
+          "english": "Surely from",
+          "bangla": "নিশ্চয়ই থেকে"
+        },
+        {
+          "serial_no": 416,
+          "arabic": "مِنْهُ",
+          "english": "From him / it",
+          "bangla": "তার থেকে"
+        },
+        {
+          "serial_no": 417,
+          "arabic": "وَمِنْهُ",
+          "english": "And from him / it",
+          "bangla": "এবং তার থেকে"
+        },
+        {
+          "serial_no": 418,
+          "arabic": "فَمِنْهُ",
+          "english": "So from him / it",
+          "bangla": "সুতরাং তার থেকে"
+        },
+        {
+          "serial_no": 419,
+          "arabic": "مِنْهُمْ",
+          "english": "From them",
+          "bangla": "তাদের থেকে"
+        },
+        {
+          "serial_no": 420,
+          "arabic": "فَمِنْهُمْ",
+          "english": "So from them",
+          "bangla": "সুতরাং তাদের থেকে"
+        },
+        {
+          "serial_no": 421,
+          "arabic": "مِنْكَ",
+          "english": "From you",
+          "bangla": "তোমার থেকে"
+        },
+        {
+          "serial_no": 422,
+          "arabic": "مِنِّي",
+          "english": "From me",
+          "bangla": "আমার থেকে"
+        },
+        {
+          "serial_no": 423,
+          "arabic": "مِنْكُمْ",
+          "english": "From you (all)",
+          "bangla": "তোমাদের থেকে"
+        },
+        {
+          "serial_no": 424,
+          "arabic": "وَمِنْكُمْ",
+          "english": "And from you (all)",
+          "bangla": "এবং তোমাদের থেকে"
+        },
+        {
+          "serial_no": 425,
+          "arabic": "فَمِنْكُمْ",
+          "english": "So from you (all)",
+          "bangla": "সুতরাং তোমাদের থেকে"
+        },
+        {
+          "serial_no": 426,
+          "arabic": "لَمِنْكُمْ",
+          "english": "Surely from you",
+          "bangla": "নিশ্চয়ই তোমাদের মধ্য হতে"
+        },
+        {
+          "serial_no": 427,
+          "arabic": "مِنَّا",
+          "english": "From us",
+          "bangla": "আমাদের থেকে"
+        },
+        {
+          "serial_no": 428,
+          "arabic": "وَمِنَّا",
+          "english": "And from us",
+          "bangla": "এবং আমাদের থেকে"
+        },
+        {
+          "serial_no": 429,
+          "arabic": "مِنْهَا",
+          "english": "From her / it",
+          "bangla": "তার (স্ত্রী) থেকে"
+        },
+        {
+          "serial_no": 430,
+          "arabic": "وَمِنْهَا",
+          "english": "And from her / it",
+          "bangla": "এবং তার থেকে"
+        },
+        {
+          "serial_no": 431,
+          "arabic": "فَمِنْهَا",
+          "english": "So from her / it",
+          "bangla": "সুতরাং তার থেকে"
+        },
+        {
+          "serial_no": 432,
+          "arabic": "مِمَّنْ",
+          "english": "From whom",
+          "bangla": "যার থেকে"
+        },
+        {
+          "serial_no": 433,
+          "arabic": "وَمِمَّنْ",
+          "english": "And from whom",
+          "bangla": "এবং যার থেকে"
+        }
+      ]
+    },
+    {
+      "group_id": 31,
+      "core_root": "إِنَّ (Inna)",
+      "core_meaning_en": "Indeed / Surely",
+      "core_meaning_bn": "নিশ্চয়ই",
+      "words": [
+        {
+          "serial_no": 434,
+          "arabic": "وَإِنَّ",
+          "english": "And indeed",
+          "bangla": "এবং নিশ্চয়ই"
+        },
+        {
+          "serial_no": 435,
+          "arabic": "فَإِنَّ",
+          "english": "So indeed",
+          "bangla": "সুতরাং নিশ্চয়ই"
+        },
+        {
+          "serial_no": 436,
+          "arabic": "أَئِنَّ",
+          "english": "Is it indeed?",
+          "bangla": "নিশ্চয়ই কি?"
+        },
+        {
+          "serial_no": 437,
+          "arabic": "إِنَّهُ",
+          "english": "Indeed he / it",
+          "bangla": "নিশ্চয়ই সে"
+        },
+        {
+          "serial_no": 438,
+          "arabic": "وَإِنَّهُ",
+          "english": "And indeed he",
+          "bangla": "এবং নিশ্চয়ই সে"
+        },
+        {
+          "serial_no": 439,
+          "arabic": "فإِنَّهُ",
+          "english": "So indeed he",
+          "bangla": "সুতরাং নিশ্চয়ই সে"
+        },
+        {
+          "serial_no": 440,
+          "arabic": "إِنَّهُمْ",
+          "english": "Indeed they",
+          "bangla": "নিশ্চয়ই তারা"
+        },
+        {
+          "serial_no": 441,
+          "arabic": "وَإِنَّهُمْ",
+          "english": "And indeed they",
+          "bangla": "এবং নিশ্চয়ই তারা"
+        },
+        {
+          "serial_no": 442,
+          "arabic": "فَإِنَّهُمْ",
+          "english": "So indeed they",
+          "bangla": "সুতরাং নিশ্চয়ই তারা"
+        },
+        {
+          "serial_no": 443,
+          "arabic": "إِنَّكَ",
+          "english": "Indeed you",
+          "bangla": "নিশ্চয়ই তুমি"
+        },
+        {
+          "serial_no": 444,
+          "arabic": "وَإِنَّكَ",
+          "english": "And indeed you",
+          "bangla": "এবং নিশ্চয়ই তুমি"
+        },
+        {
+          "serial_no": 445,
+          "arabic": "فَإِنَّكَ",
+          "english": "So indeed you",
+          "bangla": "সুতরাং নিশ্চয়ই তুমি"
+        },
+        {
+          "serial_no": 446,
+          "arabic": "أَئِنَّكَ",
+          "english": "Are you indeed?",
+          "bangla": "তুমি কি নিশ্চয়ই?"
+        },
+        {
+          "serial_no": 447,
+          "arabic": "إِنِّي",
+          "english": "Indeed I",
+          "bangla": "নিশ্চয়ই আমি"
+        },
+        {
+          "serial_no": 448,
+          "arabic": "وَإِنِّي",
+          "english": "And indeed I",
+          "bangla": "এবং নিশ্চয়ই আমি"
+        },
+        {
+          "serial_no": 449,
+          "arabic": "فَإِنِّي",
+          "english": "So indeed I",
+          "bangla": "সুতরাং নিশ্চয়ই আমি"
+        },
+        {
+          "serial_no": 450,
+          "arabic": "إِنَّنِي",
+          "english": "Indeed I am",
+          "bangla": "নিশ্চয়ই আমি"
+        },
+        {
+          "serial_no": 451,
+          "arabic": "وَإِنَّنِي",
+          "english": "And indeed I am",
+          "bangla": "এবং নিশ্চয়ই আমি"
+        },
+        {
+          "serial_no": 452,
+          "arabic": "إِنَّكُمْ",
+          "english": "Indeed you (all)",
+          "bangla": "নিশ্চয়ই তোমরা"
+        },
+        {
+          "serial_no": 453,
+          "arabic": "وَإِنَّكُمْ",
+          "english": "And indeed you (all)",
+          "bangla": "এবং নিশ্চয়ই তোমরা"
+        },
+        {
+          "serial_no": 454,
+          "arabic": "فَإِنَّكُمْ",
+          "english": "So indeed you (all)",
+          "bangla": "সুতরাং নিশ্চয়ই তোমরা"
+        },
+        {
+          "serial_no": 455,
+          "arabic": "أَئِنَّكُمْ",
+          "english": "Are you (all) indeed?",
+          "bangla": "তোমরা কি নিশ্চয়ই?"
+        },
+        {
+          "serial_no": 456,
+          "arabic": "إِنَّا",
+          "english": "Indeed we",
+          "bangla": "নিশ্চয়ই আমরা"
+        },
+        {
+          "serial_no": 457,
+          "arabic": "فَإِنَّا",
+          "english": "So indeed we",
+          "bangla": "সুতরাং নিশ্চয়ই আমরা"
+        },
+        {
+          "serial_no": 458,
+          "arabic": "أَئِنَّا",
+          "english": "Are we indeed?",
+          "bangla": "আমরা কি নিশ্চয়ই?"
+        },
+        {
+          "serial_no": 459,
+          "arabic": "إِنَّنَا",
+          "english": "Indeed we are",
+          "bangla": "নিশ্চয়ই আমরা"
+        },
+        {
+          "serial_no": 460,
+          "arabic": "وَإِنَّنَا",
+          "english": "And indeed we are",
+          "bangla": "এবং নিশ্চয়ই আমরা"
+        },
+        {
+          "serial_no": 461,
+          "arabic": "إِنَّهَا",
+          "english": "Indeed she / it",
+          "bangla": "নিশ্চয়ই তা (স্ত্রী)"
+        },
+        {
+          "serial_no": 462,
+          "arabic": "وَإِنَّهَا",
+          "english": "And indeed she / it",
+          "bangla": "এবং নিশ্চয়ই তা"
+        },
+        {
+          "serial_no": 463,
+          "arabic": "فَإِنَّهَا",
+          "english": "So indeed she / it",
+          "bangla": "সুতরাং নিশ্চয়ই তা"
+        },
+        {
+          "serial_no": 464,
+          "arabic": "إِنَّهُمَا",
+          "english": "Indeed they both",
+          "bangla": "নিশ্চয়ই তারা উভয়"
+        },
+        {
+          "serial_no": 465,
+          "arabic": "وَإِنَّهُمَا",
+          "english": "And indeed they both",
+          "bangla": "এবং নিশ্চয়ই তারা উভয়"
+        },
+        {
+          "serial_no": 466,
+          "arabic": "إِنَّهُنَّ",
+          "english": "Indeed they (fem.)",
+          "bangla": "নিশ্চয়ই তারা (স্ত্রী)"
+        },
+        {
+          "serial_no": 467,
+          "arabic": "إِنَّكِ",
+          "english": "Indeed you (fem.)",
+          "bangla": "নিশ্চয়ই তুমি (স্ত্রী)"
+        }
+      ]
+    },
+    {
+      "group_id": 32,
+      "core_root": "فِي (Fi)",
+      "core_meaning_en": "In / About",
+      "core_meaning_bn": "মধ্যে / ভেতরে / সম্পর্কে",
+      "words": [
+        {
+          "serial_no": 468,
+          "arabic": "وَفِي",
+          "english": "And in",
+          "bangla": "এবং মধ্যে"
+        },
+        {
+          "serial_no": 469,
+          "arabic": "فَفِي",
+          "english": "So in",
+          "bangla": "সুতরাং মধ্যে"
+        },
+        {
+          "serial_no": 470,
+          "arabic": "لَفِي",
+          "english": "Surely in",
+          "bangla": "নিশ্চয়ই মধ্যে"
+        },
+        {
+          "serial_no": 471,
+          "arabic": "أَفِي",
+          "english": "Is it in?",
+          "bangla": "মধ্যে কি?"
+        },
+        {
+          "serial_no": 472,
+          "arabic": "فِيهِ",
+          "english": "In him / it",
+          "bangla": "তার মধ্যে"
+        },
+        {
+          "serial_no": 473,
+          "arabic": "وَفِيهِ",
+          "english": "And in him / it",
+          "bangla": "এবং তার মধ্যে"
+        },
+        {
+          "serial_no": 474,
+          "arabic": "فِيهِمْ",
+          "english": "In them",
+          "bangla": "তাদের মধ্যে"
+        },
+        {
+          "serial_no": 475,
+          "arabic": "فِيكُمْ",
+          "english": "In you (all)",
+          "bangla": "তোমাদের মধ্যে"
+        },
+        {
+          "serial_no": 476,
+          "arabic": "وَفِيكُمْ",
+          "english": "And in you (all)",
+          "bangla": "এবং তোমাদের মধ্যে"
+        },
+        {
+          "serial_no": 477,
+          "arabic": "فِينَا",
+          "english": "In us",
+          "bangla": "আমাদের মধ্যে"
+        },
+        {
+          "serial_no": 478,
+          "arabic": "فِيهَا",
+          "english": "In her / it",
+          "bangla": "তার (স্ত্রী) মধ্যে"
+        },
+        {
+          "serial_no": 479,
+          "arabic": "وَفِيهَا",
+          "english": "And in her / it",
+          "bangla": "এবং তার মধ্যে"
+        },
+        {
+          "serial_no": 480,
+          "arabic": "فِيمَ",
+          "english": "In what / About what",
+          "bangla": "কীসের মধ্যে"
+        },
+        {
+          "serial_no": 481,
+          "arabic": "فِيمَا",
+          "english": "In that which",
+          "bangla": "তার মধ্যে যা"
+        }
+      ]
+    },
+    
+    {
+      "group_id": 1,
+      "core_root": "الله (Allah)",
+      "core_meaning_en": "God (Allah)",
+      "core_meaning_bn": "আল্লাহ",
+      "words": [
+        {
+          "serial_no": 1,
+          "arabic": "وَاللّٰهِ",
+          "english": "And by Allah",
+          "bangla": "আর আল্লাহর কসম"
+        },
+        {
+          "serial_no": 2,
+          "arabic": "فَاللّٰهِ",
+          "english": "So by Allah",
+          "bangla": "অতএব আল্লাহর কসম"
+        },
+        {
+          "serial_no": 3,
+          "arabic": "لِلّٰهِ",
+          "english": "For Allah",
+          "bangla": "আল্লাহর জন্য"
+        },
+        {
+          "serial_no": 4,
+          "arabic": "وَلِلّٰهِ",
+          "english": "And for Allah",
+          "bangla": "এবং আল্লাহর জন্য"
+        },
+        {
+          "serial_no": 5,
+          "arabic": "فَلِلّٰهِ",
+          "english": "So for Allah",
+          "bangla": "সুতরাং আল্লাহর জন্য"
+        },
+        {
+          "serial_no": 6,
+          "arabic": "اَبِاللّٰهِ",
+          "english": "Is it by Allah?",
+          "bangla": "আল্লাহর কসম কি?"
+        },
+        {
+          "serial_no": 7,
+          "arabic": "اَللّٰهُ",
+          "english": "Allah",
+          "bangla": "আল্লাহ"
+        },
+        {
+          "serial_no": 8,
+          "arabic": "بِاللّٰهِ",
+          "english": "By Allah / In Allah",
+          "bangla": "আল্লাহর নামে/সাথে"
+        },
+        {
+          "serial_no": 9,
+          "arabic": "تَاللّٰهِ",
+          "english": "By Allah (oath)",
+          "bangla": "আল্লাহর কসম"
+        },
+        {
+          "serial_no": 10,
+          "arabic": "وَتَاللّٰهِ",
+          "english": "And by Allah (oath)",
+          "bangla": "এবং আল্লাহর কসম"
+        }
+      ]
+    },
+    {
+      "group_id": 2,
+      "core_root": "شَيْطٰن (Shaytan)",
+      "core_meaning_en": "Satan / Devil",
+      "core_meaning_bn": "শয়তান",
+      "words": [
+        {
+          "serial_no": 11,
+          "arabic": "لِلشَّيْطٰنِ",
+          "english": "For the Satan",
+          "bangla": "শয়তানের জন্য"
+        },
+        {
+          "serial_no": 12,
+          "arabic": "وَالشَّيٰطِيْنَ",
+          "english": "And the Satans (Plural)",
+          "bangla": "এবং শয়তানরা"
+        },
+        {
+          "serial_no": 13,
+          "arabic": "لِلشَّيٰطِيْنِ",
+          "english": "For the Satans",
+          "bangla": "শয়তানদের জন্য"
+        },
+        {
+          "serial_no": 14,
+          "arabic": "شَيٰطِيْنُهُمْ",
+          "english": "Their Satans",
+          "bangla": "তাদের শয়তানরা"
+        }
+      ]
+    },
+    {
+      "group_id": 3,
+      "core_root": "هُوَ (Huwa)",
+      "core_meaning_en": "He / It",
+      "core_meaning_bn": "সে / তিনি",
+      "words": [
+        {
+          "serial_no": 15,
+          "arabic": "وَهُوَ",
+          "english": "And He",
+          "bangla": "এবং তিনি"
+        },
+        {
+          "serial_no": 16,
+          "arabic": "فَهُوَ",
+          "english": "So He",
+          "bangla": "অতএব তিনি"
+        },
+        {
+          "serial_no": 17,
+          "arabic": "لَهُوَ",
+          "english": "Surely He",
+          "bangla": "নিশ্চয়ই তিনি"
+        }
+      ]
+    },
+    {
+      "group_id": 4,
+      "core_root": "هُمْ (Hum)",
+      "core_meaning_en": "They",
+      "core_meaning_bn": "তারা",
+      "words": [
+        {
+          "serial_no": 18,
+          "arabic": "وَهُمْ",
+          "english": "And they",
+          "bangla": "এবং তারা"
+        },
+        {
+          "serial_no": 19,
+          "arabic": "فَهُمْ",
+          "english": "So they",
+          "bangla": "সুতরাং তারা"
+        },
+        {
+          "serial_no": 20,
+          "arabic": "اَهُمْ",
+          "english": "Are they?",
+          "bangla": "তারা কি?"
+        },
+        {
+          "serial_no": 21,
+          "arabic": "اَفَهُمْ",
+          "english": "Is it then they?",
+          "bangla": "তবে কি তারা?"
+        },
+        {
+          "serial_no": 22,
+          "arabic": "لَهُمْ",
+          "english": "For them / To them",
+          "bangla": "তাদের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 5,
+      "core_root": "اَنْتَ (Anta)",
+      "core_meaning_en": "You (Singular)",
+      "core_meaning_bn": "তুমি / আপনি",
+      "words": [
+        {
+          "serial_no": 23,
+          "arabic": "وَاَنْتَ",
+          "english": "And you",
+          "bangla": "এবং তুমি"
+        },
+        {
+          "serial_no": 24,
+          "arabic": "فَاَنْتَ",
+          "english": "So you",
+          "bangla": "সুতরাং তুমি"
+        },
+        {
+          "serial_no": 25,
+          "arabic": "اَاَنْتَ",
+          "english": "Are you?",
+          "bangla": "তুমি কি?"
+        },
+        {
+          "serial_no": 26,
+          "arabic": "اَفَاَنْتَ",
+          "english": "Is it then you?",
+          "bangla": "তবে কি তুমি?"
+        },
+        {
+          "serial_no": 27,
+          "arabic": "لَاَنْتَ",
+          "english": "Surely you",
+          "bangla": "অবশ্যই তুমি"
+        }
+      ]
+    },
+    {
+      "group_id": 6,
+      "core_root": "مَنْ (Man)",
+      "core_meaning_en": "Who / Whoever",
+      "core_meaning_bn": "কে / যে",
+      "words": [
+        {
+          "serial_no": 28,
+          "arabic": "وَمَنْ",
+          "english": "And who",
+          "bangla": "এবং যে"
+        },
+        {
+          "serial_no": 29,
+          "arabic": "اَوَمَنْ",
+          "english": "Or is it he who?",
+          "bangla": "অথবা সে কি যে?"
+        },
+        {
+          "serial_no": 30,
+          "arabic": "فَمَنْ",
+          "english": "So who",
+          "bangla": "সুতরাং যে"
+        },
+        {
+          "serial_no": 31,
+          "arabic": "لِمَنْ",
+          "english": "For whom",
+          "bangla": "যার জন্য"
+        },
+        {
+          "serial_no": 32,
+          "arabic": "اَفَمَنْ",
+          "english": "Is it then he who?",
+          "bangla": "তবে কি সে যে?"
+        },
+        {
+          "serial_no": 33,
+          "arabic": "كَمَنْ",
+          "english": "Like one who",
+          "bangla": "তার মত যে"
+        },
+        {
+          "serial_no": 34,
+          "arabic": "مِمَّنْ",
+          "english": "From whom",
+          "bangla": "তার থেকে যে"
+        },
+        {
+          "serial_no": 35,
+          "arabic": "بِمَنْ",
+          "english": "With whom",
+          "bangla": "তার সাথে যে"
+        }
+      ]
+    },
+    {
+      "group_id": 7,
+      "core_root": "خَيْر (Khair)",
+      "core_meaning_en": "Good / Better",
+      "core_meaning_bn": "ভালো / কল্যাণ",
+      "words": [
+        {
+          "serial_no": 36,
+          "arabic": "وَخَيْرٌ",
+          "english": "And good",
+          "bangla": "এবং উত্তম"
+        },
+        {
+          "serial_no": 37,
+          "arabic": "وَالْخَيْرِ",
+          "english": "And the good",
+          "bangla": "এবং কল্যাণ"
+        },
+        {
+          "serial_no": 38,
+          "arabic": "بِالْخَيْرِ",
+          "english": "With the good",
+          "bangla": "কল্যাণের সাথে"
+        },
+        {
+          "serial_no": 39,
+          "arabic": "بِخَيْرٍ",
+          "english": "With good",
+          "bangla": "ভালোভাবে"
+        },
+        {
+          "serial_no": 40,
+          "arabic": "لِلْخَيْرِ",
+          "english": "For the good",
+          "bangla": "কল্যাণের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 8,
+      "core_root": "أَنَا (Ana)",
+      "core_meaning_en": "I / Me",
+      "core_meaning_bn": "আমি",
+      "words": [
+        {
+          "serial_no": 41,
+          "arabic": "وَاَنَا",
+          "english": "And I",
+          "bangla": "এবং আমি"
+        },
+        {
+          "serial_no": 42,
+          "arabic": "فَاَنَا",
+          "english": "So I",
+          "bangla": "সুতরাং আমি"
+        }
+      ]
+    },
+    {
+      "group_id": 9,
+      "core_root": "أَنْتُمْ (Antum)",
+      "core_meaning_en": "You (Plural)",
+      "core_meaning_bn": "তোমরা / আপনারা",
+      "words": [
+        {
+          "serial_no": 43,
+          "arabic": "وَاَنْتُمْ",
+          "english": "And you (plural)",
+          "bangla": "এবং তোমরা"
+        },
+        {
+          "serial_no": 44,
+          "arabic": "فَاَنْتُمْ",
+          "english": "So you (plural)",
+          "bangla": "সুতরাং তোমরা"
+        },
+        {
+          "serial_no": 45,
+          "arabic": "اَاَنْتُمْ",
+          "english": "Are you?",
+          "bangla": "তোমরা কি?"
+        },
+        {
+          "serial_no": 46,
+          "arabic": "اَفَاَنْتُمْ",
+          "english": "Is it then you?",
+          "bangla": "তবে কি তোমরা?"
+        },
+        {
+          "serial_no": 47,
+          "arabic": "لَاَنْتُمْ",
+          "english": "Surely you",
+          "bangla": "অবশ্যই তোমরা"
+        },
+        {
+          "serial_no": 48,
+          "arabic": "هٰاَنْتُمْ",
+          "english": "Here you are",
+          "bangla": "এই যে তোমরা"
+        }
+      ]
+    },
+    {
+      "group_id": 10,
+      "core_root": "نَحْنُ (Nahnu)",
+      "core_meaning_en": "We / Us",
+      "core_meaning_bn": "আমরা",
+      "words": [
+        {
+          "serial_no": 49,
+          "arabic": "وَنَحْنُ",
+          "english": "And we",
+          "bangla": "এবং আমরা"
+        },
+        {
+          "serial_no": 50,
+          "arabic": "لَنَحْنُ",
+          "english": "Surely we",
+          "bangla": "অবশ্যই আমরা"
+        },
+        {
+          "serial_no": 51,
+          "arabic": "اَنَحْنُ",
+          "english": "Are we?",
+          "bangla": "আমরা কি?"
+        }
+      ]
+    },
+    {
+      "group_id": 11,
+      "core_root": "هَلْ (Hal)",
+      "core_meaning_en": "Is / Are / Do (Question particle)",
+      "core_meaning_bn": "কি? (প্রশ্নবোধক অবয়ব)",
+      "words": [
+        {
+          "serial_no": 52,
+          "arabic": "وَهَلْ",
+          "english": "And is/do?",
+          "bangla": "এবং কি?"
+        },
+        {
+          "serial_no": 53,
+          "arabic": "فَهَلْ",
+          "english": "So is/do?",
+          "bangla": "সুতরাং কি?"
+        }
+      ]
+    },
+    {
+      "group_id": 12,
+      "core_root": "اِسْم (Ism)",
+      "core_meaning_en": "Name",
+      "core_meaning_bn": "নাম",
+      "words": [
+        {
+          "serial_no": 54,
+          "arabic": "اِسْمُهُ",
+          "english": "His name",
+          "bangla": "তার নাম"
+        },
+        {
+          "serial_no": 55,
+          "arabic": "اَلِاسْمُ",
+          "english": "The name",
+          "bangla": "নামটি"
+        },
+        {
+          "serial_no": 56,
+          "arabic": "بِاسْمِ",
+          "english": "In the name of",
+          "bangla": "নামে"
+        },
+        {
+          "serial_no": 57,
+          "arabic": "بِسْمِ",
+          "english": "In the name of (contracted)",
+          "bangla": "নামে"
+        },
+        {
+          "serial_no": 58,
+          "arabic": "اَسْمَاءَ",
+          "english": "Names (Plural)",
+          "bangla": "নামসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 13,
+      "core_root": "رَحْمٰن (Rahman)",
+      "core_meaning_en": "Gracious / Compassionate",
+      "core_meaning_bn": "পরম দয়ালু",
+      "words": [
+        {
+          "serial_no": 59,
+          "arabic": "بِالرَّحْمٰنِ",
+          "english": "By the Most Gracious",
+          "bangla": "পরম করুণাময়ের সাথে"
+        },
+        {
+          "serial_no": 60,
+          "arabic": "لِلرَّحْمٰنِ",
+          "english": "For the Most Gracious",
+          "bangla": "পরম করুণাময়ের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 14,
+      "core_root": "رَحِيم (Rahim)",
+      "core_meaning_en": "Merciful",
+      "core_meaning_bn": "অতি দয়ালু",
+      "words": [
+        {
+          "serial_no": 61,
+          "arabic": "رَحِيْمٌ",
+          "english": "Merciful",
+          "bangla": "দয়ালু"
+        },
+        {
+          "serial_no": 62,
+          "arabic": "رَحِيْمًا",
+          "english": "Merciful (Accusative)",
+          "bangla": "দয়ালু হিসেবে"
+        },
+        {
+          "serial_no": 63,
+          "arabic": "رُحَمَاءَ",
+          "english": "Merciful (Plural)",
+          "bangla": "দয়াশীলগণ"
+        }
+      ]
+    },
+    {
+      "group_id": 15,
+      "core_root": "كَرِيم (Karim)",
+      "core_meaning_en": "Noble / Generous",
+      "core_meaning_bn": "সম্মানিত / দয়ালু",
+      "words": [
+        {
+          "serial_no": 64,
+          "arabic": "كَرِيْمٌ",
+          "english": "Generous",
+          "bangla": "সম্মানিত"
+        },
+        {
+          "serial_no": 65,
+          "arabic": "كَرِيْمًا",
+          "english": "Generous (Accusative)",
+          "bangla": "সম্মানিত হিসেবে"
+        },
+        {
+          "serial_no": 66,
+          "arabic": "كَرِيْمٍ",
+          "english": "Generous (Genitive)",
+          "bangla": "সম্মানিত এর"
+        },
+        {
+          "serial_no": 67,
+          "arabic": "اَلْكَرِيْمُ",
+          "english": "The Generous",
+          "bangla": "মহা সম্মানিত"
+        }
+      ]
+    },
+    {
+      "group_id": 16,
+      "core_root": "حَمْد (Hamd)",
+      "core_meaning_en": "Praise / Thanks",
+      "core_meaning_bn": "প্রশংসা",
+      "words": [
+        {
+          "serial_no": 68,
+          "arabic": "وَالْحَمْدُ",
+          "english": "And the praise",
+          "bangla": "এবং সকল প্রশংসা"
+        },
+        {
+          "serial_no": 69,
+          "arabic": "بِحَمْدِ",
+          "english": "With praise of",
+          "bangla": "প্রশংসার সাথে"
+        },
+        {
+          "serial_no": 70,
+          "arabic": "بِحَمْدِهِ",
+          "english": "With His praise",
+          "bangla": "তাঁর প্রশংসার সাথে"
+        },
+        {
+          "serial_no": 71,
+          "arabic": "بِحَمْدِكَ",
+          "english": "With Your praise",
+          "bangla": "আপনার প্রশংসার সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 17,
+      "core_root": "عَالَم (Aalam)",
+      "core_meaning_en": "World / Universe",
+      "core_meaning_bn": "বিশ্ব / জগত",
+      "words": [
+        {
+          "serial_no": 72,
+          "arabic": "لِلْعٰلَمِينَ",
+          "english": "For the worlds",
+          "bangla": "বিশ্বজগতের জন্য"
+        },
+        {
+          "serial_no": 73,
+          "arabic": "عَالَمَ",
+          "english": "World",
+          "bangla": "জগত"
+        }
+      ]
+    },
+    {
+      "group_id": 18,
+      "core_root": "دِين (Deen)",
+      "core_meaning_en": "Religion / Judgment / Way of life",
+      "core_meaning_bn": "দ্বীন / ধর্ম / বিচার",
+      "words": [
+        {
+          "serial_no": 74,
+          "arabic": "اَلدِّينِ",
+          "english": "The religion / judgment",
+          "bangla": "বিচার দিবস / দ্বীন"
+        },
+        {
+          "serial_no": 75,
+          "arabic": "وَدِينِ",
+          "english": "And religion of",
+          "bangla": "এবং দ্বীন"
+        },
+        {
+          "serial_no": 76,
+          "arabic": "بِالدِّينِ",
+          "english": "In the religion / judgment",
+          "bangla": "বিচারের বিষয়ে"
+        },
+        {
+          "serial_no": 77,
+          "arabic": "دِينُهُ",
+          "english": "His religion",
+          "bangla": "তার দ্বীন"
+        },
+        {
+          "serial_no": 78,
+          "arabic": "دِينُهُمْ",
+          "english": "Their religion",
+          "bangla": "তাদের দ্বীন"
+        },
+        {
+          "serial_no": 79,
+          "arabic": "دِينُكُمْ",
+          "english": "Your religion",
+          "bangla": "তোমাদের দ্বীন"
+        },
+        {
+          "serial_no": 80,
+          "arabic": "بِدِينِكُمْ",
+          "english": "With your religion",
+          "bangla": "তোমাদের দ্বীনের সাথে"
+        },
+        {
+          "serial_no": 81,
+          "arabic": "دِينِيْ",
+          "english": "My religion",
+          "bangla": "আমার দ্বীন"
+        },
+        {
+          "serial_no": 82,
+          "arabic": "لِلدِّينِ",
+          "english": "For the religion",
+          "bangla": "দ্বীনের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 19,
+      "core_root": "إِيَّا (Iyya)",
+      "core_meaning_en": "Only / Alone (Personal Pronoun intensive)",
+      "core_meaning_bn": "একমাত্র / শুধুমাত্র",
+      "words": [
+        {
+          "serial_no": 83,
+          "arabic": "إِيَّاكُمْ",
+          "english": "Only you (plural)",
+          "bangla": "একমাত্র তোমাদের"
+        },
+        {
+          "serial_no": 84,
+          "arabic": "وَإِيَّاكُمْ",
+          "english": "And only you",
+          "bangla": "এবং একমাত্র তোমাদের"
+        },
+        {
+          "serial_no": 85,
+          "arabic": "إِيَّانَا",
+          "english": "Only us",
+          "bangla": "একমাত্র আমাদের"
+        },
+        {
+          "serial_no": 86,
+          "arabic": "إِيَّاهُ",
+          "english": "Only him",
+          "bangla": "একমাত্র তাকে"
+        },
+        {
+          "serial_no": 87,
+          "arabic": "وَإِيَّاهُمْ",
+          "english": "And only them",
+          "bangla": "এবং একমাত্র তাদের"
+        },
+        {
+          "serial_no": 88,
+          "arabic": "فَإِيَّايَ",
+          "english": "So only me",
+          "bangla": "সুতরাং একমাত্র আমাকে"
+        },
+        {
+          "serial_no": 89,
+          "arabic": "وَإِيَّايَ",
+          "english": "And only me",
+          "bangla": "এবং একমাত্র আমাকে"
+        }
+      ]
+    },
+    {
+      "group_id": 20,
+      "core_root": "رَبّ (Rabb)",
+      "core_meaning_en": "Lord / Sustainer",
+      "core_meaning_bn": "রব / প্রভু / পালনকর্তা",
+      "words": [
+        {
+          "serial_no": 90,
+          "arabic": "رَبُّهُ",
+          "english": "His Lord",
+          "bangla": "তার রব"
+        },
+        {
+          "serial_no": 91,
+          "arabic": "رَبُّهُمْ",
+          "english": "Their Lord",
+          "bangla": "তাদের রব"
+        },
+        {
+          "serial_no": 92,
+          "arabic": "رَبُّكَ",
+          "english": "Your Lord",
+          "bangla": "তোমার রব"
+        },
+        {
+          "serial_no": 93,
+          "arabic": "رَبُّكُمُ",
+          "english": "Your (plural) Lord",
+          "bangla": "তোমাদের রব"
+        },
+        {
+          "serial_no": 94,
+          "arabic": "رَبِّي",
+          "english": "My Lord",
+          "bangla": "আমার রব"
+        },
+        {
+          "serial_no": 95,
+          "arabic": "رَبُّنَا",
+          "english": "Our Lord",
+          "bangla": "আমাদের রব"
+        },
+        {
+          "serial_no": 96,
+          "arabic": "رَبَّهَا",
+          "english": "Her Lord",
+          "bangla": "তার (স্ত্রী) রব"
+        },
+        {
+          "serial_no": 97,
+          "arabic": "وَلِرَبِّكَ",
+          "english": "And for your Lord",
+          "bangla": "এবং তোমার রবের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 21,
+      "core_root": "صِرَاط (Sirat)",
+      "core_meaning_en": "Path / Way",
+      "core_meaning_bn": "পথ / রাস্তা",
+      "words": [
+        {
+          "serial_no": 98,
+          "arabic": "صِرَاطَكَ",
+          "english": "Your path",
+          "bangla": "তোমার পথ"
+        },
+        {
+          "serial_no": 99,
+          "arabic": "صِرَاطِي",
+          "english": "My path",
+          "bangla": "আমার পথ"
+        }
+      ]
+    },
+    {
+      "group_id": 22,
+      "core_root": "مُسْتَقِيم (Mustaqim)",
+      "core_meaning_en": "Straight / Upright",
+      "core_meaning_bn": "সরল / সঠিক",
+      "words": [
+        {
+          "serial_no": 100,
+          "arabic": "مُسْتَقِيمٌ",
+          "english": "Straight",
+          "bangla": "সরল"
+        },
+        {
+          "serial_no": 101,
+          "arabic": "مُسْتَقِيمًا",
+          "english": "Straight (Accusative)",
+          "bangla": "সরলভাবে"
+        },
+        {
+          "serial_no": 102,
+          "arabic": "مُسْتَقِيمٍ",
+          "english": "Straight (Genitive)",
+          "bangla": "সরল পথের"
+        }
+      ]
+    },
+    {
+      "group_id": 23,
+      "core_root": "الَّذِينَ (Alladhina)",
+      "core_meaning_en": "Those who",
+      "core_meaning_bn": "যারা / যারা তারা",
+      "words": [
+        {
+          "serial_no": 103,
+          "arabic": "وَالَّذِينَ",
+          "english": "And those who",
+          "bangla": "এবং যারা"
+        },
+        {
+          "serial_no": 104,
+          "arabic": "فَالَّذِينَ",
+          "english": "So those who",
+          "bangla": "অতএব যারা"
+        },
+        {
+          "serial_no": 105,
+          "arabic": "بِالَّذِينَ",
+          "english": "With those who",
+          "bangla": "তাদের সাথে যারা"
+        },
+        {
+          "serial_no": 106,
+          "arabic": "كَالَّذِينَ",
+          "english": "Like those who",
+          "bangla": "তাদের মত যারা"
+        },
+        {
+          "serial_no": 107,
+          "arabic": "لِلَّذِينَ",
+          "english": "For those who",
+          "bangla": "তাদের জন্য যারা"
+        },
+        {
+          "serial_no": 108,
+          "arabic": "وَلِلَّذِينَ",
+          "english": "And for those who",
+          "bangla": "এবং তাদের জন্য যারা"
+        }
+      ]
+    },
+    {
+      "group_id": 24,
+      "core_root": "غَيْر (Ghair)",
+      "core_meaning_en": "Other than / Without / Not",
+      "core_meaning_bn": "ব্যতীত / ছাড়া / অন্য",
+      "words": [
+        {
+          "serial_no": 109,
+          "arabic": "وَغَيْرُ",
+          "english": "And other than",
+          "bangla": "এবং অন্য"
+        },
+        {
+          "serial_no": 110,
+          "arabic": "بِغَيْرِ",
+          "english": "Without",
+          "bangla": "বিনা / ছাড়া"
+        },
+        {
+          "serial_no": 111,
+          "arabic": "اَغَيْرَ",
+          "english": "Is it other than?",
+          "bangla": "অন্য কেউ কি?"
+        },
+        {
+          "serial_no": 112,
+          "arabic": "اَفَغَيْرَ",
+          "english": "Is it then other than?",
+          "bangla": "তবে কি অন্য কিছু?"
+        },
+        {
+          "serial_no": 113,
+          "arabic": "لِغَيْرِ",
+          "english": "For other than",
+          "bangla": "অন্য কারো জন্য"
+        },
+        {
+          "serial_no": 114,
+          "arabic": "غَيْرُهُ",
+          "english": "Other than Him",
+          "bangla": "তিনি ছাড়া অন্য কেউ"
+        },
+        {
+          "serial_no": 115,
+          "arabic": "غَيْرُكُمْ",
+          "english": "Other than you",
+          "bangla": "তোমরা ছাড়া অন্য কেউ"
+        },
+        {
+          "serial_no": 116,
+          "arabic": "غَيْرِىْ",
+          "english": "Other than me",
+          "bangla": "আমি ছাড়া অন্য কেউ"
+        },
+        {
+          "serial_no": 117,
+          "arabic": "غَيْرُهَا",
+          "english": "Other than her",
+          "bangla": "সে (স্ত্রী) ছাড়া অন্য কেউ"
+        }
+      ]
+    },
+    {
+      "group_id": 25,
+      "core_root": "ضَلَّ (Dhalla)",
+      "core_meaning_en": "To go astray / Lose the way",
+      "core_meaning_bn": "পথভ্রষ্ট হওয়া",
+      "words": [
+        {
+          "serial_no": 118,
+          "arabic": "ضَالًّا",
+          "english": "Astray (Singular)",
+          "bangla": "পথভ্রষ্ট"
+        },
+        {
+          "serial_no": 119,
+          "arabic": "اَلضَّالُّونَ",
+          "english": "Those who go astray",
+          "bangla": "পথভ্রষ্টরা"
+        },
+        {
+          "serial_no": 120,
+          "arabic": "لَضَالُّونَ",
+          "english": "Surely those who go astray",
+          "bangla": "অবশ্যই পথভ্রষ্টরা"
+        },
+        {
+          "serial_no": 121,
+          "arabic": "ضَالِّينَ",
+          "english": "Those who are astray",
+          "bangla": "পথভ্রষ্টদের"
+        }
+      ]
+    },
+    {
+      "group_id": 26,
+      "core_root": "هِيَ (Hiya)",
+      "core_meaning_en": "She / It",
+      "core_meaning_bn": "সে / তিনি (স্ত্রী)",
+      "words": [
+        {
+          "serial_no": 122,
+          "arabic": "وَهِيَ",
+          "english": "And she / it",
+          "bangla": "এবং সে"
+        },
+        {
+          "serial_no": 123,
+          "arabic": "فَهِيَ",
+          "english": "So she / it",
+          "bangla": "সুতরাং সে"
+        },
+        {
+          "serial_no": 124,
+          "arabic": "لَهِيَ",
+          "english": "Surely she / it",
+          "bangla": "অবশ্যই সে"
+        },
+        {
+          "serial_no": 125,
+          "arabic": "هِيَهْ",
+          "english": "It is she/it (pausal)",
+          "bangla": "তাহাই সে"
+        }
+      ]
+    },
+    {
+      "group_id": 27,
+      "core_root": "أَنْزَلَ (Anzala)",
+      "core_meaning_en": "To Send down / Reveal",
+      "core_meaning_bn": "নাজিল করা / অবতীর্ণ করা",
+      "words": [
+        {
+          "serial_no": 126,
+          "arabic": "وَاَنْزَلْنَا",
+          "english": "And We sent down",
+          "bangla": "এবং আমরা অবতীর্ণ করেছি"
+        },
+        {
+          "serial_no": 127,
+          "arabic": "فَاَنْزَلْنَا",
+          "english": "So We sent down",
+          "bangla": "সুতরাং আমরা অবতীর্ণ করেছি"
+        },
+        {
+          "serial_no": "128",
+          "arabic": "اَنْزَلْنٰهُ",
+          "english": "We sent it down",
+          "bangla": "আমরা তা অবতীর্ণ করেছি"
+        },
+        {
+          "serial_no": "129",
+          "arabic": "اَنْزَلْنَهَا",
+          "english": "We sent her/it down",
+          "bangla": "আমরা তা (স্ত্রী) অবতীর্ণ করেছি"
+        }
+      ]
+    },
+    {
+      "group_id": 28,
+      "core_root": "إِنْسَان (Insan)",
+      "core_meaning_en": "Human / Man",
+      "core_meaning_bn": "মানুষ",
+      "words": [
+        {
+          "serial_no": 130,
+          "arabic": "إِنْسَانٍ",
+          "english": "A human",
+          "bangla": "একজন মানুষ"
+        },
+        {
+          "serial_no": 131,
+          "arabic": "لِلْإِنْسَانِ",
+          "english": "For the human",
+          "bangla": "মানুষের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 29,
+      "core_root": "إِلَّا (Illa)",
+      "core_meaning_en": "Except / But",
+      "core_meaning_bn": "ব্যতীত / ছাড়া",
+      "words": [
+        {
+          "serial_no": 132,
+          "arabic": "إِلَّا",
+          "english": "Except",
+          "bangla": "ব্যতীত"
+        },
+        {
+          "serial_no": 133,
+          "arabic": "وَإِلَّا",
+          "english": "And if not / And except",
+          "bangla": "এবং অন্যথায়"
+        }
+      ]
+    },
+    {
+      "group_id": 30,
+      "core_root": "هٰذَا (Hadha)",
+      "core_meaning_en": "This (Masculine)",
+      "core_meaning_bn": "এই / ইহা (পুংলিঙ্গ)",
+      "words": [
+        {
+          "serial_no": 134,
+          "arabic": "وَهٰذَا",
+          "english": "And this",
+          "bangla": "এবং এই"
+        },
+        {
+          "serial_no": 135,
+          "arabic": "فَهٰذَا",
+          "english": "So this",
+          "bangla": "সুতরাং এই"
+        },
+        {
+          "serial_no": 136,
+          "arabic": "بِهٰذَا",
+          "english": "With this",
+          "bangla": "এটির সাথে"
+        },
+        {
+          "serial_no": 137,
+          "arabic": "لِهٰذَا",
+          "english": "For this",
+          "bangla": "এটির জন্য"
+        },
+        {
+          "serial_no": 138,
+          "arabic": "أَهٰذَا",
+          "english": "Is this?",
+          "bangla": "ইহা কি?"
+        },
+        {
+          "serial_no": 139,
+          "arabic": "أَفَبِهٰذَا",
+          "english": "Is it then with this?",
+          "bangla": "তবে কি এটির সাথে?"
+        },
+        {
+          "serial_no": 140,
+          "arabic": "هٰذَانِ",
+          "english": "These two",
+          "bangla": "এই দুইজন"
+        },
+        {
+          "serial_no": 141,
+          "arabic": "أَهَكَذَا",
+          "english": "Is it like this?",
+          "bangla": "ইহা কি এইরূপ?"
+        }
+      ]
+    },
+    {
+      "group_id": 31,
+      "core_root": "تِلْكَ (Tilka)",
+      "core_meaning_en": "That (Feminine)",
+      "core_meaning_bn": "ঐ / উহা (স্ত্রীলিঙ্গ)",
+      "words": [
+        {
+          "serial_no": 142,
+          "arabic": "وَتِلْكَ",
+          "english": "And that",
+          "bangla": "এবং ঐ"
+        },
+        {
+          "serial_no": 143,
+          "arabic": "فَتِلْكَ",
+          "english": "So that",
+          "bangla": "সুতরাং ঐ"
+        },
+        {
+          "serial_no": 144,
+          "arabic": "تِلْكُمَا",
+          "english": "Those two (you two)",
+          "bangla": "তোমাদের ঐ দুইজন"
+        },
+        {
+          "serial_no": 145,
+          "arabic": "تِلْكُمُ",
+          "english": "Those (plural)",
+          "bangla": "ঐগুলো/তোমাদের ঐগুলো"
+        }
+      ]
+    },
+    {
+      "group_id": 32,
+      "core_root": "إِذْ (Idh)",
+      "core_meaning_en": "When / Since",
+      "core_meaning_bn": "যখন",
+      "words": [
+        {
+          "serial_no": 146,
+          "arabic": "إِذْ",
+          "english": "When",
+          "bangla": "যখন"
+        },
+        {
+          "serial_no": 147,
+          "arabic": "وَإِذْ",
+          "english": "And when",
+          "bangla": "এবং যখন"
+        },
+        {
+          "serial_no": 148,
+          "arabic": "إِذًا",
+          "english": "Then / In that case",
+          "bangla": "তখন / সেই ক্ষেত্রে"
+        },
+        {
+          "serial_no": 149,
+          "arabic": "فَإِذَا",
+          "english": "So when",
+          "bangla": "সুতরাং যখন"
+        }
+      ]
+    },
+    {
+      "group_id": 33,
+      "core_root": "نَاس (Nas)",
+      "core_meaning_en": "People / Mankind",
+      "core_meaning_bn": "মানুষ / লোকসকল",
+      "words": [
+        {
+          "serial_no": 150,
+          "arabic": "وَالنَّاسِ",
+          "english": "And the people",
+          "bangla": "এবং মানুষ"
+        },
+        {
+          "serial_no": 151,
+          "arabic": "لِلنَّاسِ",
+          "english": "For the people",
+          "bangla": "মানুষের জন্য"
+        },
+        {
+          "serial_no": 152,
+          "arabic": "بِالنَّاسِ",
+          "english": "With/In the people",
+          "bangla": "মানুষের সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 34,
+      "core_root": "فَعَلَ (Fa'ala Scale)",
+      "core_meaning_en": "To do (Verb Template)",
+      "core_meaning_bn": "কাজ করা (ক্রিয়ার ওজন)",
+      "words": [
+        {
+          "serial_no": 153,
+          "arabic": "فَعَلَ",
+          "english": "He did",
+          "bangla": "সে করেছে"
+        },
+        {
+          "serial_no": 154,
+          "arabic": "يَفْعَلُ",
+          "english": "He does",
+          "bangla": "সে করছে"
+        },
+        {
+          "serial_no": 155,
+          "arabic": "اِفْعَلْ",
+          "english": "Do! (Command)",
+          "bangla": "করো"
+        },
+        {
+          "serial_no": 156,
+          "arabic": "فَاعِلٌ",
+          "english": "Doer",
+          "bangla": "কর্তা"
+        },
+        {
+          "serial_no": 157,
+          "arabic": "مَفْعُولٌ",
+          "english": "The one acted upon",
+          "bangla": "কর্ম"
+        }
+      ]
+    },
+    {
+      "group_id": 35,
+      "core_root": "جَعَلَ (Ja'ala)",
+      "core_meaning_en": "To make / To place",
+      "core_meaning_bn": "বানানো / করা",
+      "words": [
+        {
+          "serial_no": 158,
+          "arabic": "جَعَلَ",
+          "english": "He made",
+          "bangla": "সে বানিয়েছে"
+        },
+        {
+          "serial_no": 159,
+          "arabic": "يَجْعَلُ",
+          "english": "He makes",
+          "bangla": "সে বানাচ্ছে"
+        },
+        {
+          "serial_no": 160,
+          "arabic": "اِجْعَلْ",
+          "english": "Make! (Command)",
+          "bangla": "বানাও"
+        },
+        {
+          "serial_no": 161,
+          "arabic": "جَاعِلٌ",
+          "english": "Maker",
+          "bangla": "প্রস্তুতকারক"
+        },
+        {
+          "serial_no": 162,
+          "arabic": "مَجْعُولٌ",
+          "english": "Made / Established",
+          "bangla": "যা বানানো হয়েছে"
+        }
+      ]
+    },
+    {
+      "group_id": 36,
+      "core_root": "فَتَحَ (Fataha)",
+      "core_meaning_en": "To open / To grant victory",
+      "core_meaning_bn": "খোলা / বিজয় দান করা",
+      "words": [
+        {
+          "serial_no": 163,
+          "arabic": "فَتَحَ",
+          "english": "He opened",
+          "bangla": "সে খুলেছে"
+        },
+        {
+          "serial_no": 164,
+          "arabic": "يَفْتَحُ",
+          "english": "He opens",
+          "bangla": "সে খুলছে"
+        },
+        {
+          "serial_no": 165,
+          "arabic": "اِفْتَحْ",
+          "english": "Open! (Command)",
+          "bangla": "খোলো"
+        },
+        {
+          "serial_no": 166,
+          "arabic": "فَاتِحٌ",
+          "english": "Opener / Conqueror",
+          "bangla": "উদ্বোধনকারী"
+        },
+        {
+          "serial_no": 167,
+          "arabic": "مَفْتُوحٌ",
+          "english": "Opened",
+          "bangla": "উন্মুক্ত"
+        }
+      ]
+    },
+    {
+      "group_id": 37,
+      "core_root": "أَرْض (Ard)",
+      "core_meaning_en": "Earth / Land",
+      "core_meaning_bn": "পৃথিবী / জমিন",
+      "words": [
+        {
+          "serial_no": 168,
+          "arabic": "أَرْضٌ",
+          "english": "Land",
+          "bangla": "জমিন"
+        },
+        {
+          "serial_no": 169,
+          "arabic": "وَأَرْضٌ",
+          "english": "And land",
+          "bangla": "এবং জমিন"
+        },
+        {
+          "serial_no": 170,
+          "arabic": "وَالْأَرْضُ",
+          "english": "And the earth",
+          "bangla": "এবং পৃথিবী"
+        },
+        {
+          "serial_no": 171,
+          "arabic": "أَرْضُهُمْ",
+          "english": "Their land",
+          "bangla": "তাদের জমিন"
+        },
+        {
+          "serial_no": 172,
+          "arabic": "أَرْضُكُمْ",
+          "english": "Your land",
+          "bangla": "তোমাদের জমিন"
+        },
+        {
+          "serial_no": 173,
+          "arabic": "أَرْضِيْ",
+          "english": "My land",
+          "bangla": "আমার জমিন"
+        },
+        {
+          "serial_no": 174,
+          "arabic": "أَرْضُنَا",
+          "english": "Our land",
+          "bangla": "আমাদের জমিন"
+        }
+      ]
+    },
+    {
+      "group_id": 38,
+      "core_root": "سَمَاء (Samaa)",
+      "core_meaning_en": "Sky / Heaven",
+      "core_meaning_bn": "আকাশ",
+      "words": [
+        {
+          "serial_no": 175,
+          "arabic": "سَمَاءٌ",
+          "english": "A sky",
+          "bangla": "একটি আকাশ"
+        },
+        {
+          "serial_no": 176,
+          "arabic": "السَّمَاءُ",
+          "english": "The sky",
+          "bangla": "আকাশটি"
+        },
+        {
+          "serial_no": 177,
+          "arabic": "سَمَاوَاتٌ",
+          "english": "Heavens (Plural)",
+          "bangla": "আকাশসমূহ"
+        },
+        {
+          "serial_no": 178,
+          "arabic": "وَالسَّمَاوَاتِ",
+          "english": "And the heavens",
+          "bangla": "এবং আকাশসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 39,
+      "core_root": "عَنْ (An)",
+      "core_meaning_en": "From / About / Away from",
+      "core_meaning_bn": "হতে / থেকে / সম্পর্কে",
+      "words": [
+        {
+          "serial_no": 179,
+          "arabic": "وَعَنْ",
+          "english": "And from",
+          "bangla": "এবং থেকে"
+        },
+        {
+          "serial_no": 180,
+          "arabic": "عَنْهُ",
+          "english": "From him",
+          "bangla": "তার থেকে"
+        },
+        {
+          "serial_no": 181,
+          "arabic": "عَنْهُمْ",
+          "english": "From them",
+          "bangla": "তাদের থেকে"
+        },
+        {
+          "serial_no": 182,
+          "arabic": "عَنْكَ",
+          "english": "From you",
+          "bangla": "তোমার থেকে"
+        },
+        {
+          "serial_no": 183,
+          "arabic": "عَنِّي",
+          "english": "From me",
+          "bangla": "আমার থেকে"
+        },
+        {
+          "serial_no": 184,
+          "arabic": "عَنَّا",
+          "english": "From us",
+          "bangla": "আমাদের থেকে"
+        },
+        {
+          "serial_no": 185,
+          "arabic": "عَمَّا",
+          "english": "About what",
+          "bangla": "যা সম্পর্কে"
+        },
+        {
+          "serial_no": 186,
+          "arabic": "عَمَّنْ",
+          "english": "From whom",
+          "bangla": "যার থেকে"
+        }
+      ]
+    },
+    {
+      "group_id": 40,
+      "core_root": "قُرْآن (Quran)",
+      "core_meaning_en": "Recitation / Quran",
+      "core_meaning_bn": "কুরআন / পাঠ",
+      "words": [
+        {
+          "serial_no": 187,
+          "arabic": "قُرْآنٌ",
+          "english": "A Quran",
+          "bangla": "একটি কুরআন"
+        },
+        {
+          "serial_no": 188,
+          "arabic": "وَالْقُرْآنِ",
+          "english": "And the Quran",
+          "bangla": "এবং কুরআনের কসম"
+        },
+        {
+          "serial_no": 189,
+          "arabic": "بِالْقُرْآنِ",
+          "english": "With the Quran",
+          "bangla": "কুরআনের সাথে"
+        },
+        {
+          "serial_no": 190,
+          "arabic": "لَقُرْآنٌ",
+          "english": "Surely a Quran",
+          "bangla": "নিশ্চয়ই এক কুরআন"
+        },
+        {
+          "serial_no": 191,
+          "arabic": "قُرْآنُهُ",
+          "english": "Its recitation",
+          "bangla": "তার পাঠ"
+        }
+      ]
+    },
+    {
+      "group_id": 41,
+      "core_root": "عَمَل (Amal)",
+      "core_meaning_en": "Work / Deed / Action",
+      "core_meaning_bn": "কাজ / আমল",
+      "words": [
+        {
+          "serial_no": 192,
+          "arabic": "أَعْمَالًا",
+          "english": "Deeds",
+          "bangla": "কাজসমূহ"
+        },
+        {
+          "serial_no": 193,
+          "arabic": "أَعْمَالُهُمْ",
+          "english": "Their deeds",
+          "bangla": "তাদের আমলসমূহ"
+        },
+        {
+          "serial_no": 194,
+          "arabic": "أَعْمَالُكُمْ",
+          "english": "Your deeds",
+          "bangla": "তোমাদের আমলসমূহ"
+        },
+        {
+          "serial_no": 195,
+          "arabic": "أَعْمَالُنَا",
+          "english": "Our deeds",
+          "bangla": "আমাদের আমলসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 42,
+      "core_root": "بِـ (Bi)",
+      "core_meaning_en": "In / With / By",
+      "core_meaning_bn": "সাথে / দ্বারা / মাধ্যমে",
+      "words": [
+        {
+          "serial_no": 196,
+          "arabic": "بِهِ",
+          "english": "With him/it",
+          "bangla": "তার সাথে"
+        },
+        {
+          "serial_no": 197,
+          "arabic": "بِهِمْ",
+          "english": "With them",
+          "bangla": "তাদের সাথে"
+        },
+        {
+          "serial_no": 198,
+          "arabic": "بِكَ",
+          "english": "With you",
+          "bangla": "তোমার সাথে"
+        },
+        {
+          "serial_no": 199,
+          "arabic": "بِيْ",
+          "english": "With me",
+          "bangla": "আমার সাথে"
+        },
+        {
+          "serial_no": 200,
+          "arabic": "بِكُمْ",
+          "english": "With you (plural)",
+          "bangla": "তোমাদের সাথে"
+        },
+        {
+          "serial_no": 201,
+          "arabic": "بِنَا",
+          "english": "With us",
+          "bangla": "আমাদের সাথে"
+        }
+      ]
+    },
+    {
+      "group_id": 43,
+      "core_root": "الَّذِي (Alladhi)",
+      "core_meaning_en": "The one who / Which",
+      "core_meaning_bn": "যে / যিনি",
+      "words": [
+        {
+          "serial_no": 202,
+          "arabic": "وَالَّذِي",
+          "english": "And he who",
+          "bangla": "এবং যিনি"
+        },
+        {
+          "serial_no": 203,
+          "arabic": "بِالَّذِي",
+          "english": "In/By him who",
+          "bangla": "তার সাথে যিনি"
+        },
+        {
+          "serial_no": 204,
+          "arabic": "كَالَّذِي",
+          "english": "Like him who",
+          "bangla": "তার মত যে"
+        },
+        {
+          "serial_no": 205,
+          "arabic": "لِلَّذِي",
+          "english": "For him who",
+          "bangla": "তার জন্য যে"
+        }
+      ]
+    },
+    {
+      "group_id": 44,
+      "core_root": "مَعَ (Ma'a)",
+      "core_meaning_en": "With / Along with",
+      "core_meaning_bn": "সাথে",
+      "words": [
+        {
+          "serial_no": 206,
+          "arabic": "مَعَهُ",
+          "english": "With him",
+          "bangla": "তার সাথে"
+        },
+        {
+          "serial_no": 207,
+          "arabic": "مَعَهُمْ",
+          "english": "With them",
+          "bangla": "তাদের সাথে"
+        },
+        {
+          "serial_no": 208,
+          "arabic": "مَعَكَ",
+          "english": "With you",
+          "bangla": "তোমার সাথে"
+        },
+        {
+          "serial_no": 209,
+          "arabic": "مَعِيَ",
+          "english": "With me",
+          "bangla": "আমার সাথে"
+        },
+        {
+          "serial_no": 210,
+          "arabic": "مَعَكُمْ",
+          "english": "With you (plural)",
+          "bangla": "তোমাদের সাথে"
+        },
+        {
+          "serial_no": 211,
+          "arabic": "مَعَنَا",
+          "english": "With us",
+          "bangla": "আমাদের سাথে"
+        }
+      ]
+    },
+    
+    {
+      "group_id": 45,
+      "core_root": "قُلْ (Qul)",
+      "core_meaning_en": "Say (Command)",
+      "core_meaning_bn": "বলো (আদেশ)",
+      "words": [
+        {
+          "serial_no": 212,
+          "arabic": "قُلْ",
+          "english": "Say!",
+          "bangla": "বলো"
+        },
+        {
+          "serial_no": 213,
+          "arabic": "وَقُلْ",
+          "english": "And say!",
+          "bangla": "এবং বলো"
+        },
+        {
+          "serial_no": 214,
+          "arabic": "فَقُلْ",
+          "english": "So say!",
+          "bangla": "সুতরাং বলো"
+        }
+      ]
+    },
+    {
+      "group_id": 46,
+      "core_root": "أَحَد (Ahad)",
+      "core_meaning_en": "One / Anyone",
+      "core_meaning_bn": "এক / যে কেউ",
+      "words": [
+        {
+          "serial_no": 215,
+          "arabic": "لِأَحَدٍ",
+          "english": "For anyone",
+          "bangla": "কারো জন্য"
+        },
+        {
+          "serial_no": 216,
+          "arabic": "كَأَحَدٍ",
+          "english": "Like anyone",
+          "bangla": "কারো মতো"
+        },
+        {
+          "serial_no": 217,
+          "arabic": "أَحَدُهُمَا",
+          "english": "One of them (two)",
+          "bangla": "তাদের দুজনের একজন"
+        },
+        {
+          "serial_no": 218,
+          "arabic": "أَحَدُهُمْ",
+          "english": "One of them",
+          "bangla": "তাদের একজন"
+        },
+        {
+          "serial_no": 219,
+          "arabic": "أَحَدُكُمْ",
+          "english": "One of you",
+          "bangla": "তোমাদের একজন"
+        },
+        {
+          "serial_no": 220,
+          "arabic": "أَحَدُنَا",
+          "english": "One of us",
+          "bangla": "আমাদের একজন"
+        }
+      ]
+    },
+    {
+      "group_id": 47,
+      "core_root": "نَصَرَ (Nasara)",
+      "core_meaning_en": "To help / To support",
+      "core_meaning_bn": "সাহায্য করা",
+      "words": [
+        {
+          "serial_no": 221,
+          "arabic": "نَصَرَ",
+          "english": "He helped",
+          "bangla": "সে সাহায্য করেছে"
+        },
+        {
+          "serial_no": 222,
+          "arabic": "يَنْصُرُ",
+          "english": "He helps",
+          "bangla": "সে সাহায্য করছে"
+        },
+        {
+          "serial_no": 223,
+          "arabic": "اُنْصُرْ",
+          "english": "Help! (Command)",
+          "bangla": "সাহায্য করো"
+        },
+        {
+          "serial_no": 224,
+          "arabic": "نَاصِرٌ",
+          "english": "Helper",
+          "bangla": "সাহায্যকারী"
+        },
+        {
+          "serial_no": 225,
+          "arabic": "مَنْصُورٌ",
+          "english": "Helped / Victorious",
+          "bangla": "যাকে সাহায্য করা হয়েছে"
+        }
+      ]
+    },
+    {
+      "group_id": 48,
+      "core_root": "خَلَقَ (Khalaqa)",
+      "core_meaning_en": "To create",
+      "core_meaning_bn": "সৃষ্টি করা",
+      "words": [
+        {
+          "serial_no": 226,
+          "arabic": "خَلَقَ",
+          "english": "He created",
+          "bangla": "সে সৃষ্টি করেছে"
+        },
+        {
+          "serial_no": 227,
+          "arabic": "يَخْلُقُ",
+          "english": "He creates",
+          "bangla": "সে সৃষ্টি করছে"
+        },
+        {
+          "serial_no": 228,
+          "arabic": "اُخْلُقْ",
+          "english": "Create!",
+          "bangla": "সৃষ্টি করো"
+        },
+        {
+          "serial_no": 229,
+          "arabic": "خَالِقٌ",
+          "english": "Creator",
+          "bangla": "স্রষ্টা"
+        },
+        {
+          "serial_no": 230,
+          "arabic": "مَخْلُوقٌ",
+          "english": "Created / Creature",
+          "bangla": "সৃষ্টি"
+        }
+      ]
+    },
+    {
+      "group_id": 49,
+      "core_root": "شَيْء (Shay)",
+      "core_meaning_en": "Thing / Something",
+      "core_meaning_bn": "জিনিস / কিছু",
+      "words": [
+        {
+          "serial_no": 231,
+          "arabic": "وَشَيْءٍ",
+          "english": "And a thing",
+          "bangla": "এবং কিছু"
+        },
+        {
+          "serial_no": 232,
+          "arabic": "لِشَيْءٍ",
+          "english": "For a thing",
+          "bangla": "কিছুর জন্য"
+        },
+        {
+          "serial_no": 233,
+          "arabic": "بِشَيْءٍ",
+          "english": "With something",
+          "bangla": "কিছুর সাথে"
+        },
+        {
+          "serial_no": 234,
+          "arabic": "أَشْيَاءَ",
+          "english": "Things (Plural)",
+          "bangla": "জিনিসপত্র"
+        },
+        {
+          "serial_no": 235,
+          "arabic": "أَشْيَاءَهُمْ",
+          "english": "Their things",
+          "bangla": "তাদের জিনিসপত্র"
+        }
+      ]
+    },
+    {
+      "group_id": 50,
+      "core_root": "عَلِمَ (Alima)",
+      "core_meaning_en": "To know",
+      "core_meaning_bn": "জানা / জ্ঞান অর্জন করা",
+      "words": [
+        {
+          "serial_no": 236,
+          "arabic": "عَلِمَ",
+          "english": "He knew",
+          "bangla": "সে জেনেছে"
+        },
+        {
+          "serial_no": 237,
+          "arabic": "يَعْلَمُ",
+          "english": "He knows",
+          "bangla": "সে জানে"
+        },
+        {
+          "serial_no": 238,
+          "arabic": "اِعْلَمْ",
+          "english": "Know! (Command)",
+          "bangla": "জানো"
+        },
+        {
+          "serial_no": 239,
+          "arabic": "عَالِمٌ",
+          "english": "Knower / Scholar",
+          "bangla": "জ্ঞানী"
+        },
+        {
+          "serial_no": 240,
+          "arabic": "مَعْلُومٌ",
+          "english": "Known",
+          "bangla": "পরিচিত / জানা"
+        }
+      ]
+    },
+    {
+      "group_id": 51,
+      "core_root": "حَدِيث (Hadith)",
+      "core_meaning_en": "Speech / Narrative / Tradition",
+      "core_meaning_bn": "কথা / হাদিস",
+      "words": [
+        {
+          "serial_no": 241,
+          "arabic": "اَلْحَدِيثُ",
+          "english": "The speech",
+          "bangla": "কথাটি"
+        },
+        {
+          "serial_no": 242,
+          "arabic": "لِحَدِيثٍ",
+          "english": "For a speech",
+          "bangla": "কথার জন্য"
+        },
+        {
+          "serial_no": 243,
+          "arabic": "بِحَدِيثٍ",
+          "english": "With a speech",
+          "bangla": "কথার মাধ্যমে"
+        },
+        {
+          "serial_no": 244,
+          "arabic": "أَحَادِيثَ",
+          "english": "Speeches (Plural)",
+          "bangla": "কথাসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 52,
+      "core_root": "صَدْر (Sadr)",
+      "core_meaning_en": "Chest / Heart / Breast",
+      "core_meaning_bn": "বক্ষ / অন্তর",
+      "words": [
+        {
+          "serial_no": 245,
+          "arabic": "صَدْرُهُ",
+          "english": "His chest",
+          "bangla": "তার বক্ষ"
+        },
+        {
+          "serial_no": 246,
+          "arabic": "صَدْرِيْ",
+          "english": "My chest",
+          "bangla": "আমার বক্ষ"
+        },
+        {
+          "serial_no": 247,
+          "arabic": "صُدُورٌ",
+          "english": "Chests (Plural)",
+          "bangla": "অন্তরসমূহ"
+        },
+        {
+          "serial_no": 248,
+          "arabic": "اَلصُّدُورُ",
+          "english": "The chests",
+          "bangla": "বক্ষসমূহ"
+        },
+        {
+          "serial_no": 249,
+          "arabic": "صُدُورُهُمْ",
+          "english": "Their chests",
+          "bangla": "তাদের অন্তরসমূহ"
+        },
+        {
+          "serial_no": 250,
+          "arabic": "صُدُورُكُمْ",
+          "english": "Your chests",
+          "bangla": "তোমাদের অন্তরসমূহ"
+        }
+      ]
+    },
+    {
+      "group_id": 53,
+      "core_root": "جَنَّة (Jannah)",
+      "core_meaning_en": "Paradise / Garden",
+      "core_meaning_bn": "জান্নাত / বাগান",
+      "words": [
+        {
+          "serial_no": 251,
+          "arabic": "اَلْجَنَّةُ",
+          "english": "The Paradise",
+          "bangla": "জান্নাতটি"
+        },
+        {
+          "serial_no": 252,
+          "arabic": "الْجِنُّ",
+          "english": "The Jinn",
+          "bangla": "জ্বিন জাতি"
+        },
+        {
+          "serial_no": 253,
+          "arabic": "وَالْجِنُّ",
+          "english": "And the Jinn",
+          "bangla": "এবং জ্বিন"
+        }
+      ]
+    },
+    {
+      "group_id": 54,
+      "core_root": "أَنْ (An / Anna)",
+      "core_meaning_en": "That / Indeed",
+      "core_meaning_bn": "যে / নিশ্চয়ই",
+      "words": [
+        {
+          "serial_no": 254,
+          "arabic": "أَنْ",
+          "english": "That",
+          "bangla": "যে"
+        },
+        {
+          "serial_no": 255,
+          "arabic": "وَأَنْ",
+          "english": "And that",
+          "bangla": "এবং যে"
+        },
+        {
+          "serial_no": 256,
+          "arabic": "بِأَنَّ",
+          "english": "Because / With that",
+          "bangla": "এই কারণে যে"
+        },
+        {
+          "serial_no": 257,
+          "arabic": "لِأَنَّ",
+          "english": "Because",
+          "bangla": "কেননা"
+        },
+        {
+          "serial_no": 258,
+          "arabic": "أَلَّا",
+          "english": "That not",
+          "bangla": "যেন না"
+        },
+        {
+          "serial_no": 259,
+          "arabic": "لِئَلَّا",
+          "english": "So that not",
+          "bangla": "যাতে না"
+        }
+      ]
+    },
+    {
+      "group_id": 55,
+      "core_root": "سَبَّحَ (Sabbaha)",
+      "core_meaning_en": "To glorify / Praise",
+      "core_meaning_bn": "পবিত্রতা বর্ণনা করা",
+      "words": [
+        {
+          "serial_no": 260,
+          "arabic": "وَسُبْحٰنَ",
+          "english": "And glory be to",
+          "bangla": "এবং পবিত্রতা"
+        },
+        {
+          "serial_no": 261,
+          "arabic": "فَسُبْحٰنَ",
+          "english": "So glory be to",
+          "bangla": "সুতরাং পবিত্রতা"
+        },
+        {
+          "serial_no": 262,
+          "arabic": "سُبْحٰنَهُ",
+          "english": "Glory be to Him",
+          "bangla": "তাঁর পবিত্রতা"
+        },
+        {
+          "serial_no": 263,
+          "arabic": "سُبْحٰنَكَ",
+          "english": "Glory be to You",
+          "bangla": "আপনার পবিত্রতা"
+        }
+      ]
+    },
+    {
+      "group_id": 56,
+      "core_root": "عَظِيم (Azim)",
+      "core_meaning_en": "Great / Magnificent",
+      "core_meaning_bn": "মহান / বিশাল",
+      "words": [
+        {
+          "serial_no": 264,
+          "arabic": "الْعَظِيْمُ",
+          "english": "The Great",
+          "bangla": "মহা মহিম"
+        },
+        {
+          "serial_no": 265,
+          "arabic": "عَظِيْمٌ",
+          "english": "Great",
+          "bangla": "মহান"
+        },
+        {
+          "serial_no": 266,
+          "arabic": "عَظِيْمٍ",
+          "english": "Great (Genitive)",
+          "bangla": "মহানের"
+        }
+      ]
+    },
+    {
+      "group_id": 57,
+      "core_root": "سَلَام (Salam)",
+      "core_meaning_en": "Peace",
+      "core_meaning_bn": "শান্তি",
+      "words": [
+        {
+          "serial_no": 267,
+          "arabic": "السَّلَامُ",
+          "english": "The peace",
+          "bangla": "শান্তি"
+        },
+        {
+          "serial_no": 268,
+          "arabic": "وَالسَّلَامُ",
+          "english": "And the peace",
+          "bangla": "এবং শান্তি"
+        },
+        {
+          "serial_no": 269,
+          "arabic": "بِسَلَامٍ",
+          "english": "With peace",
+          "bangla": "শান্তির সাথে"
+        },
+        {
+          "serial_no": 270,
+          "arabic": "وَسَلَامٌ",
+          "english": "And peace",
+          "bangla": "এবং শান্তি"
+        },
+        {
+          "serial_no": 271,
+          "arabic": "فَسَلَامٌ",
+          "english": "So peace",
+          "bangla": "সুতরাং শান্তি"
+        }
+      ]
+    },
+    {
+      "group_id": 58,
+      "core_root": "سَوْفَ (Sawfa)",
+      "core_meaning_en": "Soon / Will (Future particle)",
+      "core_meaning_bn": "শীঘ্রই",
+      "words": [
+        {
+          "serial_no": 272,
+          "arabic": "وَسَوْفَ",
+          "english": "And soon",
+          "bangla": "এবং শীঘ্রই"
+        },
+        {
+          "serial_no": 273,
+          "arabic": "فَسَوْفَ",
+          "english": "So soon",
+          "bangla": "সুতরাং শীঘ্রই"
+        },
+        {
+          "serial_no": 274,
+          "arabic": "لَسَوْفَ",
+          "english": "Surely soon",
+          "bangla": "অবশ্যই শীঘ্রই"
+        },
+        {
+          "serial_no": 275,
+          "arabic": "وَلَسَوْفَ",
+          "english": "And surely soon",
+          "bangla": "এবং অবশ্যই শীঘ্রই"
+        },
+        {
+          "serial_no": 276,
+          "arabic": "فَلَسَوْفَ",
+          "english": "So surely soon",
+          "bangla": "অতএব অবশ্যই শীঘ্রই"
+        }
+      ]
+    },
+    {
+      "group_id": 59,
+      "core_root": "إِبْرَاهِيم (Ibrahim)",
+      "core_meaning_en": "Abraham (Prophet's Name)",
+      "core_meaning_bn": "ইব্রাহিম (আ.)",
+      "words": [
+        {
+          "serial_no": 277,
+          "arabic": "وَإِبْرَاهِيْمَ",
+          "english": "And Ibrahim",
+          "bangla": "এবং ইব্রাহিম"
+        },
+        {
+          "serial_no": 278,
+          "arabic": "بِإِبْرَاهِيْمَ",
+          "english": "With Ibrahim",
+          "bangla": "ইব্রাহিমের সাথে"
+        },
+        {
+          "serial_no": 279,
+          "arabic": "لِإِبْرَاهِيْمَ",
+          "english": "For Ibrahim",
+          "bangla": "ইব্রাহিমের জন্য"
+        }
+      ]
+    },
+    {
+      "group_id": 60,
+      "core_root": "كَثِير (Kathir)",
+      "core_meaning_en": "Much / Many / Abundant",
+      "core_meaning_bn": "অনেক / প্রচুর",
+      "words": [
+        {
+          "serial_no": 280,
+          "arabic": "وَكَثِيرٌ",
+          "english": "And many",
+          "bangla": "এবং অনেক"
+        },
+        {
+          "serial_no": 281,
+          "arabic": "لَكَثِيرٌ",
+          "english": "Surely many",
+          "bangla": "অবশ্যই অনেক"
+        }
+      ]
+    },
+    {
+      "group_id": 61,
+      "core_root": "غَفُور (Ghafur)",
+      "core_meaning_en": "Oft-Forgiving",
+      "core_meaning_bn": "অত্যন্ত ক্ষমাশীল",
+      "words": [
+        {
+          "serial_no": 282,
+          "arabic": "الْغَفُورُ",
+          "english": "The Oft-Forgiving",
+          "bangla": "মহা ক্ষমাশীল"
+        },
+        {
+          "serial_no": 283,
+          "arabic": "لَغَفُورٌ",
+          "english": "Surely Oft-Forgiving",
+          "bangla": "অবশ্যই ক্ষমাশীল"
+        }
+      ]
+    },
+    {
+      "group_id": 62,
+      "core_root": "آخِرَة (Akhirah)",
+      "core_meaning_en": "Hereafter / Life after death",
+      "core_meaning_bn": "আখিরাত / পরকাল",
+      "words": [
+        {
+          "serial_no": 284,
+          "arabic": "وَالْآخِرَةُ",
+          "english": "And the Hereafter",
+          "bangla": "এবং পরকাল"
+        },
+        {
+          "serial_no": 285,
+          "arabic": "بِالْآخِرَةِ",
+          "english": "In the Hereafter",
+          "bangla": "পরকালের প্রতি"
+        },
+        {
+          "serial_no": 286,
+          "arabic": "وَبِالْآخِرَةِ",
+          "english": "And in the Hereafter",
+          "bangla": "এবং পরকালের প্রতি"
+        },
+        {
+          "serial_no": 287,
+          "arabic": "لِلْآخِرَةِ",
+          "english": "For the Hereafter",
+          "bangla": "পরকালের জন্য"
+        },
+        {
+          "serial_no": 288,
+          "arabic": "وَلَلْآخِرَةُ",
+          "english": "And surely the Hereafter",
+          "bangla": "এবং অবশ্যই পরকাল"
+        }
+      ]
+    },
+    {
+      "group_id": 63,
+      "core_root": "نَار (Nar)",
+      "core_meaning_en": "Fire / Hellfire",
+      "core_meaning_bn": "আগুন / জাহান্নাম",
+      "words": [
+        {
+          "serial_no": 289,
+          "arabic": "نَارٌ",
+          "english": "Fire",
+          "bangla": "আগুন"
+        },
+        {
+          "serial_no": 290,
+          "arabic": "وَالنَّارُ",
+          "english": "And the fire",
+          "bangla": "এবং আগুন"
+        },
+        {
+          "serial_no": 291,
+          "arabic": "فَالنَّارُ",
+          "english": "So the fire",
+          "bangla": "سুতরাং আগুন"
+        }
+      ]
+    }
+
+  
+  ]
+};
+
+function parseRoot(root) {
+  // Split "قُلْ (Qul)" → arabic part and romanized part
+  const match = root.match(/^([\u0600-\u06FF\s\u064B-\u065F\u0670]+)\s*\(([^)]+)\)/);
+  if (match) return { arabic: match[1].trim(), romanized: match[2].trim() };
+  return { arabic: root, romanized: '' };
+}
+
+function render(vocabData) {
+  const container = document.getElementById('groups-container');
+  container.innerHTML = '';
+
+  vocabData.vocabulary_groups.forEach((group, gi) => {
+    const { arabic, romanized } = parseRoot(group.core_root);
+
+    const groupEl = document.createElement('div');
+    groupEl.className = 'group';
+    groupEl.style.animationDelay = `${gi * 0.1}s`;
+
+    groupEl.innerHTML = `
+      <div class="group-header">
+        <span class="group-id">Group ${group.group_id}</span>
+        <div class="group-meta">
+          <div>
+            <span class="group-root">${arabic}</span>
+            ${romanized ? `<span class="group-root-romanized">(${romanized})</span>` : ''}
+          </div>
+          <div class="group-meanings">
+            <span class="group-meaning"><span class="lang-tag">EN</span> ${group.core_meaning_en}</span>
+            <span class="group-meaning"><span class="lang-tag">BN</span> ${group.core_meaning_bn}</span>
+          </div>
+        </div>
+      </div>
+      <div class="words-grid">
+        ${group.words.map(w => `
+          <div class="word-card">
+            <span class="serial">${w.serial_no}</span>
+            <span class="word-arabic">${w.arabic}</span>
+            <span class="word-english">${w.english}</span>
+            <span class="word-bangla">${w.bangla}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+
+    container.appendChild(groupEl);
+  });
+}
+
+render(data);
+</script>
+</body>
+</html>
