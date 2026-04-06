@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duas Taught by Jibril ﷺ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-dark: #8B6914;
+    --deep: #0D1117;
+    --surface: #111820;
+    --card: #16202C;
+    --border: rgba(201,168,76,0.25);
+    --border-bright: rgba(201,168,76,0.6);
+    --text: #F0EAD6;
+    --muted: #9AA5B4;
+    --emerald: #2D6A4F;
+    --emerald-glow: rgba(45,106,79,0.3);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 85%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 33% 90%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 78% 12%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 48% 48%, rgba(255,255,255,0.4) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .page-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  /* HEADER */
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+    position: relative;
+  }
+
+  .bismillah {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    opacity: 0.9;
+  }
+
+  .angel-icon {
+    display: block;
+    margin: 0 auto 20px;
+    width: 64px;
+    height: 64px;
+  }
+
+  .top-line {
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0 auto 20px;
+  }
+
+  header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.6rem);
+    font-weight: 500;
+    color: var(--gold-light);
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-shadow: 0 0 40px rgba(201,168,76,0.3);
+  }
+
+  header .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .ornament-line {
+    flex: 1;
+    max-width: 120px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border-bright));
+  }
+  .ornament-line.right {
+    background: linear-gradient(to left, transparent, var(--border-bright));
+  }
+  .ornament-diamond {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.7;
+  }
+
+  /* DUA CARDS */
+  .duas-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .dua-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .dua-card:hover {
+    border-color: var(--border-bright);
+    box-shadow: 0 0 40px rgba(201,168,76,0.08), 0 0 80px rgba(201,168,76,0.04);
+  }
+
+  .dua-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.6;
+  }
+
+  .card-header {
+    padding: 20px 28px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .prophet-badge {
+    background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+    border: 1px solid var(--border-bright);
+    border-radius: 2px;
+    padding: 4px 12px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .card-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: 0.06em;
+  }
+
+  .card-header .context {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  .card-body {
+    padding: 28px 28px 24px;
+  }
+
+  .arabic-text {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    direction: rtl;
+    text-align: right;
+    line-height: 2;
+    color: var(--gold-light);
+    background: rgba(201,168,76,0.04);
+    border-right: 3px solid var(--gold);
+    padding: 16px 20px 16px 16px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    letter-spacing: 0.03em;
+  }
+
+  .transliteration {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 12px;
+    padding-left: 8px;
+  }
+
+  .translation {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text);
+    padding: 14px 16px;
+    border-left: 2px solid rgba(201,168,76,0.3);
+    background: rgba(255,255,255,0.02);
+    border-radius: 0 2px 2px 0;
+    margin-bottom: 16px;
+  }
+
+  .source-tag {
+    display: inline-block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: var(--gold-dark);
+    background: rgba(201,168,76,0.07);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 4px 10px;
+    border-radius: 2px;
+  }
+
+  /* Divider */
+  .section-divider {
+    text-align: center;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-divider .line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-divider span {
+    font-family: 'Noto Naskh Arabic', serif;
+    color: var(--gold);
+    font-size: 1.1rem;
+    opacity: 0.5;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+  footer p {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+  footer .arabic-footer {
+    font-family: 'Noto Naskh Arabic', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 10px;
+    display: block;
+    opacity: 0.8;
+  }
+
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .dua-card { animation: fadein 0.6s ease both; }
+  .dua-card:nth-child(1) { animation-delay: 0.1s; }
+  .dua-card:nth-child(2) { animation-delay: 0.2s; }
+  .dua-card:nth-child(3) { animation-delay: 0.3s; }
+  .dua-card:nth-child(4) { animation-delay: 0.4s; }
+  .dua-card:nth-child(5) { animation-delay: 0.5s; }
+  .dua-card:nth-child(6) { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <header>
+    <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+    <svg class="angel-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="32" cy="32" r="28" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.4"/>
+      <ellipse cx="32" cy="32" r="20" fill="none" stroke="#C9A84C" stroke-width="0.5" opacity="0.3"/>
+      <path d="M32 14 C24 20, 18 30, 20 42 C24 38, 28 34, 32 32" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M32 14 C40 20, 46 30, 44 42 C40 38, 36 34, 32 32" fill="none" stroke="#C9A84C" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M32 14 C26 22, 22 32, 24 44 C27 40, 30 36, 32 32" fill="none" stroke="#E8D5A3" stroke-width="0.7" stroke-linecap="round" opacity="0.6"/>
+      <path d="M32 14 C38 22, 42 32, 40 44 C37 40, 34 36, 32 32" fill="none" stroke="#E8D5A3" stroke-width="0.7" stroke-linecap="round" opacity="0.6"/>
+      <circle cx="32" cy="24" r="5" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.7"/>
+      <circle cx="32" cy="24" r="2" fill="#C9A84C" opacity="0.5"/>
+    </svg>
+    <h1>Duas Taught by Jibril<br><span style="font-size:0.65em; letter-spacing:0.15em; opacity:0.7;">عَلَيْهِ السَّلَام</span><br>to the Prophets</h1>
+    <p class="subtitle">Sacred supplications conveyed from the heavens</p>
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+  </header>
+
+  <div class="duas-grid">
+
+    <!-- DUA 1 -->
+    <div class="dua-card">
+      <div class="card-header">
+        <div>
+          <div class="prophet-badge">Prophet Muhammad ﷺ</div>
+          <h2>Dua for Grief & Anxiety</h2>
+          <div class="context">Taught by Jibril ﷺ when Prophet ﷺ was in distress</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text">
+          اللّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الهَمِّ وَالحَزَنِ، وَأَعُوذُ بِكَ مِنَ العَجْزِ وَالكَسَلِ، وَأَعُوذُ بِكَ مِنَ الجُبْنِ وَالبُخْلِ، وَأَعُوذُ بِكَ مِنْ غَلَبَةِ الدَّيْنِ وَقَهْرِ الرِّجَالِ
+        </div>
+        <div class="transliteration">Allāhumma innī a'ūdhu bika minal-hammi wal-ḥazani, wa a'ūdhu bika minal-'ajzi wal-kasali, wa a'ūdhu bika minal-jubni wal-bukhli, wa a'ūdhu bika min ghalabatid-dayni wa qahrir-rijāl</div>
+        <div class="translation">"O Allah, I seek refuge in You from worry and grief, from incapacity and laziness, from cowardice and miserliness, and from being overwhelmed by debt and overpowered by people."</div>
+        <span class="source-tag">Sahih al-Bukhari · 6369</span>
+      </div>
+    </div>
+
+    <!-- DUA 2 -->
+    <div class="dua-card">
+      <div class="card-header">
+        <div>
+          <div class="prophet-badge">Prophet Muhammad ﷺ</div>
+          <h2>Dua of Sayyid al-Istighfar</h2>
+          <div class="context">The Master of Seeking Forgiveness — taught by Jibril ﷺ</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text">
+          اللّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ
+        </div>
+        <div class="transliteration">Allāhumma anta rabbī, lā ilāha illā anta, khalaqtanī wa anā 'abduka, wa anā 'alā 'ahdika wa wa'dika mastaṭa'tu. A'ūdhu bika min sharri mā ṣana'tu. Abū'u laka bini'matika 'alayya wa abū'u bidhanbī, faghfir lī, fa'innahu lā yaghfirudh-dhunūba illā anta.</div>
+        <div class="translation">"O Allah, You are my Lord. There is no god but You. You created me and I am Your servant. I am upon Your covenant and promise as much as I am able. I seek refuge in You from the evil of what I have done. I acknowledge Your blessing upon me and I acknowledge my sin. Forgive me, for none forgives sins but You."</div>
+        <span class="source-tag">Sahih al-Bukhari · 6306</span>
+      </div>
+    </div>
+
+    <!-- DUA 3 -->
+    <div class="dua-card">
+      <div class="card-header">
+        <div>
+          <div class="prophet-badge">Prophet Muhammad ﷺ</div>
+          <h2>Dua for Knowledge & Guidance</h2>
+          <div class="context">Jibril ﷺ descended with this supplication for seeking beneficial knowledge</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text">
+          اللّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا
+        </div>
+        <div class="transliteration">Allāhumma innī as'aluka 'ilman nāfi'an, wa rizqan ṭayyiban, wa 'amalan mutaqabbalan</div>
+        <div class="translation">"O Allah, I ask You for beneficial knowledge, wholesome sustenance, and deeds that are accepted."</div>
+        <span class="source-tag">Ibn Majah · 925 · After Fajr Prayer</span>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="line"></div>
+      <span>✦</span>
+      <div class="line"></div>
+    </div>
+
+    <!-- DUA 4 -->
+    <div class="dua-card">
+      <div class="card-header">
+        <div>
+          <div class="prophet-badge">Prophet Ibrahim ﷺ</div>
+          <h2>Dua of Tawhid & Submission</h2>
+          <div class="context">Taught by Jibril ﷺ during the trial of being cast into the fire</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text">
+          حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ
+        </div>
+        <div class="transliteration">Ḥasbiyallāhu wa ni'mal-wakīl</div>
+        <div class="translation">"Allah is sufficient for me, and He is the best Disposer of affairs."</div>
+        <div class="section-divider" style="margin: 18px 0 14px;">
+          <div class="line"></div><div class="ornament-diamond" style="width:5px;height:5px;background:var(--gold);transform:rotate(45deg);opacity:0.4;"></div><div class="line"></div>
+        </div>
+        <p style="font-style:italic; color:var(--muted); font-size:0.9rem; line-height:1.7; margin-bottom:14px;">Jibril ﷺ descended and asked Ibrahim ﷺ: "Do you have a need?" He replied: "As for from you — no." Jibril ﷺ then said: "Then ask your Lord." Ibrahim ﷺ said: "His knowledge of my state is sufficient for me from asking."</p>
+        <span class="source-tag">Tafsir Ibn Kathir · Surah Al-Imran 3:173</span>
+      </div>
+    </div>
+
+    <!-- DUA 5 -->
+    <div class="dua-card">
+      <div class="card-header">
+        <div>
+          <div class="prophet-badge">Prophet Musa ﷺ</div>
+          <h2>Dua for Help & Ease</h2>
+          <div class="context">Jibril ﷺ taught this dua to Musa ﷺ during hardship in his mission</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text">
+          رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي يَفْقَهُوا قَوْلِي
+        </div>
+        <div class="transliteration">Rabbish-raḥ lī ṣadrī, wa yassir lī amrī, waḥlul 'uqdatan min lisānī yafqahū qawlī</div>
+        <div class="translation">"My Lord, expand for me my breast [with assurance], and ease for me my task, and untie the knot from my tongue that they may understand my speech."</div>
+        <span class="source-tag">Qur'an · Surah Ta-Ha 20:25–28</span>
+      </div>
+    </div>
+
+    <!-- DUA 6 -->
+    <div class="dua-card">
+      <div class="card-header">
+        <div>
+          <div class="prophet-badge">Prophet Muhammad ﷺ</div>
+          <h2>Dua for the Night of Power</h2>
+          <div class="context">When 'A'isha ؓ asked what to recite on Laylat al-Qadr, Jibril ﷺ revealed this</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text">
+          اللّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي
+        </div>
+        <div class="transliteration">Allāhumma innaka 'afuwwun tuḥibbul-'afwa fa'fu 'annī</div>
+        <div class="translation">"O Allah, You are the Pardoner and You love to pardon, so pardon me."</div>
+        <span class="source-tag">Sunan al-Tirmidhi · 3513 · Graded Sahih</span>
+      </div>
+    </div>
+
+    <div class="section-divider">
+      <div class="line"></div>
+      <span>✦</span>
+      <div class="line"></div>
+    </div>
+
+    <!-- RUQYAH SECTION HEADING -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <div style="font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.18em; color:var(--gold); text-transform:uppercase; opacity:0.8;">Ruqyah of Jibril ﷺ upon the Prophet ﷺ</div>
+      <div style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.95rem; color:var(--muted); margin-top:6px;">Two authentic narrations recorded in Sahih Muslim — both performed by Jibril ﷺ during the Prophet's illness</div>
+    </div>
+
+    <!-- RUQYAH DUA 1 — Abu Sa'id al-Khudri narration (Muslim 2186) -->
+    <div class="dua-card" style="border-color: rgba(201,168,76,0.45);">
+      <div class="card-header" style="background: rgba(201,168,76,0.04);">
+        <div>
+          <div class="prophet-badge" style="background:linear-gradient(135deg,rgba(201,168,76,0.22),rgba(201,168,76,0.08)); border-color:var(--gold);">Ruqyah · 1 of 2</div>
+          <h2>Healing from Every Harm & Envious Eye</h2>
+          <div class="context">Narrated by Abu Sa'id al-Khudri ؓ — Jibril ﷺ asked "O Muhammad, do you feel sick?"</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text" style="font-size: clamp(1.45rem, 3.8vw, 2rem); line-height: 2.2;">
+          بِسْمِ اللَّهِ أَرْقِيكَ، مِنْ كُلِّ شَيْءٍ يُؤْذِيكَ، مِنْ شَرِّ كُلِّ نَفْسٍ أَوْ عَيْنِ حَاسِدٍ، اللَّهُ يَشْفِيكَ، بِسْمِ اللَّهِ أَرْقِيكَ
+        </div>
+        <div class="transliteration">Bismillāhi arqīka, min kulli shay'in yu'dhīka, min sharri kulli nafsin aw 'ayni ḥāsidin, Allāhu yashfīka, bismillāhi arqīka</div>
+        <div class="translation">"In the name of Allah I perform ruqyah for you — from everything that harms you, from the evil of every soul and every envious eye. May Allah cure you. In the name of Allah I perform ruqyah for you."</div>
+        <div style="margin-top:14px; padding:12px 16px; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.14); border-radius:2px;">
+          <p style="font-style:italic; color:var(--muted); font-size:0.88rem; line-height:1.8;">Jibril ﷺ came to the Prophet ﷺ and said: <span style="color:var(--gold-light);">"O Muhammad ﷺ, do you feel sick?"</span> He ﷺ said: <span style="color:var(--gold-light);">"Yes."</span> Jibril ﷺ then recited this ruqyah. It is reported he performed it three times.</p>
+        </div>
+        <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:8px;">
+          <span class="source-tag">Sahih Muslim · 2186</span>
+          <span class="source-tag">Riyad al-Salihin · 908</span>
+          <span class="source-tag">Jami al-Tirmidhi · 972</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RUQYAH DUA 2 — 'A'isha narration (Muslim 2185) -->
+    <div class="dua-card" style="border-color: rgba(201,168,76,0.45);">
+      <div class="card-header" style="background: rgba(201,168,76,0.04);">
+        <div>
+          <div class="prophet-badge" style="background:linear-gradient(135deg,rgba(201,168,76,0.22),rgba(201,168,76,0.08)); border-color:var(--gold);">Ruqyah · 2 of 2</div>
+          <h2>Healing from Every Illness & the Evil Eye</h2>
+          <div class="context">Narrated by 'A'isha ؓ — Jibril ﷺ would perform this whenever the Prophet ﷺ fell ill</div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="arabic-text" style="font-size: clamp(1.45rem, 3.8vw, 2rem); line-height: 2.2;">
+          بِسْمِ اللَّهِ يُبْرِيكَ، وَمِنْ كُلِّ دَاءٍ يَشْفِيكَ، وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ، وَشَرِّ كُلِّ ذِي عَيْنٍ
+        </div>
+        <div class="transliteration">Bismillāhi yubrika, wa min kulli dā'in yashfīka, wa min sharri ḥāsidin idhā ḥasada, wa sharri kulli dhī 'ayn</div>
+        <div class="translation">"In the name of Allah — may He cure you, and from every illness may He heal you, from the evil of the envier when he envies, and from the evil of every envious eye."</div>
+        <div style="margin-top:14px; padding:12px 16px; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.14); border-radius:2px;">
+          <p style="font-style:italic; color:var(--muted); font-size:0.88rem; line-height:1.8;">'A'isha ؓ reported: <span style="color:var(--gold-light);">"Whenever the Messenger of Allah ﷺ was afflicted by something, Jibril ﷺ would come and perform ruqyah for him with these words."</span> This narration differs slightly in wording from the first — both are authentic and complement one another.</p>
+        </div>
+        <div style="margin-top:14px; display:flex; flex-wrap:wrap; gap:8px;">
+          <span class="source-tag">Sahih Muslim · 2185</span>
+          <span class="source-tag">Hadith Answers · Verified Sahih</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="arabic-footer">صَلَّى اللَّهُ عَلَيْهِمْ وَسَلَّمَ</span>
+    <p>May Allah's peace and blessings be upon all the Prophets<br>and upon Jibril, the Trustworthy Spirit who conveyed these sacred words.</p>
+    <div class="ornament" style="margin-top:24px;">
+      <div class="ornament-line"></div>
+      <div class="ornament-diamond"></div>
+      <div class="ornament-line right"></div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
