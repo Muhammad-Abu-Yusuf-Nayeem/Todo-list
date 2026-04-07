@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>নামাজের দোয়া — অর্থসহ বাংলা</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Serif+Bengali:wght@400;500;600;700&family=Lateef:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #b8860b;
+    --gold-light: #f5e6a3;
+    --gold-pale: #fdf9ec;
+    --green-deep: #1a3a2a;
+    --green-mid: #2d5a3d;
+    --green-light: #e8f5ee;
+    --cream: #faf7f0;
+    --ink: #1c1a16;
+    --ink-muted: #4a4438;
+    --ink-faint: #8a7f6e;
+    --border: #d4c9a8;
+    --shadow: rgba(184,134,11,0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Noto Serif Bengali', serif;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .site-header {
+    background: var(--green-deep);
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(184,134,11,0.04) 20px, rgba(184,134,11,0.04) 40px);
+  }
+  .header-bismillah {
+    font-family: 'Amiri', serif;
+    font-size: 2.4rem;
+    color: var(--gold-light);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    position: relative;
+  }
+  .header-title {
+    font-family: 'Noto Serif Bengali', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+  .header-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+    position: relative;
+  }
+
+  /* Nav bar */
+  .nav-bar {
+    background: var(--green-mid);
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-bottom: 2px solid var(--gold);
+    padding: 0 0.5rem;
+  }
+  .nav-bar::-webkit-scrollbar { display: none; }
+  .nav-bar a {
+    display: inline-block;
+    padding: 0.7rem 1rem;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav-bar a:hover {
+    color: var(--gold-light);
+    border-bottom-color: var(--gold);
+  }
+
+  /* Main layout */
+  .main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+  }
+
+  /* Dua card */
+  .dua-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+    box-shadow: 0 2px 12px var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .dua-card:hover {
+    box-shadow: 0 4px 24px rgba(184,134,11,0.18);
+  }
+
+  /* Card header */
+  .card-head {
+    background: var(--green-deep);
+    padding: 1rem 1.5rem 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .card-title-group { flex: 1; }
+  .card-num {
+    font-family: 'Amiri', serif;
+    font-size: 1rem;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+  .card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+  }
+  .card-when {
+    font-size: 0.75rem;
+    background: rgba(184,134,11,0.25);
+    color: var(--gold-light);
+    border: 1px solid rgba(184,134,11,0.4);
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Full Arabic block */
+  .arabic-full-block {
+    background: var(--gold-pale);
+    border-bottom: 1px solid var(--border);
+    padding: 1.5rem 2rem 1.4rem;
+    text-align: center;
+  }
+  .arabic-full-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 0.7rem;
+  }
+  .arabic-full {
+    font-family: 'Amiri', serif;
+    font-size: 1.85rem;
+    line-height: 2.1;
+    color: var(--green-deep);
+    direction: rtl;
+    unicode-bidi: bidi-override;
+  }
+
+  /* Phrase section */
+  .phrases-section {
+    padding: 1.4rem 1.5rem 1.5rem;
+  }
+  .phrases-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed var(--border);
+  }
+
+  /* Individual phrase row */
+  .phrase-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1.2rem;
+    align-items: start;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid #f0ebe0;
+  }
+  .phrase-row:last-child { border-bottom: none; }
+
+  .phrase-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 1.25rem;
+    color: var(--green-deep);
+    direction: rtl;
+    line-height: 1.8;
+    text-align: right;
+  }
+  .phrase-bangla {
+    font-size: 0.92rem;
+    color: var(--ink-muted);
+    line-height: 1.75;
+    padding-top: 0.15rem;
+  }
+  .phrase-bangla strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* Transliteration */
+  .phrase-translit {
+    font-size: 0.76rem;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 0.1rem;
+    direction: ltr;
+    text-align: right;
+    font-family: Georgia, serif;
+  }
+
+  /* Note box */
+  .dua-note {
+    margin: 0 1.5rem 1.5rem;
+    background: var(--green-light);
+    border-left: 3px solid var(--green-mid);
+    border-radius: 0 8px 8px 0;
+    padding: 0.7rem 1rem;
+    font-size: 0.84rem;
+    color: var(--green-mid);
+    line-height: 1.6;
+  }
+  .dua-note strong { color: var(--green-deep); }
+
+  /* Section divider */
+  .section-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    text-align: center;
+    margin: 2.5rem 0 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .section-title::before, .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .arabic-full { font-size: 1.45rem; }
+    .phrase-row { grid-template-columns: 1fr; }
+    .phrase-arabic { text-align: right; }
+    .phrase-translit { text-align: right; }
+    .card-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    .phrases-section { padding: 1rem 1rem 1.2rem; }
+    .arabic-full-block { padding: 1.2rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <h1 class="header-title">নামাজের দোয়া — অর্থসহ বাংলা</h1>
+  <p class="header-sub">সকল দোয়া · আরবি পাঠ · বাংলা অর্থ বাক্যে বাক্যে</p>
+</header>
+
+<nav class="nav-bar">
+  <a href="#sana">সানা</a>
+  <a href="#taawwuz">তাআউয</a>
+  <a href="#tasmiah">তাসমিয়া</a>
+  <a href="#fatiha">সূরা ফাতিহা</a>
+  <a href="#ruku">রুকুর দোয়া</a>
+  <a href="#qawmah">ক্বওমাহ</a>
+  <a href="#sujud">সিজদার দোয়া</a>
+  <a href="#jalsah">জালসাহ</a>
+  <a href="#tashahhud">তাশাহহুদ</a>
+  <a href="#darud">দরুদ ইবরাহিম</a>
+  <a href="#dua-masur">দোয়া মাসুর</a>
+  <a href="#salam">সালাম</a>
+  <a href="#qunut">দোয়া কুনুত</a>
+</nav>
+
+<main class="main">
+
+  <!-- ===== SANA ===== -->
+  <div class="section-title">নামাজ শুরুর দোয়া</div>
+
+  <div class="dua-card" id="sana">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০১</span>
+        <span class="card-title">সানা (ছানা) — তাকবিরে তাহরিমার পর</span>
+      </div>
+      <span class="card-when">নামাজ শুরুতে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        سُبْحَانَكَ اللّٰهُمَّ وَبِحَمْدِكَ وَتَبَارَكَ اسْمُكَ وَتَعَالٰى جَدُّكَ وَلَا إِلٰهَ غَيْرُكَ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">سُبْحَانَكَ اللّٰهُمَّ</div>
+          <div class="phrase-translit">Subhānakallahumma</div>
+        </div>
+        <div class="phrase-bangla">হে আল্লাহ! তুমি <strong>পবিত্র ও মহিমান্বিত</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَبِحَمْدِكَ</div>
+          <div class="phrase-translit">wa bihamdika</div>
+        </div>
+        <div class="phrase-bangla">এবং তোমার <strong>প্রশংসার সাথে</strong> (তোমার পবিত্রতা ঘোষণা করছি)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَتَبَارَكَ اسْمُكَ</div>
+          <div class="phrase-translit">wa tabārakasmuka</div>
+        </div>
+        <div class="phrase-bangla">তোমার <strong>নাম বরকতময়</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَتَعَالٰى جَدُّكَ</div>
+          <div class="phrase-translit">wa ta'ālā jadduka</div>
+        </div>
+        <div class="phrase-bangla">তোমার <strong>মহত্ত্ব সুউচ্চ</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَلَا إِلٰهَ غَيْرُكَ</div>
+          <div class="phrase-translit">wa lā ilāha ghairuka</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তুমি ছাড়া কোনো উপাস্য নেই</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TAAWWUZ ===== -->
+  <div class="dua-card" id="taawwuz">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০২</span>
+        <span class="card-title">তাআউয — আউযুবিল্লাহ</span>
+      </div>
+      <span class="card-when">সানার পরে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        أَعُوذُ بِاللهِ مِنَ الشَّيْطَانِ الرَّجِيمِ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">أَعُوذُ بِاللهِ</div>
+          <div class="phrase-translit">A'ūdhu billāhi</div>
+        </div>
+        <div class="phrase-bangla">আমি <strong>আল্লাহর কাছে আশ্রয় চাই</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">مِنَ الشَّيْطَانِ الرَّجِيمِ</div>
+          <div class="phrase-translit">minash-shaitānir-rajīm</div>
+        </div>
+        <div class="phrase-bangla"><strong>বিতাড়িত শয়তান</strong> থেকে</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TASMIAH ===== -->
+  <div class="dua-card" id="tasmiah">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৩</span>
+        <span class="card-title">তাসমিয়া — বিসমিল্লাহ</span>
+      </div>
+      <span class="card-when">প্রতিটি সূরার আগে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيمِ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">بِسْمِ اللهِ</div>
+          <div class="phrase-translit">Bismillāhi</div>
+        </div>
+        <div class="phrase-bangla"><strong>আল্লাহর নামে</strong> (শুরু করছি)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">الرَّحْمٰنِ</div>
+          <div class="phrase-translit">ar-Rahmāni</div>
+        </div>
+        <div class="phrase-bangla">যিনি <strong>পরম দয়াময়</strong> (সকলের প্রতি)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">الرَّحِيمِ</div>
+          <div class="phrase-translit">ar-Rahīm</div>
+        </div>
+        <div class="phrase-bangla">যিনি <strong>অতি মেহেরবান</strong> (মুমিনদের প্রতি বিশেষভাবে)</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== FATIHA ===== -->
+  <div class="section-title">সূরা ফাতিহা</div>
+
+  <div class="dua-card" id="fatiha">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৪</span>
+        <span class="card-title">সূরা আল-ফাতিহা — উম্মুল কুরআন</span>
+      </div>
+      <span class="card-when">প্রতি রাকাতে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ সূরা (আরবি)</div>
+      <div class="arabic-full">
+        الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِيْنَ ۞ الرَّحْمٰنِ الرَّحِيْمِ ۞ مَالِكِ يَوْمِ الدِّيْنِ ۞ إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِيْنُ ۞ اهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَ ۞ صِرَاطَ الَّذِيْنَ أَنْعَمْتَ عَلَيْهِمْ ۞ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّيْنَ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">আয়াতে আয়াতে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِيْنَ</div>
+          <div class="phrase-translit">Alhamdu lillāhi rabbil 'ālamīn</div>
+        </div>
+        <div class="phrase-bangla">সমস্ত <strong>প্রশংসা আল্লাহর জন্য</strong>, যিনি <strong>সকল জগতের রব (প্রতিপালক)</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">الرَّحْمٰنِ الرَّحِيْمِ</div>
+          <div class="phrase-translit">ar-Rahmānir-Rahīm</div>
+        </div>
+        <div class="phrase-bangla">যিনি <strong>পরম দয়াময়</strong>, <strong>অতি মেহেরবান</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">مَالِكِ يَوْمِ الدِّيْنِ</div>
+          <div class="phrase-translit">Māliki yawmid-dīn</div>
+        </div>
+        <div class="phrase-bangla"><strong>বিচার দিনের (কিয়ামতের) মালিক</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِيْنُ</div>
+          <div class="phrase-translit">Iyyāka na'budu wa iyyāka nasta'īn</div>
+        </div>
+        <div class="phrase-bangla"><strong>একমাত্র তোমারই ইবাদত করি</strong> এবং <strong>একমাত্র তোমার কাছেই সাহায্য চাই</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَ</div>
+          <div class="phrase-translit">Ihdinaṣ-ṣirāṭal-mustaqīm</div>
+        </div>
+        <div class="phrase-bangla">আমাদের <strong>সঠিক ও সরল পথ দেখাও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">صِرَاطَ الَّذِيْنَ أَنْعَمْتَ عَلَيْهِمْ</div>
+          <div class="phrase-translit">ṣirāṭalladhīna an'amta 'alaihim</div>
+        </div>
+        <div class="phrase-bangla">সেই পথ, <strong>যাদের উপর তুমি নিয়ামত দিয়েছ</strong> (নবী, সিদ্দিকীন, শহীদ, সালেহীনগণ)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّيْنَ</div>
+          <div class="phrase-translit">ghairil-maghdhūbi 'alaihim wa laḍ-ḍāllīn</div>
+        </div>
+        <div class="phrase-bangla"><strong>যাদের উপর তুমি ক্রোধিত হয়েছ</strong> (ইহুদি) তাদের পথ নয়, এবং <strong>যারা পথভ্রষ্ট হয়েছে</strong> (খ্রিষ্টান) তাদের পথও নয়</div>
+      </div>
+    </div>
+    <div class="dua-note"><strong>আমীন:</strong> সূরা ফাতিহা শেষে আমীন বলতে হয়। অর্থ — <em>হে আল্লাহ, কবুল করো।</em></div>
+  </div>
+
+
+  <!-- ===== RUKU ===== -->
+  <div class="section-title">রুকু ও সিজদার দোয়া</div>
+
+  <div class="dua-card" id="ruku">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৫</span>
+        <span class="card-title">রুকুর দোয়া — তাসবিহ</span>
+      </div>
+      <span class="card-when">রুকুতে (৩ বার)</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        سُبْحَانَ رَبِّيَ الْعَظِيمِ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">سُبْحَانَ</div>
+          <div class="phrase-translit">Subhāna</div>
+        </div>
+        <div class="phrase-bangla"><strong>পবিত্রতা</strong> (ঘোষণা করছি)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">رَبِّيَ</div>
+          <div class="phrase-translit">Rabbiya</div>
+        </div>
+        <div class="phrase-bangla">আমার <strong>রবের (প্রতিপালকের)</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">الْعَظِيمِ</div>
+          <div class="phrase-translit">al-'Aẓīm</div>
+        </div>
+        <div class="phrase-bangla">যিনি <strong>মহান ও সুমহিম</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== QAWMAH ===== -->
+  <div class="dua-card" id="qawmah">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৬</span>
+        <span class="card-title">ক্বওমাহ — রুকু থেকে ওঠার দোয়া</span>
+      </div>
+      <span class="card-when">সোজা হয়ে দাঁড়ানোর সময়</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        سَمِعَ اللهُ لِمَنْ حَمِدَهُ ۞ رَبَّنَا لَكَ الْحَمْدُ مِلْءَ السَّمَاوَاتِ وَمِلْءَ الْأَرْضِ وَمِلْءَ مَا شِئْتَ مِنْ شَيْءٍ بَعْدُ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">سَمِعَ اللهُ لِمَنْ حَمِدَهُ</div>
+          <div class="phrase-translit">Sami'allāhu liman hamidah</div>
+        </div>
+        <div class="phrase-bangla"><strong>আল্লাহ তার কথা শুনেন যে তাঁর প্রশংসা করে</strong> — (ইমাম বলেন)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">رَبَّنَا لَكَ الْحَمْدُ</div>
+          <div class="phrase-translit">Rabbanā lakal-hamd</div>
+        </div>
+        <div class="phrase-bangla">হে আমাদের রব! <strong>তোমারই জন্য সমস্ত প্রশংসা</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">مِلْءَ السَّمَاوَاتِ</div>
+          <div class="phrase-translit">mil'as-samāwāt</div>
+        </div>
+        <div class="phrase-bangla"><strong>আসমানসমূহ পরিপূর্ণ</strong> পরিমাণ প্রশংসা</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَمِلْءَ الْأَرْضِ</div>
+          <div class="phrase-translit">wa mil'al-arḍ</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>পৃথিবী পরিপূর্ণ</strong> পরিমাণ প্রশংসা</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَمِلْءَ مَا شِئْتَ مِنْ شَيْءٍ بَعْدُ</div>
+          <div class="phrase-translit">wa mil'a mā shi'ta min shai'im ba'd</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>এরপর যা তুমি চাও তা পরিপূর্ণ</strong> পরিমাণ প্রশংসা</div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== SUJUD ===== -->
+  <div class="dua-card" id="sujud">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৭</span>
+        <span class="card-title">সিজদার দোয়া — তাসবিহ</span>
+      </div>
+      <span class="card-when">সিজদায় (৩ বার)</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        سُبْحَانَ رَبِّيَ الْأَعْلٰى
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">سُبْحَانَ</div>
+          <div class="phrase-translit">Subhāna</div>
+        </div>
+        <div class="phrase-bangla"><strong>পবিত্রতা</strong> (ঘোষণা করছি)</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">رَبِّيَ</div>
+          <div class="phrase-translit">Rabbiya</div>
+        </div>
+        <div class="phrase-bangla">আমার <strong>রবের</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">الْأَعْلٰى</div>
+          <div class="phrase-translit">al-A'lā</div>
+        </div>
+        <div class="phrase-bangla">যিনি <strong>সর্বোচ্চ</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== JALSAH ===== -->
+  <div class="dua-card" id="jalsah">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৮</span>
+        <span class="card-title">জালসাহ — দুই সিজদার মাঝের দোয়া</span>
+      </div>
+      <span class="card-when">দুই সিজদার মাঝে বসে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        رَبِّ اغْفِرْ لِيْ وَارْحَمْنِيْ وَاجْبُرْنِيْ وَارْفَعْنِيْ وَارْزُقْنِيْ وَاهْدِنِيْ وَعَافِنِيْ وَاعْفُ عَنِّيْ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">رَبِّ اغْفِرْ لِيْ</div>
+          <div class="phrase-translit">Rabbighfir lī</div>
+        </div>
+        <div class="phrase-bangla">হে আমার রব! <strong>আমাকে ক্ষমা করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَارْحَمْنِيْ</div>
+          <div class="phrase-translit">warhamnī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমার উপর রহম করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَاجْبُرْنِيْ</div>
+          <div class="phrase-translit">wajburnī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমার ক্ষতি পূরণ করো / আমাকে সংশোধন করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَارْفَعْنِيْ</div>
+          <div class="phrase-translit">warfa'nī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমার মর্যাদা উন্নত করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَارْزُقْنِيْ</div>
+          <div class="phrase-translit">warzuqnī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমাকে রিযিক দাও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَاهْدِنِيْ</div>
+          <div class="phrase-translit">wahdinī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমাকে সঠিক পথ দেখাও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَعَافِنِيْ</div>
+          <div class="phrase-translit">wa 'āfinī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমাকে সুস্থতা ও নিরাপত্তা দাও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَاعْفُ عَنِّيْ</div>
+          <div class="phrase-translit">wa'fu 'annī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমাকে মাফ করে দাও</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== TASHAHHUD ===== -->
+  <div class="section-title">তাশাহহুদ ও দরুদ</div>
+
+  <div class="dua-card" id="tashahhud">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">০৯</span>
+        <span class="card-title">তাশাহহুদ — আত্তাহিয়্যাতু</span>
+      </div>
+      <span class="card-when">প্রতিটি বৈঠকে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        اَلتَّحِيَّاتُ لِلّٰهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ ۞ اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ ۞ اَلسَّلَامُ عَلَيْنَا وَعَلٰى عِبَادِ اللهِ الصَّالِحِيْنَ ۞ أَشْهَدُ أَنْ لَّا إِلٰهَ إِلَّا اللهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَلتَّحِيَّاتُ لِلّٰهِ</div>
+          <div class="phrase-translit">At-tahiyyātu lillāh</div>
+        </div>
+        <div class="phrase-bangla">সমস্ত <strong>মৌখিক ইবাদত (সালাম ও সম্মান) আল্লাহর জন্য</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَالصَّلَوَاتُ</div>
+          <div class="phrase-translit">waṣ-ṣalawāt</div>
+        </div>
+        <div class="phrase-bangla">এবং সমস্ত <strong>শারীরিক ইবাদত</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَالطَّيِّبَاتُ</div>
+          <div class="phrase-translit">waṭ-ṭayyibāt</div>
+        </div>
+        <div class="phrase-bangla">এবং সমস্ত <strong>পবিত্র ও উত্তম বিষয়সমূহ</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ</div>
+          <div class="phrase-translit">As-salāmu 'alaika ayyuhan-Nabiyy</div>
+        </div>
+        <div class="phrase-bangla">হে নবী! <strong>আপনার উপর শান্তি বর্ষিত হোক</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ</div>
+          <div class="phrase-translit">wa rahmatullāhi wa barakātuh</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আল্লাহর রহমত ও বরকত</strong> আপনার উপর বর্ষিত হোক</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَلسَّلَامُ عَلَيْنَا</div>
+          <div class="phrase-translit">As-salāmu 'alainā</div>
+        </div>
+        <div class="phrase-bangla"><strong>আমাদের উপরেও শান্তি বর্ষিত হোক</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَعَلٰى عِبَادِ اللهِ الصَّالِحِيْنَ</div>
+          <div class="phrase-translit">wa 'alā 'ibādillāhiṣ-ṣālihīn</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আল্লাহর নেক বান্দাদের উপরেও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">أَشْهَدُ أَنْ لَّا إِلٰهَ إِلَّا اللهُ</div>
+          <div class="phrase-translit">Ashhadu allā ilāha illallāh</div>
+        </div>
+        <div class="phrase-bangla">আমি সাক্ষ্য দিচ্ছি যে <strong>আল্লাহ ছাড়া কোনো উপাস্য নেই</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</div>
+          <div class="phrase-translit">wa ashhadu anna Muhammadan 'abduhu wa rasūluh</div>
+        </div>
+        <div class="phrase-bangla">এবং আমি সাক্ষ্য দিচ্ছি যে <strong>মুহাম্মদ (ﷺ) তাঁর বান্দা ও রাসূল</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== DARUD IBRAHIM ===== -->
+  <div class="dua-card" id="darud">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">১০</span>
+        <span class="card-title">দরুদ ইবরাহিম</span>
+      </div>
+      <span class="card-when">শেষ বৈঠকে তাশাহহুদের পরে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        اَللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ وَّعَلٰى اٰلِ مُحَمَّدٍ كَمَا صَلَّيْتَ عَلٰى إِبْرَاهِيمَ وَعَلٰى اٰلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَّجِيدٌ ۞ اَللّٰهُمَّ بَارِكْ عَلٰى مُحَمَّدٍ وَّعَلٰى اٰلِ مُحَمَّدٍ كَمَا بَارَكْتَ عَلٰى إِبْرَاهِيمَ وَعَلٰى اٰلِ إِبْرَاهِيمَ إِنَّكَ حَمِيدٌ مَّجِيدٌ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَللّٰهُمَّ صَلِّ عَلٰى مُحَمَّدٍ</div>
+          <div class="phrase-translit">Allāhumma salli 'alā Muhammad</div>
+        </div>
+        <div class="phrase-bangla">হে আল্লাহ! <strong>মুহাম্মদ (ﷺ)-এর উপর রহমত বর্ষণ করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَّعَلٰى اٰلِ مُحَمَّدٍ</div>
+          <div class="phrase-translit">wa 'alā āli Muhammad</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>মুহাম্মদ (ﷺ)-এর পরিবার-পরিজনের উপরেও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">كَمَا صَلَّيْتَ عَلٰى إِبْرَاهِيمَ وَعَلٰى اٰلِ إِبْرَاهِيمَ</div>
+          <div class="phrase-translit">kamā ṣallaita 'alā Ibrāhīma wa 'alā āli Ibrāhīm</div>
+        </div>
+        <div class="phrase-bangla">যেভাবে <strong>ইবরাহিম (আ.) ও তাঁর পরিবারের উপর রহমত বর্ষণ করেছিলে</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">إِنَّكَ حَمِيدٌ مَّجِيدٌ</div>
+          <div class="phrase-translit">innaka Hamīdum Majīd</div>
+        </div>
+        <div class="phrase-bangla">নিশ্চয়ই তুমি <strong>প্রশংসিত ও মহিমান্বিত</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَللّٰهُمَّ بَارِكْ عَلٰى مُحَمَّدٍ وَّعَلٰى اٰلِ مُحَمَّدٍ</div>
+          <div class="phrase-translit">Allāhumma bārik 'alā Muhammadin wa 'alā āli Muhammad</div>
+        </div>
+        <div class="phrase-bangla">হে আল্লাহ! <strong>মুহাম্মদ (ﷺ) ও তাঁর পরিবারের উপর বরকত দাও</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">كَمَا بَارَكْتَ عَلٰى إِبْرَاهِيمَ وَعَلٰى اٰلِ إِبْرَاهِيمَ</div>
+          <div class="phrase-translit">kamā bārakta 'alā Ibrāhīma wa 'alā āli Ibrāhīm</div>
+        </div>
+        <div class="phrase-bangla">যেভাবে <strong>ইবরাহিম (আ.) ও তাঁর পরিবারের উপর বরকত দিয়েছিলে</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== DUA MASUR ===== -->
+  <div class="dua-card" id="dua-masur">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">১১</span>
+        <span class="card-title">দোয়া মাসুর — শেষ বৈঠকের দোয়া</span>
+      </div>
+      <span class="card-when">সালামের আগে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        اَللّٰهُمَّ إِنِّيْ ظَلَمْتُ نَفْسِيْ ظُلْمًا كَثِيرًا وَّلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنتَ ۞ فَاغْفِرْ لِيْ مَغْفِرَةً مِّنْ عِنْدِكَ وَارْحَمْنِيْ إِنَّكَ أَنتَ الْغَفُورُ الرَّحِيمُ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَللّٰهُمَّ إِنِّيْ ظَلَمْتُ نَفْسِيْ</div>
+          <div class="phrase-translit">Allāhumma innī ẓalamtu nafsī</div>
+        </div>
+        <div class="phrase-bangla">হে আল্লাহ! নিশ্চয়ই <strong>আমি নিজের উপর অনেক জুলুম করেছি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">ظُلْمًا كَثِيرًا</div>
+          <div class="phrase-translit">ẓulman kathīrā</div>
+        </div>
+        <div class="phrase-bangla"><strong>অসংখ্য জুলুম</strong> করেছি</div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَّلَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنتَ</div>
+          <div class="phrase-translit">wa lā yaghfirudh-dhunūba illā ant</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তুমি ছাড়া কেউ গুনাহ মাফ করতে পারে না</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">فَاغْفِرْ لِيْ مَغْفِرَةً مِّنْ عِنْدِكَ</div>
+          <div class="phrase-translit">faghfir lī maghfiratam min 'indik</div>
+        </div>
+        <div class="phrase-bangla">অতএব <strong>তোমার পক্ষ থেকে আমাকে ক্ষমা করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَارْحَمْنِيْ</div>
+          <div class="phrase-translit">warhamnī</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আমার উপর রহম করো</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">إِنَّكَ أَنتَ الْغَفُورُ الرَّحِيمُ</div>
+          <div class="phrase-translit">innaka antal-Ghafūrur-Rahīm</div>
+        </div>
+        <div class="phrase-bangla">নিশ্চয়ই তুমি <strong>ক্ষমাশীল ও মেহেরবান</strong></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ===== SALAM ===== -->
+  <div class="dua-card" id="salam">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">১২</span>
+        <span class="card-title">সালাম — নামাজ শেষের সালাম</span>
+      </div>
+      <span class="card-when">নামাজ শেষে (ডানে ও বামে)</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللهِ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَلسَّلَامُ عَلَيْكُمْ</div>
+          <div class="phrase-translit">As-salāmu 'alaikum</div>
+        </div>
+        <div class="phrase-bangla"><strong>তোমাদের উপর শান্তি বর্ষিত হোক</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَرَحْمَةُ اللهِ</div>
+          <div class="phrase-translit">wa rahmatullāh</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>আল্লাহর রহমতও</strong></div>
+      </div>
+    </div>
+    <div class="dua-note"><strong>দ্রষ্টব্য:</strong> ডানদিকে এবং বামদিকে মুখ ফিরিয়ে দুইবার সালাম দিতে হয়। এতে পাশের ফেরেশতা ও মুসল্লিদের সালাম দেওয়া হয়।</div>
+  </div>
+
+
+  <!-- ===== QUNUT ===== -->
+  <div class="section-title">বিতর নামাজের দোয়া</div>
+
+  <div class="dua-card" id="qunut">
+    <div class="card-head">
+      <div class="card-title-group">
+        <span class="card-num">১৩</span>
+        <span class="card-title">দোয়া কুনুত — বিতরের দোয়া</span>
+      </div>
+      <span class="card-when">বিতর নামাজের তৃতীয় রাকাতে</span>
+    </div>
+
+    <div class="arabic-full-block">
+      <div class="arabic-full-label">সম্পূর্ণ দোয়া (আরবি)</div>
+      <div class="arabic-full">
+        اَللّٰهُمَّ إِنَّا نَسْتَعِيْنُكَ وَنَسْتَغْفِرُكَ وَنُؤْمِنُ بِكَ وَنَتَوَكَّلُ عَلَيْكَ وَنُثْنِيْ عَلَيْكَ الْخَيْرَ ۞ وَنَشْكُرُكَ وَلَا نَكْفُرُكَ وَنَخْلَعُ وَنَتْرُكُ مَنْ يَّفْجُرُكَ ۞ اَللّٰهُمَّ إِيَّاكَ نَعْبُدُ وَلَكَ نُصَلِّيْ وَنَسْجُدُ وَإِلَيْكَ نَسْعٰى وَنَحْفِدُ ۞ وَنَرْجُو رَحْمَتَكَ وَنَخْشٰى عَذَابَكَ إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ
+      </div>
+    </div>
+
+    <div class="phrases-section">
+      <div class="phrases-label">বাক্যে বাক্যে বাংলা অর্থ</div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَللّٰهُمَّ إِنَّا نَسْتَعِيْنُكَ</div>
+          <div class="phrase-translit">Allāhumma innā nasta'īnuk</div>
+        </div>
+        <div class="phrase-bangla">হে আল্লাহ! আমরা <strong>তোমার কাছে সাহায্য চাই</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنَسْتَغْفِرُكَ</div>
+          <div class="phrase-translit">wa nastaghfiruk</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার কাছে ক্ষমা চাই</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنُؤْمِنُ بِكَ</div>
+          <div class="phrase-translit">wa nu'minu bik</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার উপর ঈমান রাখি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنَتَوَكَّلُ عَلَيْكَ</div>
+          <div class="phrase-translit">wa natawakkalu 'alaik</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার উপর ভরসা করি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنُثْنِيْ عَلَيْكَ الْخَيْرَ</div>
+          <div class="phrase-translit">wa nuthnī 'alaikal-khayr</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার ভালো গুণ ও প্রশংসা বর্ণনা করি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنَشْكُرُكَ وَلَا نَكْفُرُكَ</div>
+          <div class="phrase-translit">wa nashkuruka wa lā nakfuruk</div>
+        </div>
+        <div class="phrase-bangla"><strong>তোমার শুকরিয়া আদায় করি</strong> এবং <strong>তোমার নিয়ামত অস্বীকার করি না</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنَخْلَعُ وَنَتْرُكُ مَنْ يَّفْجُرُكَ</div>
+          <div class="phrase-translit">wa nakhla'u wa natruku man yafjuruk</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার অবাধ্যদের পরিত্যাগ করি ও তাদের থেকে সম্পর্ক ছিন্ন করি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">اَللّٰهُمَّ إِيَّاكَ نَعْبُدُ</div>
+          <div class="phrase-translit">Allāhumma iyyāka na'bud</div>
+        </div>
+        <div class="phrase-bangla">হে আল্লাহ! <strong>একমাত্র তোমারই ইবাদত করি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَلَكَ نُصَلِّيْ وَنَسْجُدُ</div>
+          <div class="phrase-translit">wa laka nuṣallī wa nasjud</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার জন্যই নামাজ পড়ি ও সিজদা করি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَإِلَيْكَ نَسْعٰى وَنَحْفِدُ</div>
+          <div class="phrase-translit">wa ilaika nas'ā wa nahfid</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার দিকেই ছুটে চলি ও দ্রুততার সাথে অগ্রসর হই</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنَرْجُو رَحْمَتَكَ</div>
+          <div class="phrase-translit">wa narjū rahmatak</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার রহমতের আশা রাখি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">وَنَخْشٰى عَذَابَكَ</div>
+          <div class="phrase-translit">wa nakhshā 'adhābak</div>
+        </div>
+        <div class="phrase-bangla">এবং <strong>তোমার আযাবকে ভয় করি</strong></div>
+      </div>
+
+      <div class="phrase-row">
+        <div>
+          <div class="phrase-arabic">إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ</div>
+          <div class="phrase-translit">inna 'adhābaka bil-kuffāri mulhiq</div>
+        </div>
+        <div class="phrase-bangla">নিশ্চয়ই <strong>তোমার আযাব কাফেরদের নিশ্চিতভাবে পাকড়াও করবে</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center; padding: 2rem 0 1rem; color: var(--ink-faint); font-size: 0.82rem; border-top: 1px solid var(--border); margin-top: 1rem;">
+    <span style="font-family:'Amiri',serif; font-size:1.1rem; color:var(--gold); display:block; margin-bottom:0.3rem;">اَللّٰهُمَّ تَقَبَّلْ مِنَّا</span>
+    হে আল্লাহ! আমাদের নামাজ কবুল করুন। আমীন।
+  </div>
+
+</main>
+</body>
+</html>
