@@ -37,7 +37,7 @@
     --tx-ocean:  #b8dff5;
     --tx-violet: #d4bcf5;
     --tx-rose:   #f5bcd8;
-    --sidebar-w: 280px;
+    --sidebar-w: 30%;
     --radius: 10px;
     --font-size: 15px;
   }
@@ -185,7 +185,7 @@
   input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
   /* Filter buttons */
-  .filter-group { padding: 0 14px 6px; display: flex; flex-direction: column; gap: 4px; }
+  .filter-group { padding: 0 10px 6px; display: flex; gap: 4px; flex-wrap: wrap; }
   .filter-btn {
     display: flex;
     align-items: center;
@@ -200,7 +200,7 @@
     cursor: pointer;
     text-align: left;
     transition: all .15s;
-    width: 100%;
+    width: 48%;
   }
   .filter-btn:hover { background: var(--surface2); color: var(--text); }
   .filter-btn.active { background: rgba(124,106,247,.12); color: var(--accent); }
@@ -578,8 +578,8 @@
 
 /* shared style */
 .pdf-icon {
-    padding: 6px 14px;
-    font-size: 14px;
+    padding: 3px 7px;
+    font-size: 12px;
     color: #fff;
     background: rgba(255,255,255,0.05);       /* soft glass */
     border: 1px solid rgba(255,255,255,0.1);  /* subtle border */
@@ -644,6 +644,12 @@
     <a href="Daily duas.html" target="_blank">
         <span class="pdf-icon med">Daily</span>
     </a>
+    <a href="jibril_duas.html" target="_blank">
+        <span class="pdf-icon med">jibril_duas</span>
+    </a>
+    <a href="masnun-duas-daily.html" target="_blank">
+        <span class="pdf-icon med">Masnun-duas</span>
+    </a>
     <a href="নবীদের দু'আ থেকে শিক্ষা.html" target="_blank">
         <span class="pdf-icon low">দু'আ থেকে শিক্ষা</span>
     </a>
@@ -667,8 +673,7 @@
       <button class="pri-btn low active" data-p="low">LOW</button>
       <button class="pri-btn med"        data-p="med">MED</button>
       <button class="pri-btn high"       data-p="high">HIGH</button>
-    </div>
-    <div class="priority-row">
+
       <button class="pri-btn ocean"  data-p="ocean">OCEAN</button>
       <button class="pri-btn violet" data-p="violet">VIOLET</button>
       <button class="pri-btn rose"   data-p="rose">ROSE</button>
