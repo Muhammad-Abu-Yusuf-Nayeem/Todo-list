@@ -696,6 +696,14 @@
 
     
 </div>
+<div>
+	<iframe 
+  src="Date.html" 
+  width="100%" 
+  height="90px" 
+  style="border: 2px solid #ccc; border-radius: 8px;">
+</iframe>
+</div>
 
   <!-- ADD TASK -->
   <div class="section-label">➕ New Task</div>
@@ -806,57 +814,7 @@
       <input type="text" id="search-input" placeholder="Search tasks…"/>
     </div>
   </div>
-  <div style="width:300px;padding:16px;border:1px solid #ccc;border-radius:8px;font-family:sans-serif;">
-  <h3 style="margin-top:0;text-align:center;">Today's Date</h3>
 
-  <p><strong>Gregorian:</strong> <span id="gregorian"></span></p>
-  <p><strong>Bangla:</strong> <span id="bangla"></span></p>
-  <p><strong>Hijri:</strong> <span id="hijri"></span></p>
-</div>
-
-<script>
-  const now = new Date();
-
-  // ---- Gregorian ----
-  document.getElementById("gregorian").textContent =
-    now.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
-
-  // ---- Corrected Bangla Calendar ----
-  // Traditional Bangla months starting around mid-April (Baishakh)
-  const banglaMonths = [
-    "বৈশাখ", "জ্যৈষ্ঠ", "আষাঢ়", "শ্রাবণ", "ভাদ্র", "আশ্বিন", 
-    "কার্তিক", "অগ্রহায়ণ", "পৌষ", "মাঘ", "ফাল্গুন", "চৈত্র"
-  ];
-  
-  // Convert English numerals to Bangla numerals
-  const toBanglaDigits = (num) => String(num).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
-
-  // Approximating the modern revised Bangla Calendar (Bangladesh standard)
-  // May 17 falls into Joishtho (the 2nd month, index 1)
-  let banglaDay = now.getDate();
-  let banglaMonthIndex = now.getMonth(); // Gregorian month index
-  let banglaYear = now.getFullYear() - 593;
-
-  // Rough calculation logic for the mid-month transition
-  if (now.getMonth() === 4) { // May
-    if (banglaDay >= 15) {
-      banglaDay = banglaDay - 14; 
-      banglaMonthIndex = 1; // জ্যৈষ্ঠ
-    } else {
-      banglaDay = banglaDay + 16;
-      banglaMonthIndex = 0; // বৈশাখ
-    }
-  }
-  // Note: For a fully bulletproof year-round converter, 
-  // you would need a complete switch/case mapping array for all 12 months.
-
-  document.getElementById("bangla").textContent = 
-    `${toBanglaDigits(banglaDay)} ${banglaMonths[banglaMonthIndex]}, ${toBanglaDigits(banglaYear)}`;
-
-  // ---- Hijri Calendar ----
-  document.getElementById("hijri").textContent =
-    now.toLocaleDateString("en-SA-u-ca-islamic", { day: "numeric", month: "long", year: "numeric" });
-</script>
   <div id="task-area">
     <div id="task-list">
       <div class="empty-state" id="empty-state">
