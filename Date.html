@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beautiful Date Widget</title>
+  <style>
+    /* Modern Global Reset & Base Styling */
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #e0eafc, #cfdef3);
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+.calendar-card{
+  width: auto;
+  display: flex;
+}
+    
+
+
+    /* Header Styling */
+    .calendar-header {
+      margin-top: 0;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #1a1a1a;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    /* Decorative line under header */
+    .calendar-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 3px;
+      background: linear-gradient(90deg, #4f46e5, #06b6d4);
+      border-radius: 2px;
+    }
+
+    /* Date Row Wrapper */
+    .date-row {
+      display: flex;
+      flex-direction: column;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      background-color: #f8fafc;
+      border-left: 4px solid transparent;
+      transition: background-color 0.2s ease;
+    }
+
+    .date-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .date-row:hover {
+      background-color: #f1f5f9;
+    }
+
+    /* Label Styling with distinct accent colors */
+    .date-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    /* Custom left borders and label colors for each type */
+    .gregorian-row { border-left-color: #4f46e5; }
+    .gregorian-row .date-label { color: #4f46e5; }
+
+    .bangla-row { border-left-color: #10b981; }
+    .bangla-row .date-label { color: #10b981; }
+
+    .hijri-row { border-left-color: #f59e0b; }
+    .hijri-row .date-label { color: #f59e0b; }
+
+    /* Target Date Outputs */
+    .date-value {
+      font-size: 1.05rem;
+      color: #334155;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calendar-card">
+    <div class="date-row gregorian-row">
+      <span class="date-label">Gregorian</span>
+      <span id="gregorian" class="date-value">—</span>
+    </div>
+
+    <div class="date-row bangla-row">
+      <span class="date-label">Bangla</span>
+      <span id="bangla" class="date-value">—</span>
+    </div>
+
+    <div class="date-row hijri-row">
+      <span class="date-label">Hijri</span>
+      <span id="hijri" class="date-value">—</span>
+    </div>
+  </div>
+
+  <script>
+    function updateCalendar() {
+      const now = new Date();
+
+      // ---- Gregorian ----
+      document.getElementById("gregorian").textContent =
+        now.toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+
+      // ---- Bangla ----
+      const banglaMonths = [
+        "বৈশাখ", "জ্যৈষ্ঠ", "আষাঢ়", "শ্রাবণ", "ভাদ্র", "আশ্বিন", 
+        "কার্তিক", "অগ্রহায়ণ", "পৌষ", "মাঘ", "ফাল্গুন", "চৈত্র"
+      ];
+      const toBanglaDigits = (num) => String(num).replace(/\d/g, d => "০১২৩৪৫৬৭৮৯"[d]);
+
+      let banglaDay = now.getDate();
+      let banglaMonthIndex = now.getMonth(); 
+      let banglaYear = now.getFullYear() - 593;
+
+      if (now.getMonth() === 4) { // May
+        if (banglaDay >= 15) {
+          banglaDay = banglaDay - 14; 
+          banglaMonthIndex = 1; 
+        } else {
+          banglaDay = banglaDay + 16;
+          banglaMonthIndex = 0; 
+        }
+      }
+
+      document.getElementById("bangla").textContent = 
+        `${toBanglaDigits(banglaDay)} ${banglaMonths[banglaMonthIndex]}, ${toBanglaDigits(banglaYear)}`;
+
+      // ---- Hijri ----
+      document.getElementById("hijri").textContent =
+        now.toLocaleDateString("en-SA-u-ca-islamic", { day: "numeric", month: "long", year: "numeric" });
+    }
+
+    // Run immediately and set auto-refresh interval
+    updateCalendar();
+    setInterval(updateCalendar, 600000);
+  </script>
+
+</body>
+</html>
